@@ -4,9 +4,9 @@ import com.generic.page.HomePage;
 import com.generic.page.PDP;
 import com.generic.setup.SelTestCase;
 
-public class PDPValidation extends SelTestCase {
+public class PDPBundleValidation extends SelTestCase {
 
-	public static void validate(String searchTerm, Boolean Personalized) throws Exception {
+	public static void validate() throws Exception {
 		getCurrentFunctionName(true);
 		String BundleHeadline;
 		Double BundlePrice;
@@ -21,7 +21,7 @@ public class PDPValidation extends SelTestCase {
 
 		HomePage.closeSignUpModal();
 		PDP.navigteToBundleLandingPage();
-		PDP.navigteToBundlePage();
+		PDP.navigteToRandomBundlePage();
 		BundleHeadline = PDP.getBundleHeadline();
 		BundlePrice = PDP.getBundlePrice();
 		PDP.clickBundlesAddToCart();
@@ -61,6 +61,10 @@ public class PDPValidation extends SelTestCase {
 				"Num Of Bundle Tabs is not matching the number of the available and outofstuck items for the bundle. The Num Of Bundle Tabs is: "
 						+ NumOfBundleTabs + ". The availabe and outOfStuckQty items qtys are: " + availableQty
 						+ outOfStuckQty);
+		sassert().assertEquals(PDP.getminiCartItemsNumbers(), availableQty,
+				"The Qty In Add To Cart Button is not matching the number of added items to cart. The number of added items to cart is: "
+						+ PDP.getminiCartItemsNumbers() + ". The availabe items qty is: " + availableQty);
+		
 		sassert().assertAll();
 	}
 }

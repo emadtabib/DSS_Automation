@@ -78,7 +78,7 @@ public class PDP extends SelTestCase {
 		}
 	}
 
-	public static void navigteToBundlePage() throws Exception {
+	public static void navigteToRandomBundlePage() throws Exception {
 		try {
 			logs.debug("Navigte To Bundle Page");
 			List<WebElement> items = new ArrayList<WebElement>();
@@ -254,7 +254,7 @@ public class PDP extends SelTestCase {
 			getCurrentFunctionName(true);
 			String sideBarNavTitle = "";
 			logs.debug("Get Side Bar Nav Title: ");
-			sideBarNavTitle = getDriver().findElement(By.cssSelector(PDPSelectors.sideBarNavTitle)).getText();
+			sideBarNavTitle = getDriver().findElement(By.cssSelector(PDPSelectors.sideBarNavTitle)).getText().replaceAll(" ", "").trim();
 			logs.debug("Side Bar Nav Title: " + sideBarNavTitle);
 			getCurrentFunctionName(false);
 			return sideBarNavTitle;
@@ -420,4 +420,260 @@ public class PDP extends SelTestCase {
 			throw e;
 		}
 	}
+	
+	public static int getminiCartItemsNumbers() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			int miniCartItems = 0;
+			logs.debug("Get Mini Cart Items Numbers: ");
+			miniCartItems = Integer.parseInt(getDriver().findElement(By.cssSelector(PDPSelectors.miniCartItems)).getText().replaceAll(" ", "").trim());
+			logs.debug("Mini Cart Items Numbers: " + miniCartItems);
+			getCurrentFunctionName(false);
+			return miniCartItems;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Side Bar Nav Title selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+
+		}
+	}
+	
+	public static void NavigteToColorationsSRP() {
+		getCurrentFunctionName(true);
+		getDriver().get(getURL() + getCONFIG().getProperty("colorationsSRP"));
+		getCurrentFunctionName(false);
+	}
+
+	public static void navigteToRandomSingleColorationsPage() throws Exception {
+		try {
+			logs.debug("Navigte To Single Colorations PDP Page");
+			List<WebElement> items = new ArrayList<WebElement>();
+			items = SelectorUtil.getAllElements(PDPSelectors.ColorationsPDPLinks);
+			items.remove(items.size() - 1);
+			logs.debug("WebElement List Size = " + items.size());
+			Random random = new Random();
+			int index = random.nextInt(items.size() - 1);
+			items.get(index).click();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Selectors of PDPs links on the SRP were not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getSinglePDPHeadline() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String SingleHeadline = "";
+			logs.debug("Get Single Headline: ");
+			SingleHeadline = getDriver().findElement(By.cssSelector(PDPSelectors.SingleHeadline)).getText().replaceAll(" ", "").trim();
+			logs.debug("Single Headline: " + SingleHeadline);
+			getCurrentFunctionName(false);
+			return SingleHeadline;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Single Headline selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+
+		}
+	}
+
+	public static Double getSinglePDPPrice() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String BundlePrice = "";
+			logs.debug("Get Single Price: ");
+
+			BundlePrice = getDriver().findElement(By.cssSelector(PDPSelectors.SinglePDPPrice)).getText();
+			logs.debug("Single Price: " + BundlePrice);
+			Double BundlePrice2 = Double.parseDouble(BundlePrice.replace('$', ' ').trim());
+			logs.debug("Single Price: " + BundlePrice);
+			getCurrentFunctionName(false);
+			return BundlePrice2;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Single PDP Price selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+
+		}
+	}
+
+	public static String getSinglePDPCode() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String SinglePDPCode = "";
+			logs.debug("Get SinglePDP Code: " );
+			SinglePDPCode = getDriver().findElement(By.cssSelector(PDPSelectors.SinglePDPSKU)).getText();
+			logs.debug("Single PDP Code: " + SinglePDPCode);
+			getCurrentFunctionName(false);
+			return SinglePDPCode;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Single PDP Code selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+
+		}
+	}
+	
+	public static String getSinglePDPSKUimg() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String SinglePDPSKUimg = "";
+			logs.debug("Get Single PDP SKU img src: ");
+			SinglePDPSKUimg = getDriver().findElement(By.cssSelector(PDPSelectors.SinglePDPSKUimg)).getAttribute("src");
+			logs.debug("Single PDP SKU img src: " + SinglePDPSKUimg);
+			getCurrentFunctionName(false);
+			return SinglePDPSKUimg;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Bundle Price selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+
+		}
+	}
+	
+	public static String getSinglePDPProductOverviewHeader() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String SinglePDPDescription = "";
+			logs.debug("Get Single PDP Product Overview Header: ");
+			SinglePDPDescription = getDriver().findElement(By.cssSelector(PDPSelectors.SinglePDPProductOverviewHeader)).getText();
+			logs.debug("Single PDP Product Overview Header: " + SinglePDPDescription);
+			getCurrentFunctionName(false);
+			return SinglePDPDescription;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Single PDP Product Overview Header: selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+
+		}
+	}
+
+	public static String getSinglePDPProductOverview() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String SinglePDPDescription = "";
+			logs.debug("Get Single PDP Product Overview description: ");
+			SinglePDPDescription = getDriver().findElement(By.cssSelector(PDPSelectors.SinglePDPProductOverview)).getText();
+			logs.debug("Single PDP Product Overview description: " + SinglePDPDescription);
+			getCurrentFunctionName(false);
+			return SinglePDPDescription;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Single PDP Product Overview description: selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+
+		}
+	}
+	
+	public static String getSinglePDPShareLinksDiv() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String SinglePDPShareLinksDiv = "";
+			logs.debug("Get Single PDP Share Links Div: ");
+			SinglePDPShareLinksDiv = getDriver().findElement(By.cssSelector(PDPSelectors.SinglePDPShareLinksDiv)).getText();
+			logs.debug("Single PDP Share Links Div " + SinglePDPShareLinksDiv);
+			getCurrentFunctionName(false);
+			return SinglePDPShareLinksDiv;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Single PDP Share Links Div selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+
+		}
+	}
+
+	public static String getSinglePDPShareLinks(int index) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String SinglePDPShareLinks = "";
+			logs.debug("Get Single PDP Share Links index: " + index );
+			SinglePDPShareLinks = getDriver().findElements(By.cssSelector(PDPSelectors.SinglePDPShareLinks)).get(index).getAttribute("href");
+			logs.debug("Single PDP Share Link index: "+ index + " is: "+ SinglePDPShareLinks);
+			getCurrentFunctionName(false);
+			return SinglePDPShareLinks;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Single PDP Share Links selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+
+		}
+	}
+	
+	public static boolean validateRecommendedForYouHeaderIsDisplayed() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			boolean isDisplayed = false;
+			logs.debug("Validate Recommended For You Product Title is displayed or not" );
+			isDisplayed = getDriver().findElement(By.cssSelector(PDPSelectors.recommendedForYouTitle)).isDisplayed();
+			logs.debug("Recommended For You Product Title is displayed? : " +  isDisplayed);
+			getCurrentFunctionName(false);
+			return isDisplayed;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Recommended For You Product Tiles selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+
+		}
+	}
+	
+	public static boolean validateRecommendedForYouCarouselIsDisplayed() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			boolean isDisplayed = false;
+			logs.debug("Validate Recommended For You Products Carousel is displayed or not" );
+			isDisplayed = getDriver().findElement(By.cssSelector(PDPSelectors.recommendedForYouTitle)).isDisplayed();
+			logs.debug("Recommended For You Products Carousel is displayed? : " +  isDisplayed);
+			getCurrentFunctionName(false);
+			return isDisplayed;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Recommended For You Products Carousel selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+
+		}
+	}
+	
+	public static String getRecommendedForYouProductTiles(int index) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String RecommendedForYouProductTiles = "";
+			logs.debug("Get Recommended For You Product Tile index: " + index );
+			RecommendedForYouProductTiles = getDriver().findElements(By.cssSelector(PDPSelectors.recommendedForYouProductTiles)).get(index).getText();
+			logs.debug("Recommended For You Product Tile index: "+ index + " is: "+ RecommendedForYouProductTiles);
+			getCurrentFunctionName(false);
+			return RecommendedForYouProductTiles;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Recommended For You Product Tiles selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+
+		}
+	}
+	
 }

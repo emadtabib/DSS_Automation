@@ -21,12 +21,10 @@ public class PDPBase extends SelTestCase {
 	public static final String singlePDP = "Validate PDP Single active elements";
 	public static final String bundlePDP = "Validate PDP Bundle active elements";
 
+
+
 	public static String singlePDPSearchTerm;
 	public static String BundlePDPSearchTerm;
-
-	public static final String wishListGuestValidation = "Wish List Guest Validation";
-	
-	public static boolean isVK = false;
 
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.PDPSheet;
@@ -69,10 +67,10 @@ public class PDPBase extends SelTestCase {
 		try {
 
 			if (proprties.contains(singlePDP)) {
-				PDPValidation.validate(singlePDPSearchTerm, false);
+				PDPSingleValidation.validate();
 			}
 			if (proprties.contains(bundlePDP)) {
-				PDPValidation.validate(BundlePDPSearchTerm, false);
+				PDPBundleValidation.validate();
 			}
 			
 			sassert().assertAll();
