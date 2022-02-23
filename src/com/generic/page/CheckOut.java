@@ -543,7 +543,7 @@ public class CheckOut extends SelTestCase {
 			String globalMessage = "";
 			logs.debug("Get Global Message for Order Confirmation");
 			globalMessage = getDriver().findElement(By.cssSelector(CheckOutSelectors.globalMessage)).getText();
-			logs.debug("Place order success message: " + globalMessage);
+			logs.debug("<font color=#f442cb>Place order success message: </font><font color=#b86d29> " + globalMessage + "</font>");
 			getCurrentFunctionName(false);
 			return globalMessage;
 		} catch (NoSuchElementException e) {
@@ -562,7 +562,7 @@ public class CheckOut extends SelTestCase {
 			String orderNumber = "";
 			logs.debug("Get order number in Order Confirmation oage");
 			orderNumber = getDriver().findElements(By.cssSelector(CheckOutSelectors.orderComponents)).get(0).getText();
-			logs.debug("Order Number Is: " + orderNumber);
+			logs.debug("<font color=#f442cb>Order Number Is: </font><font color=#b86d29>" + orderNumber + "</font>");
 			getCurrentFunctionName(false);
 			return orderNumber;
 		} catch (NoSuchElementException e) {

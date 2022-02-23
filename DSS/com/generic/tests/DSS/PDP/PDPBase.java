@@ -21,8 +21,6 @@ public class PDPBase extends SelTestCase {
 	public static final String singlePDP = "Validate PDP Single active elements";
 	public static final String bundlePDP = "Validate PDP Bundle active elements";
 
-
-
 	public static String singlePDPSearchTerm;
 	public static String BundlePDPSearchTerm;
 
@@ -40,7 +38,7 @@ public class PDPBase extends SelTestCase {
 		testObject = test;
 	}
 
-	@DataProvider(name = "PDP_SC", parallel = true)
+	@DataProvider(name = "PDP", parallel = true)
 	// concurrency maintenance on sheet reading
 	public static Object[][] loadTestData() throws Exception {
 		getBrowserWait(testObject.getParameter("browserName"));
@@ -50,18 +48,16 @@ public class PDPBase extends SelTestCase {
 		return data;
 	}
 
-	@Test(dataProvider = "PDP_SC")
+	@Test(dataProvider = "PDP")
 	public void PDPTest(String caseId, String runTest, String desc, String proprties)
 			throws Exception {
-		Testlogs.set(new SASLogger("PDP_SC " + getBrowserName()));
+		Testlogs.set(new SASLogger("PDP " + getBrowserName()));
 		// Important to add this for logging/reporting
 		setTestCaseReportName(SheetVariables.PDPCaseId);
 		String CaseDescription = MessageFormat.format(LoggingMsg.TEST_CASE_DESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc);
 		initReportTime();
 		Testlogs.get().debug("Case Browser: " + testObject.getParameter("browserName"));
-		singlePDPSearchTerm = getCONFIG().getProperty("BDsinglePDPSearchTerm").toString();
-		BundlePDPSearchTerm = getCONFIG().getProperty("BDBundlePDPSearchTerm").toString();
 		
 
 		try {

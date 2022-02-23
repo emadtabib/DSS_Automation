@@ -35,11 +35,21 @@ public class PDPSelectors {
 	
 	
 	//public static final String budgetBundles = "Budget Bundles";
-	public static final String ColorationsPDPLinks = "css,.btn.btn-alternate.btn-block";
+	public static final String ColorationsPDPLinks = ".product-item>a>img";
 	public static final String SingleHeadline = "h1.title";
 	public static final String SinglePDPPrice = ".final-price>span";
 	public static final String SinglePDPSKU = "div>.sku";
-	public static final String SinglePDPSKUimg = "div.carousel-item.js-carousel-item.slick-slide.slick-current.slick-active>div>img";
+	public static final String SinglePDPSKUimg = "#product-image";
+	public static final String writeTheFirstReview = ".pr-snippet-read-and-write>a";
+	public static final String brandImg = ".brand>img";
+	public static final String optionListDiv = "css,.product-option>.option-list";
+	public static final String optionListLinks = ".product-option>.option-list>li>a";
+	public static final String selectOptionsButton = "css,.select-options>button";
+	public static final String qtyValue = ".qty-selector>input.js-qty-selector-input";
+	public static final String priceInaddToCartModal = "#addToCartLayer>div>div>.price";
+	
+	
+	
 	public static final String SingleAddToCart = ".btn.btn-primary.btn-orange.js-bundle-add-to-cart ";
 //	public static final String QtysInAddToCartButton = ".js-bundle-add-to-cart>.js-updated-qty";
 

@@ -234,7 +234,7 @@ public class PDP extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			String sideBarNavImg = "";
-			logs.debug("Get Qty In Add To Cart Button: ");
+			logs.debug("Get Side Bar Nav img: ");
 			sideBarNavImg = getDriver().findElement(By.cssSelector(PDPSelectors.sideBarNavImg)).getAttribute("src");
 			logs.debug("Side Bar Nav img: " + sideBarNavImg);
 			getCurrentFunctionName(false);
@@ -446,16 +446,19 @@ public class PDP extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	public static void navigteToRandomSingleColorationsPage() throws Exception {
+	public static String navigteToRandomSingleColorationsPage() throws Exception {
 		try {
 			logs.debug("Navigte To Single Colorations PDP Page");
 			List<WebElement> items = new ArrayList<WebElement>();
-			items = SelectorUtil.getAllElements(PDPSelectors.ColorationsPDPLinks);
+			items = getDriver().findElements(By.cssSelector(PDPSelectors.ColorationsPDPLinks));
 			items.remove(items.size() - 1);
 			logs.debug("WebElement List Size = " + items.size());
 			Random random = new Random();
 			int index = random.nextInt(items.size() - 1);
+			String itemTitle = items.get(index).getAttribute("title");
+			logs.debug("<font color=#f442cb>Selected PDP Title from the SRP: </font><font color=#b86d29>" + itemTitle + "</font>");
 			items.get(index).click();
+			return itemTitle;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
 					ExceptionMsg.PageFunctionFailed + "Selectors of PDPs links on the SRP were not found by selenuim",
@@ -470,14 +473,33 @@ public class PDP extends SelTestCase {
 			getCurrentFunctionName(true);
 			String SingleHeadline = "";
 			logs.debug("Get Single Headline: ");
-			SingleHeadline = getDriver().findElement(By.cssSelector(PDPSelectors.SingleHeadline)).getText().replaceAll(" ", "").trim();
-			logs.debug("Single Headline: " + SingleHeadline);
+			SingleHeadline = getDriver().findElement(By.cssSelector(PDPSelectors.SingleHeadline)).getText();
+			logs.debug("<font color=#f442cb>Single PDP Headline: </font><font color=#b86d29>" + SingleHeadline + "</font>");
 			getCurrentFunctionName(false);
 			return SingleHeadline;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
 					ExceptionMsg.PageFunctionFailed + "Single Headline selector was not found by selenuim",
 					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+
+		}
+	}
+
+	public static String getSinglePDPRangePrice() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String BundlePrice = "";
+			logs.debug("Get Single Price: ");
+
+			BundlePrice = getDriver().findElement(By.cssSelector(PDPSelectors.SinglePDPPrice)).getText();
+			logs.debug("<font color=#f442cb>Single PDP Price: </font><font color=#b86d29>" + BundlePrice + "</font>");
+			getCurrentFunctionName(false);
+			return BundlePrice;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Single PDP Price selector was not found by selenuim", new Object() {
 					}.getClass().getEnclosingMethod().getName()));
 			throw e;
 
@@ -493,7 +515,7 @@ public class PDP extends SelTestCase {
 			BundlePrice = getDriver().findElement(By.cssSelector(PDPSelectors.SinglePDPPrice)).getText();
 			logs.debug("Single Price: " + BundlePrice);
 			Double BundlePrice2 = Double.parseDouble(BundlePrice.replace('$', ' ').trim());
-			logs.debug("Single Price: " + BundlePrice);
+			logs.debug("<font color=#f442cb>Single PDP Price: </font><font color=#b86d29>" + BundlePrice + "</font>");
 			getCurrentFunctionName(false);
 			return BundlePrice2;
 		} catch (NoSuchElementException e) {
@@ -504,14 +526,14 @@ public class PDP extends SelTestCase {
 
 		}
 	}
-
+	
 	public static String getSinglePDPCode() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			String SinglePDPCode = "";
 			logs.debug("Get SinglePDP Code: " );
 			SinglePDPCode = getDriver().findElement(By.cssSelector(PDPSelectors.SinglePDPSKU)).getText();
-			logs.debug("Single PDP Code: " + SinglePDPCode);
+			logs.debug("<font color=#f442cb>Single PDP Code: </font><font color=#b86d29>" + SinglePDPCode + "</font>");
 			getCurrentFunctionName(false);
 			return SinglePDPCode;
 		} catch (NoSuchElementException e) {
@@ -524,13 +546,32 @@ public class PDP extends SelTestCase {
 		}
 	}
 	
-	public static String getSinglePDPSKUimg() throws Exception {
+	public static String getSinglePDPSKUimgSrc() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			String SinglePDPSKUimg = "";
 			logs.debug("Get Single PDP SKU img src: ");
 			SinglePDPSKUimg = getDriver().findElement(By.cssSelector(PDPSelectors.SinglePDPSKUimg)).getAttribute("src");
-			logs.debug("Single PDP SKU img src: " + SinglePDPSKUimg);
+			logs.debug("<font color=#f442cb>Single PDP SKU img src: </font><font color=#b86d29>" + SinglePDPSKUimg + "</font>");
+			getCurrentFunctionName(false);
+			return SinglePDPSKUimg;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Bundle Price selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+
+		}
+	}
+	
+	public static String getSinglePDPSKUAltimg() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String SinglePDPSKUimg = "";
+			logs.debug("Get Single PDP SKU img alt: ");
+			SinglePDPSKUimg = getDriver().findElement(By.cssSelector(PDPSelectors.SinglePDPSKUimg)).getAttribute("alt");
+			logs.debug("<font color=#f442cb>Single PDP SKU img alt: </font><font color=#b86d29>" + SinglePDPSKUimg + "</font>");
 			getCurrentFunctionName(false);
 			return SinglePDPSKUimg;
 		} catch (NoSuchElementException e) {
@@ -568,7 +609,7 @@ public class PDP extends SelTestCase {
 			String SinglePDPDescription = "";
 			logs.debug("Get Single PDP Product Overview description: ");
 			SinglePDPDescription = getDriver().findElement(By.cssSelector(PDPSelectors.SinglePDPProductOverview)).getText();
-			logs.debug("Single PDP Product Overview description: " + SinglePDPDescription);
+			logs.debug("<font color=#FF0000>Single PDP Product Overview description: </font><font color=#b86d29> " + SinglePDPDescription + "</font>");
 			getCurrentFunctionName(false);
 			return SinglePDPDescription;
 		} catch (NoSuchElementException e) {
@@ -606,7 +647,7 @@ public class PDP extends SelTestCase {
 			String SinglePDPShareLinks = "";
 			logs.debug("Get Single PDP Share Links index: " + index );
 			SinglePDPShareLinks = getDriver().findElements(By.cssSelector(PDPSelectors.SinglePDPShareLinks)).get(index).getAttribute("href");
-			logs.debug("Single PDP Share Link index: "+ index + " is: "+ SinglePDPShareLinks);
+			logs.debug("<font color=#f442cb>Single PDP Share Link index:("+ index + ") is: </font><font color=#b86d29>"+ SinglePDPShareLinks + "</font>");
 			getCurrentFunctionName(false);
 			return SinglePDPShareLinks;
 		} catch (NoSuchElementException e) {
@@ -676,4 +717,142 @@ public class PDP extends SelTestCase {
 		}
 	}
 	
+	public static boolean validateWriteTheFirstReview() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			boolean isDisplayed = false;
+			logs.debug("Validate write The First Review is displayed or not" );
+			isDisplayed = getDriver().findElement(By.cssSelector(PDPSelectors.writeTheFirstReview)).isDisplayed();
+			logs.debug("Validate write The First Review is displayed? : " +  isDisplayed);
+			String WriteReviewDiv = getDriver().findElement(By.cssSelector(PDPSelectors.writeTheFirstReview)).getText();
+			logs.debug("<font color=#f442cb>Write Review Div contains: </font><font color=#b86d29>" +  WriteReviewDiv + "</font>");
+			getCurrentFunctionName(false);
+			return isDisplayed;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Write The First Review selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+
+		}
+	}
+	
+	public static String getBrandImg() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String brandImg = "";
+			logs.debug("Get Brand img src" );
+			brandImg = getDriver().findElement(By.cssSelector(PDPSelectors.recommendedForYouProductTiles)).getText();
+			logs.debug("<font color=#f442cb>Brand img src is: </font><font color=#b86d29>"+ brandImg + "</font>");
+			getCurrentFunctionName(false);
+			return brandImg;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Brand img selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+
+		}
+	}
+	
+	public static String slectPDPOptionsifAnyAndValidate() throws Exception {
+		try {
+			logs.debug("Select PDP options is any");
+			String optionName = "";
+			if (!SelectorUtil.isNotDisplayed(PDPSelectors.selectOptionsButton)) {
+			String SinglePDPSKUimg = getDriver().findElement(By.cssSelector(PDPSelectors.SinglePDPSKUimg)).getAttribute("src");
+			List<WebElement> options = new ArrayList<WebElement>();
+			options = getDriver().findElements(By.cssSelector(PDPSelectors.optionListLinks));
+			options.remove(options.size() - 1);
+			logs.debug("<font color=#f442cb>Number of available color options are: </font><font color=#b86d29>"+ options.size() + "</font>");
+			Random random = new Random();
+			int index = random.nextInt(options.size() - 1);
+			optionName = options.get(index).getText();
+			logs.debug("<font color=#f442cb>Selected PDP option is: </font><font color=#b86d29>" + optionName + "</font>");
+			options.get(index).click();
+			Thread.sleep(7000);
+			String NewSingleSKUimgSrc = getDriver().findElement(By.cssSelector(PDPSelectors.SinglePDPSKUimg)).getAttribute("src");
+			sassert().assertNotEquals(NewSingleSKUimgSrc, SinglePDPSKUimg,
+					"<font color=#f442cb>PDP image src is not updated after selecting an options. The old image src: </font><font color=#b86d29>" + SinglePDPSKUimg
+							+ "</font><font color=#FF0000>The new image src: </font><font color=#b86d29>"
+							+ NewSingleSKUimgSrc + "</font>");
+			SinglePDPSKUimg = getDriver().findElement(By.cssSelector(PDPSelectors.SinglePDPSKUimg)).getAttribute("alt");
+			sassert().assertTrue(SinglePDPSKUimg.contains(optionName),
+					"<font color=#f442cb>PDP image src is not updated to reflect the selected color,  The selected color is: </font><font color=#b86d29>" + optionName
+							+ "</font><font color=#FF0000>The new image name: </font><font color=#b86d29>"
+							+ SinglePDPSKUimg + "</font>");
+			}else {
+				logs.debug("<font color=#f442cb>No options to select: </font>");	
+			}
+			
+			return optionName;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Out Of Stuck selectors were not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static int getQtyValue() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			int qtyValue;
+			logs.debug("Get Qty Value" );
+			qtyValue = Integer.parseInt(getDriver().findElement(By.cssSelector(PDPSelectors.qtyValue)).getAttribute("value"));
+			logs.debug("<font color=#f442cb>Qty Value is: </font><font color=#b86d29>"+ qtyValue + "</font>");
+			getCurrentFunctionName(false);
+			return qtyValue;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Qty Value selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+
+		}
+	}
+	
+	public static String getBrandImgss() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String brandImg = "";
+			logs.debug("Get Brand img src" );
+			brandImg = getDriver().findElement(By.cssSelector(PDPSelectors.addToCartButton)).getText();
+			logs.debug("<font color=#f442cb>Brand img src is: </font><font color=#b86d29>"+ brandImg + "</font>");
+			getCurrentFunctionName(false);
+			return brandImg;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Brand img selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+
+		}
+	}
+	
+	public static Double getPriceInaddToCartModal() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String BundlePrice = "";
+			logs.debug("Get Price In add To Cart Modal: ");
+
+			BundlePrice = getDriver().findElement(By.cssSelector(PDPSelectors.priceInaddToCartModal)).getText();
+			logs.debug("Price In add To Cart Modal:  " + BundlePrice);
+			Double BundlePrice2 = Double.parseDouble(BundlePrice.replace('$', ' ').trim());
+			logs.debug("<font color=#f442cb>Price In add To Cart Modal: </font><font color=#b86d29>" + BundlePrice + "</font>");
+			getCurrentFunctionName(false);
+			return BundlePrice2;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Price In add To Cart Modal:  selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+
+		}
+	}
 }
