@@ -8,7 +8,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
@@ -32,7 +31,6 @@ import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
-import com.generic.selector.LoginSelectors;
 import com.generic.setup.Common;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.GlobalVariables;
@@ -278,18 +276,6 @@ public class SelectorUtil extends SelTestCase {
 
 		}
 		return selector;
-
-	}
-
-	public static void writeToFieldPWA(WebElement field, String value) {
-		getCurrentFunctionName(true);
-
-		int index = 0;
-		for (index = 0; index < value.length(); index++) {
-			String character = String.valueOf(value.charAt(index));
-			field.sendKeys(character);
-		}
-		getCurrentFunctionName(false);
 
 	}
 
@@ -736,74 +722,6 @@ public class SelectorUtil extends SelTestCase {
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
-	public static String getAttr(List<String> subStrArr, String attr) throws Exception {
-		getCurrentFunctionName(true);
-		List<String> valuesArr = new ArrayList<String>();
-		valuesArr.add("");
-		LinkedHashMap<String, LinkedHashMap> webelementsInfo = initializeSelectorsAndDoActions(
-				new ArrayList<String>(subStrArr), valuesArr, false);
-		List<WebElement> items = getDriver().findElements((By) webelementsInfo.get(subStrArr.get(0)).get("by"));
-		String attrValue = items.get(0).getAttribute(attr);
-		getCurrentFunctionName(false);
-		return attrValue;
-	}
-
-	public static String getAttrString(String Str, String attr, int index) throws Exception {
-		getCurrentFunctionName(true);
-		List<String> subStrArr = new ArrayList<String>();
-		subStrArr.add(Str);
-		return getAttr(subStrArr, attr, index);
-	}
-
-	@SuppressWarnings("rawtypes")
-	public static String getAttr(List<String> subStrArr, String attr, int index) throws Exception {
-		getCurrentFunctionName(true);
-		List<String> valuesArr = new ArrayList<String>();
-		valuesArr.add("");
-		LinkedHashMap<String, LinkedHashMap> webelementsInfo = initializeSelectorsAndDoActions(
-				new ArrayList<String>(subStrArr), valuesArr, false);
-		List<WebElement> items = getDriver().findElements((By) webelementsInfo.get(subStrArr.get(0)).get("by"));
-		String attrValue = items.get(index).getAttribute(attr);
-		getCurrentFunctionName(false);
-		return attrValue;
-	}
-
-	@SuppressWarnings("rawtypes")
-	public static String getAttrString(String subStrArr, String attr) throws Exception {
-		getCurrentFunctionName(true);
-		LinkedHashMap<String, LinkedHashMap> webelementsInfo = initializeSelectorsAndDoActions(subStrArr, "", false);
-		WebElement items = getDriver().findElement((By) webelementsInfo.get(subStrArr).get("by"));
-		String attrValue = items.getAttribute(attr);
-		getCurrentFunctionName(false);
-		return attrValue;
-	}
-
-	@SuppressWarnings("rawtypes")
-	public static WebElement getNthElement(List<String> subStrArr, int index) throws Exception {
-		getCurrentFunctionName(true);
-		List<String> valuesArr = new ArrayList<String>();
-		valuesArr.add("");
-		LinkedHashMap<String, LinkedHashMap> webelementsInfo = initializeSelectorsAndDoActions(
-				new ArrayList<String>(subStrArr), valuesArr, false);
-		List<WebElement> items = getDriver().findElements((By) webelementsInfo.get(subStrArr.get(0)).get("by"));
-
-		JavascriptExecutor jse1 = (JavascriptExecutor) getDriver();
-		jse1.executeScript("arguments[0].scrollIntoView(false)", items.get(index));
-
-		getCurrentFunctionName(false);
-		return items.get(index);
-	}
-
-	public static WebElement getNthElement(String selector, int index) throws Exception {
-		getCurrentFunctionName(true);
-		List<String> valuesArr = new ArrayList<String>();
-		valuesArr.add(selector);
-		getCurrentFunctionName(false);
-		return SelectorUtil.getNthElement(valuesArr, index);
-
-	}
-
 	public static List<WebElement> getAllElements(String value) throws Exception {
 		getCurrentFunctionName(true);
 		List<String> subStrArr = new ArrayList<String>();
@@ -939,231 +857,6 @@ public class SelectorUtil extends SelTestCase {
 
 	}
 
-	public static boolean isImgLoaded(String selector) throws Exception {
-		WebElement img = getElement(selector);
-		return ImageLoaded(img);
-	}
-
-	public static boolean isImgsLoaded(String selector, int NumberOfVerifiedImages) {
-		List<WebElement> imgs = getDriver().findElements(By.cssSelector(selector));
-		boolean loaded = false;
-
-		for (int elementIndex = 0; elementIndex < imgs.size()
-				&& elementIndex < NumberOfVerifiedImages; elementIndex++) {
-			WebElement img = imgs.get(elementIndex);
-			loaded = loaded && ImageLoaded(img);
-		}
-
-		return loaded;
-
-	}
-
-	public static boolean ImageLoaded(WebElement img) {
-		Object result = (Boolean) ((JavascriptExecutor) getDriver()).executeScript("return arguments[0].complete && "
-				+ "typeof arguments[0].naturalWidth != \"undefined\" && " + "arguments[0].naturalWidth > 0", img);
-		if (result instanceof Boolean) {
-			return (Boolean) result;
-		} else {
-			return false;
-		}
-	}
-
-	public static String getCurrentPageUrl() throws Exception {
-		return SelTestCase.getDriver().getCurrentUrl();
-	}
-
-	public static void clickOnWebElement(WebElement element) throws Exception {
-		((JavascriptExecutor) SelTestCase.getDriver()).executeScript("arguments[0].click()", element);
-	}
-
-	/**
-	 * Get the elements list by pass the selector as a string.
-	 *
-	 * @param selector.
-	 * @return List<WebElement>
-	 * @throws Exception
-	 */
-	@SuppressWarnings("rawtypes")
-	public static List<WebElement> getElementsList(String selector) throws Exception {
-		getCurrentFunctionName(true);
-
-		LinkedHashMap<String, LinkedHashMap> webelementsInfo = SelectorUtil.initializeSelectorsAndDoActions(selector,
-				"", false);
-		String Byselector = (By) webelementsInfo.get(selector).get("by") + "";
-		logs.debug(Byselector);
-		List<WebElement> listElements = getDriver().findElements((By) webelementsInfo.get(selector).get("by"));
-
-		getCurrentFunctionName(false);
-		return listElements;
-	}
-
-	/**
-	 * Check if element exist at document.
-	 *
-	 * @param Byselector.
-	 * @return boolean
-	 * @throws Exception
-	 */
-	public static boolean isElementExist(By Byselector) throws Exception {
-		getCurrentFunctionName(true);
-		boolean isElementExist = false;
-		List<WebElement> listItems = getDriver().findElements(Byselector);
-
-		if (listItems.size() != 0) {
-			isElementExist = true;
-		}
-		getCurrentFunctionName(false);
-		return isElementExist;
-	}
-
-	public static boolean isValidClickableItem(WebElement element) throws Exception {
-		getCurrentFunctionName(true);
-		String elementHref = element.getAttribute("href");
-		// click on the element
-		clickOnWebElement(element);
-		Thread.sleep(1000);
-		// check if the current page is the correct page
-		logs.debug("elementHref: " + elementHref);
-		getCurrentFunctionName(false);
-		if (elementHref == "") {
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-	public static WebElement getRandomWebElement(List<WebElement> items) throws Exception {
-		logs.debug("WebElement List Size = " + items.size());
-		Random random = new Random();
-		int index = random.nextInt(items.size() - 1);
-		WebElement element = items.get(index);
-		return element;
-
-	}
-
-	/**
-	 * Check if GWT Loader.
-	 *
-	 * @return boolean
-	 * @throws Exception
-	 */
-	public static boolean CheckGWTLoadedEventPWA() throws Exception {
-		getCurrentFunctionName(true);
-		JavascriptExecutor JS = (JavascriptExecutor) getDriver();
-		boolean gwtLoadedEventPWA = (boolean) JS.executeScript("return window.gwtLoadedEventPWA");
-		getCurrentFunctionName(false);
-		return gwtLoadedEventPWA;
-	}
-
-	/**
-	 * Check if GWT Loader.
-	 *
-	 * @return boolean
-	 * @throws Exception
-	 */
-	public static void waitGWTLoadedEventPWA() throws Exception {
-		getCurrentFunctionName(true);
-		boolean isPWAMobile = getBrowserName().contains(GlobalVariables.browsers.iPhone);
-		if (isPWAMobile) {
-			boolean gwtLoadedEventPWA = CheckGWTLoadedEventPWA();
-			int tries = 0;
-			while (!gwtLoadedEventPWA) {
-				Thread.sleep(500);
-				gwtLoadedEventPWA = CheckGWTLoadedEventPWA();
-				if (tries == 30) {
-					throw new NoSuchElementException("Error in Loading GWT.");
-				}
-				tries++;
-			}
-		}
-		getCurrentFunctionName(false);
-	}
-
-	/**
-	 * Wait the loading button.
-	 *
-	 * @return boolean
-	 * @throws Exception
-	 */
-	public static void waitingLoadingButton(String loadingButtonCssSelector) throws Exception {
-		int loapingCount = 0;
-		getCurrentFunctionName(true);
-		boolean isIphone = SelTestCase.getBrowserName().contains(GlobalVariables.browsers.iPhone);
-		while (isIphone && !isElementExist(By.cssSelector(loadingButtonCssSelector)) && loapingCount < 10) {
-			loapingCount++;
-			Thread.sleep(500);
-		}
-		getCurrentFunctionName(false);
-	}
-
-	/**
-	 * Open my account menu for mobile if it was not opened
-	 *
-	 * @throws Exception
-	 */
-	public static void openMobileAccountMenu() throws Exception {
-		getCurrentFunctionName(true);
-		boolean isPWAMobile = getBrowserName().contains(GlobalVariables.browsers.iPhone);
-		if (isPWAMobile) {
-			boolean isAccountMobileOpened = SelectorUtil.isElementExist(By.cssSelector(LoginSelectors.myAccountModal));
-			if (!isAccountMobileOpened) {
-				SelectorUtil.initializeSelectorsAndDoActions(LoginSelectors.accountMenuIcon.get());
-			}
-		}
-		getCurrentFunctionName(false);
-	}
-
-	/**
-	 * Get the account item (Sign in/create account page or welcome message).
-	 *
-	 * @param WebElement
-	 * @throws Exception
-	 */
-	public static WebElement getMenuLinkMobilePWA(String linkUrl) throws Exception {
-		getCurrentFunctionName(true);
-
-		logs.debug("Open account menu for PWA mobile");
-		String signInSelector = LoginSelectors.accountMenuList;
-		if (isRY()) {
-			signInSelector = LoginSelectors.RYAccountMenuList.get();
-		}
-		if (isRY()) {
-			boolean isMobileMenuOpened = SelectorUtil
-					.isElementExist(By.cssSelector(LoginSelectors.RYMenuContainer.get()));
-			if (!isMobileMenuOpened) {
-				SelectorUtil.initializeSelectorsAndDoActions(LoginSelectors.GHRYMobileMenuBuuton.get());
-			}
-		} else {
-			// Open the account menu.
-			openMobileAccountMenu();
-		}
-
-		SelectorUtil.waitElementLoading(By.cssSelector(signInSelector));
-		// Get an account items list.
-		List<WebElement> menuItems = SelectorUtil.getElementsList(signInSelector);
-		WebElement linkElement = menuItems.get(0);
-		int index = 0;
-		// Get the Sign in/create account page or welcome message item.
-		for (index = 0; index < menuItems.size(); index++) {
-			WebElement item = menuItems.get(index);
-			String itemHref = item.getAttribute("href");
-			// Check if the item is sign in/create account (By check create account page
-			// link) or welcome message.
-			if (itemHref.contains(linkUrl)) {
-				linkElement = item;
-				break;
-			}
-		}
-		logs.debug("The account item (Sign in/create account page or welcome message): " + linkElement);
-		getCurrentFunctionName(false);
-		return linkElement;
-	}
-
-	public static void setSelectText(WebElement element, String selectText) throws Exception {
-		Select selectItem = new Select(element);
-		selectItem.selectByVisibleText(selectText);
-	}
-
 	@SuppressWarnings("rawtypes")
 	public static void selectActiveOption(String Str, String value) throws Exception {
 		LinkedHashMap<String, LinkedHashMap> webelementsInfo = initializeSelectorsAndDoActions(Str, value, false);
@@ -1182,34 +875,6 @@ public class SelectorUtil extends SelTestCase {
 			}
 
 		}
-	}
-
-	public static void waitElementLoading(By selector) throws Exception {
-		int tries = 0;
-		getCurrentFunctionName(true);
-		while (!isElementExist(selector)) {
-			Thread.sleep(1000);
-			logs.debug("Waiting load element: " + selector);
-			if (tries == 30) {
-				throw new NoSuchElementException("Error in Loading GWT.");
-			}
-			tries++;
-		}
-		getCurrentFunctionName(false);
-	}
-
-	public static void waitElementToDisappear(By selector) throws Exception {
-		int tries = 0;
-		getCurrentFunctionName(true);
-		while (isElementExist(selector)) {
-			Thread.sleep(1000);
-			logs.debug("Waiting load element: " + selector);
-			if (tries == 30) {
-				throw new NoSuchElementException("Error in Loading GWT.");
-			}
-			tries++;
-		}
-		getCurrentFunctionName(false);
 	}
 
 	public static class commands {

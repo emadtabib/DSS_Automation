@@ -83,89 +83,6 @@ public class SelTestCase {
 	
 	private static String URL;
 
-	public static boolean isFGGR() {
-		getCurrentFunctionName(true);
-		boolean result = isFG() || isGR();
-		getCurrentFunctionName(false);
-		return result;
-	}
-	
-	public static boolean isGRBD() {
-		getCurrentFunctionName(true);
-		boolean result = isGR() || isBD();
-		getCurrentFunctionName(false);
-		return result;
-	}
-
-	public static boolean isGHRY() {
-		getCurrentFunctionName(true);
-		boolean result = isGH() || isRY();
-		getCurrentFunctionName(false);
-		return result;
-	}
-
-	public static boolean isGR() {
-		getCurrentFunctionName(true);
-		boolean result = true;
-		getCurrentFunctionName(false);
-		return result;
-	}
-
-	public static boolean isFG() {
-		getCurrentFunctionName(true);
-		boolean result = true;
-		getCurrentFunctionName(false);
-		return result;
-	}
-
-	public static boolean isGH() {
-		getCurrentFunctionName(true);
-		boolean result = true;
-		getCurrentFunctionName(false);
-		return result;
-	}
-
-	public static boolean isBD() {
-		getCurrentFunctionName(true);
-		boolean result = true;
-		getCurrentFunctionName(false);
-		return result;
-	}
-
-	public static boolean isRY() {
-		getCurrentFunctionName(true);
-		boolean result = true;
-		getCurrentFunctionName(false);
-		return result;
-	}
-
-	public static boolean isMobile() {
-		getCurrentFunctionName(true);
-		boolean result = getBrowserName().equalsIgnoreCase(GlobalVariables.browsers.iPhone);
-		getCurrentFunctionName(false);
-		return result;
-	}
-
-	public static boolean isDesktop() {
-		getCurrentFunctionName(true);
-		boolean result = getBrowserName().equalsIgnoreCase(GlobalVariables.browsers.chrome);
-		getCurrentFunctionName(false);
-		return result;
-	}
-
-	public static boolean isiPad() {
-		getCurrentFunctionName(true);
-		boolean result = getBrowserName().equalsIgnoreCase(GlobalVariables.browsers.iPad);
-		getCurrentFunctionName(false);
-		return result;
-	}
-
-	public static String getBrand() {
-		// return brandName;
-		String brandName = testObj.get().getParameter("Brand");
-		logs.debug("Brand: " + brandName);
-		return brandName;
-	}
 
 	public static String getBrowserName() {
 		// return browserName;
@@ -300,23 +217,6 @@ public class SelTestCase {
 		}
 	}
 
-	public static String getSubMailAccount(String email) {
-		return email.replace("tester", "tester_" + getBrowserName().replace(" ", "_"));
-
-	}
-
-	public static void enableMonetate() {
-		getCurrentFunctionName(true);
-		getDriver().get(getURL() + "/?monetate=on");
-		getCurrentFunctionName(false);
-	}
-
-	public static void disableMonetate() {
-		getCurrentFunctionName(true);
-		getDriver().get(getURL() + "/?monetate=off");
-		getCurrentFunctionName(false);
-	}
-
 	public static void failureHandeler(Throwable t, String info) {
 		setTestCaseDescription(getTestCaseDescription());
 		logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
@@ -398,10 +298,7 @@ public class SelTestCase {
 		setDriver(Common.initializeBrowser(test.getParameter("browserName")));
 
 		try {
-			Common.launchApplication(test.getParameter("browserName"), test.getParameter("Env"),
-					test.getParameter("Brand"));
-			if (isMobile())
-				getDriver().navigate().refresh();
+			Common.launchApplication(test.getParameter("browserName"), test.getParameter("Env"));
 
 		} catch (Throwable t) {
 			logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t));
@@ -425,7 +322,7 @@ public class SelTestCase {
 
 		WebDriver driver = SelTestCase.getDriver();
 		if (driver != null && !getBrowserName().contains(browsers.iOS)) {
-			driver.quit();
+	//		driver.quit();
 		}
 		getCurrentFunctionName(false);
 	}
@@ -437,7 +334,6 @@ public class SelTestCase {
 		users = Common.readUsers();
 		addresses = Common.readAddresses();
 		paymentCards = Common.readPaymentcards();
-		products = Common.readLocalInventory();
 
 	}
 

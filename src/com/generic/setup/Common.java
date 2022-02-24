@@ -11,7 +11,6 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -102,12 +101,11 @@ public class Common extends SelTestCase {
 	 *
 	 *
 	 */
-	public static void launchApplication(String Browser, String Env, String brand) throws Exception {
+	public static void launchApplication(String Browser, String Env) throws Exception {
 		getCurrentFunctionName(true);
 
 		logs.debug(MessageFormat.format(LoggingMsg.TEST_ENVIRONMENT_NAME, Env));
 
-		logs.debug("brand: " + brand);
 
 		if (getCONFIG().getProperty("chached_chrome").equalsIgnoreCase("yes")) {
 			// TODO: please enable it later with correct url in case Chrome Cached
@@ -127,48 +125,6 @@ public class Common extends SelTestCase {
 		getCurrentFunctionName(false);
 	}
 
-	public static void launchProdWCS8StaticLinks(String Env, String brand) throws Exception {
-		getCurrentFunctionName(true);
-
-		if (Env.contains("prod") || Env.contains("www")) {
-			logs.debug("Navigating to the static CSS links for the folloing brand:" + brand);
-			if (brand.equalsIgnoreCase("FG")) {
-				getDriver().get(GlobalVariables.WCS8StaticUrls.FGStatic1);
-				Thread.sleep(2000);
-				getDriver().get(GlobalVariables.WCS8StaticUrls.FGStatic2);
-				Thread.sleep(2000);
-			}
-
-			if (brand.equalsIgnoreCase("GR")) {
-				getDriver().get(GlobalVariables.WCS8StaticUrls.GRStatic1);
-				Thread.sleep(2000);
-				getDriver().get(GlobalVariables.WCS8StaticUrls.GRStatic2);
-				Thread.sleep(2000);
-			}
-
-			if (brand.equalsIgnoreCase("GH")) {
-				getDriver().get(GlobalVariables.WCS8StaticUrls.GHStatic1);
-				Thread.sleep(2000);
-				getDriver().get(GlobalVariables.WCS8StaticUrls.GHStatic2);
-				Thread.sleep(2000);
-			}
-
-			if (brand.equalsIgnoreCase("BD")) {
-				getDriver().get(GlobalVariables.WCS8StaticUrls.BDStatic1);
-				Thread.sleep(2000);
-				getDriver().get(GlobalVariables.WCS8StaticUrls.BDStatic2);
-				Thread.sleep(2000);
-			}
-
-			if (brand.equalsIgnoreCase("RY")) {
-				getDriver().get(GlobalVariables.WCS8StaticUrls.RYStatic1);
-				Thread.sleep(2000);
-				getDriver().get(GlobalVariables.WCS8StaticUrls.RYStatic2);
-				Thread.sleep(2000);
-			}
-		}
-		getCurrentFunctionName(false);
-	}
 
 	/**
 	 * Explicit wait
@@ -186,15 +142,7 @@ public class Common extends SelTestCase {
 		}
 	}
 
-	/**
-	 * Set test case status that will appear in the Automation Report
-	 *
-	 */
-	public static void testPass() {
-		logs.debug("Test Status: PASS");
-		setTestStatus("Pass");
 
-	}
 
 	/**
 	 * Set test case status that will appear in the Automation Report
@@ -257,16 +205,6 @@ public class Common extends SelTestCase {
 		setTestStatus("Fail: " + temp);
 		setScreenShotName(screenShotName + ".jpg");
 		ReportUtil.addError(getTestStatus(), getScreenShotName());
-	}
-
-	/**
-	 * Closes the opened browsers by selenium.
-	 *
-	 */
-	public static void closeApplication() {
-		if (getCONFIG().getProperty("debug").equalsIgnoreCase("no")) {
-			ActionDriver.closeBrowser();
-		}
 	}
 
 	public static void refreshBrowser() {
@@ -341,54 +279,8 @@ public class Common extends SelTestCase {
 		return addresses;
 	}// readAddresses
 
-	public static LinkedHashMap<String, Object> readLocalInventory() throws Exception {
-	
-		LinkedHashMap<String, Object> products = new LinkedHashMap<>();
-		ArrayList<String> FGproducts = new ArrayList<String>();
-		ArrayList<String> GRproducts = new ArrayList<String>();
-		ArrayList<String> GHproducts = new ArrayList<String>();
-		ArrayList<String> RYproducts = new ArrayList<String>();
-		ArrayList<String> BDproducts = new ArrayList<String>();
-
-		dataProviderUtils TDP = dataProviderUtils.getInstance();
-		Object[][] data = TDP.getData(SheetVariables.products, 1);
-
-		// data map
-		int header = 0;
-		int name = 0;
-		int brand = 1;
-		int url = 2;
-
-//		for (int row = 1; row < data.length; row++) {
-//
-//			if (isFG() && env.FG.equalsIgnoreCase((String) data[row][brand])) {
-//				FGproducts.add((String) data[row][url]);
-//			} else if (isGR() && env.GR.equalsIgnoreCase((String) data[row][brand])) {
-//				GRproducts.add((String) data[row][url]);
-//			} else if (isGH() && env.GH.equalsIgnoreCase((String) data[row][brand])) {
-//				GHproducts.add((String) data[row][url]);
-//			} else if (isRY() && env.RY.equalsIgnoreCase((String) data[row][brand])) {
-//				RYproducts.add((String) data[row][url]);
-//			} else if (isBD() && env.BD.equalsIgnoreCase((String) data[row][brand])) {
-//				BDproducts.add((String) data[row][url]);
-//			}
-//		}
-//		products.put(env.FG, FGproducts);
-//		products.put(env.GR, GRproducts);
-//		products.put(env.GH, GHproducts);
-//		products.put(env.RY, RYproducts);
-//		products.put(env.BD, BDproducts);
-
-		logs.debug("Products: " + Arrays.asList(products) + "");
-		return products;
-	}// readProducts
-
 	public static LinkedHashMap<String, Object> readPaymentcards() throws Exception {
-		/*
-		 * [ { visa={ number=4111111111111111, name=AcceptTester, expireYear=2022,
-		 * expireMonth=6, CVCC=333 }, master={ number=5555555555554444,
-		 * name=Accept*Tester, expireYear=2022, expireMonth=6, CVCC=334 } } ]
-		 */
+
 		LinkedHashMap<String, Object> cards = new LinkedHashMap<>();
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
 		Object[][] data = TDP.getData(SheetVariables.cards, 1);
@@ -416,13 +308,7 @@ public class Common extends SelTestCase {
 	}// read payments
 
 	public static LinkedHashMap<String, Object> readTestparams(String testSheet, int caseIndex) throws Exception {
-		/*
-		 * [ { desc=loggedinuserwithsavedmaistropaymentandshippingaddress,
-		 * proprties=loggedin, products=P2, shippingMethod=STANDARDDELIVERY,
-		 * payment=maistro, shippingAddress=A1, billingAddress=A2, coupon=,
-		 * email=ibatta@dbi.com, orderId=, orderTotal=, orderSubtotal=, orderTax=,
-		 * orderShipping= } ]
-		 */
+
 		LinkedHashMap<String, Object> tests = new LinkedHashMap<>();
 		dataProviderUtils TDP = dataProviderUtils.getInstance();
 		Object[][] data = TDP.getData(testSheet, 1);
@@ -440,10 +326,7 @@ public class Common extends SelTestCase {
 	}// read test param
 
 	public static LinkedHashMap<String, Object> readUsers() throws Exception {
-		/*
-		 * [ { ibatta@dbi.com={ name=U1, title=MR., username=ibatta, firstName=Accept,
-		 * lastName=Tester, password=1234567, mail=ibatta@dbi.com } } ]
-		 */
+	
 		LinkedHashMap<String, Object> users = new LinkedHashMap<>();
 
 		dataProviderUtils TDP = dataProviderUtils.getInstance();

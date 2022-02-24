@@ -21,9 +21,6 @@ public class PDPBase extends SelTestCase {
 	public static final String singlePDP = "Validate PDP Single active elements";
 	public static final String bundlePDP = "Validate PDP Bundle active elements";
 
-	public static String singlePDPSearchTerm;
-	public static String BundlePDPSearchTerm;
-
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.PDPSheet;
 
