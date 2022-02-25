@@ -16,14 +16,16 @@ import com.generic.util.SelectorUtil;
 
 public class PDP extends SelTestCase {
 
-
-	
-	/////////////////DSS//////////////////
 	
 	public static void clickAddToCartButton() throws Exception {
 		try {
 			logs.debug("Click Add To Cart Button ");
-			getDriver().findElement(By.cssSelector(PDPSelectors.addToCartButton)).click();
+			boolean singlePDP = getDriver().findElement(By.cssSelector(PDPSelectors.addToCartButton)).isDisplayed();
+			logs.debug("<font color=#f442cb>Single PDP ?: </font><font color=#b86d29>" + singlePDP + "</font>");
+			if (singlePDP)
+				getDriver().findElement(By.cssSelector(PDPSelectors.addToCartButton)).click();
+			else
+				getDriver().findElement(By.cssSelector(PDPSelectors.BundlesAddToCart)).click();
 		} catch (NoSuchElementException e) {
 			System.out.println("Add To Cart Button selector was not found by selenuim");
 			throw e;
@@ -757,7 +759,7 @@ public class PDP extends SelTestCase {
 		}
 	}
 	
-	public static String slectPDPOptionsifAnyAndValidate() throws Exception {
+	public static String selectPDPOptionsifAnyAndValidate() throws Exception {
 		try {
 			logs.debug("Select PDP options is any");
 			String optionName = "";

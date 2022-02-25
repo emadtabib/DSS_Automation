@@ -23,7 +23,7 @@ public class PDPSingleValidation extends SelTestCase {
 		PDP.validateWriteTheFirstReview();
 		PDP.getSinglePDPRangePrice();
 		PDP.getSinglePDPSKUimgSrc();
-		PDP.slectPDPOptionsifAnyAndValidate();
+		PDP.selectPDPOptionsifAnyAndValidate();
 		int qtyValue = PDP.getQtyValue();
 		Double PDPpriceForTheSelectedOption = PDP.getSinglePDPPrice();
 		PDP.getSinglePDPShareLinksDiv();
