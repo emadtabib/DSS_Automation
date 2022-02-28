@@ -474,17 +474,19 @@ public class CheckOut extends SelTestCase {
 		}
 	}
 	
-	public static void selectSavedPaymentMethod(String payment) throws Exception {
+	public static void selectSavedPaymentMethod(String payment, String estimatedOrder, Double Placer1ThresholdAmount) throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			@SuppressWarnings("unchecked")
 			LinkedHashMap<String, String> paymentDetails = (LinkedHashMap<String, String>) paymentCards.get(payment);
 			logs.debug("Select Saved Payment Method");
+			double orderEstimatedTotal = Double.parseDouble(estimatedOrder.replace('$', ' ').trim());
 
-			if (!SelectorUtil.isNotDisplayed(CheckOutSelectors.PaymentTypeSelectionNONE)) {
+			if (orderEstimatedTotal > Placer1ThresholdAmount) {
 
-				logs.debug("No saved payments, Select on hold ordr Payment Method");
-				getDriver().findElement(By.id(CheckOutSelectors.PaymentTypeSelectionNONE)).click();
+				logs.debug("<font color=#f442cb> Estimated Order Total is greater than the Placer1 Threshold Amount </font>");
+				logs.debug("Type PO Number: ");
+				//getDriver().findElement(By.id(CheckOutSelectors.PaymentTypeSelectionNONE)).click();
 				typePONumber();
 			} else {
 				if (payment != "PayPal") {
@@ -498,7 +500,11 @@ public class CheckOut extends SelTestCase {
 
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
-
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Saved Payment Method selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
 		}
 	}
 

@@ -6,7 +6,6 @@ import java.util.NoSuchElementException;
 
 import com.generic.page.CheckOut;
 import com.generic.page.HomePage;
-import com.generic.page.PDP;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
 

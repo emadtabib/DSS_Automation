@@ -24,7 +24,7 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 			HomePage.closeSignUpModal();
 	
 			HomePage.clickSignIn();
-			Login.Login();
+			Login.Login(userDetalis);
 			
 //			logs.debug("User is logged in successfully?: " + Login.verifyIfUserLoggedInSuccessfully());
 			// Add products to cart
@@ -73,9 +73,10 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 			
 			// Check number of products in Payment page
 			sassert().assertTrue(CheckOut.getitemsQuantityInCheckoutPges() == productsCount,
-					"Some products are missing in Payment page ");
+					"Some Qty are missing in Payment page ");
 			
-			CheckOut.selectSavedPaymentMethod(payment);
+			Double Placer1ThresholdAmount = Double.parseDouble(getCONFIG().getProperty("Placer1ThresholdAmount"));
+			CheckOut.selectSavedPaymentMethod(payment, newEstimatedOrder, Placer1ThresholdAmount);
 			CheckOut.placeOrder();
 			CheckOut.closeFeedbackModal();
 			CheckOut.getSuccessMessage();

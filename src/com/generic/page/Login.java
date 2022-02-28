@@ -1,6 +1,7 @@
 package com.generic.page;
 
 
+import java.util.LinkedHashMap;
 import java.util.NoSuchElementException;
 import org.openqa.selenium.By;
 
@@ -9,10 +10,10 @@ import com.generic.setup.SelTestCase;
 
 public class Login extends SelTestCase {
 	
-	public static final String emailAddress = "placer1@gmail.com";
-	public static final String passord = "12341234";
+//	public static final String emailAddress = "placer1@gmail.com";
+//	public static final String passord = "12341234";
 	
-	public static void typeEmailAddress() throws Exception {
+	public static void typeEmailAddress(String emailAddress) throws Exception {
 		try {
 			getDriver().findElement(By.cssSelector(LoginSelectors.userNameField)).sendKeys(emailAddress);
 		} catch (NoSuchElementException e) {
@@ -21,7 +22,7 @@ public class Login extends SelTestCase {
 		}
 	}
 	
-	public static void typePassword() throws Exception {
+	public static void typePassword(String passord) throws Exception {
 		try {
 			getDriver().findElement(By.cssSelector(LoginSelectors.passwordField)).sendKeys(passord);
 		
@@ -43,10 +44,10 @@ public class Login extends SelTestCase {
 
 	}
 
-	public static void Login() throws Exception {
+	public static void Login(LinkedHashMap<String, String> userDetalis) throws Exception {
 
-		typeEmailAddress();
-		typePassword();
+		typeEmailAddress(userDetalis.get("mail"));
+		typePassword(userDetalis.get("password"));
 		clickSubmitSignIn();
 
 	}

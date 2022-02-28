@@ -1,4 +1,4 @@
-package com.generic.tests.DSS.checkout;
+package com.generic.tests.DSS.OMSAccount;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -12,19 +12,16 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
-import com.generic.tests.DSS.checkout.GuestCheckoutSingleAddress;
-import com.generic.tests.DSS.checkout.RegisteredCheckoutSingleAddress;
 import com.generic.util.dataProviderUtils;
 import com.generic.util.SASLogger;
 
-public class Base_checkout extends SelTestCase {
+public class Base_OMSAccount extends SelTestCase {
 
 	// user types
-	public static final String guestUser = "fresh";
-	public static final String registeredUser = "registered";
+	public static final String Create_Placer_account  = "Create a Placer account";
 
 	// used sheet in test
-	public static final String testDataSheet = SheetVariables.checkoutSheet;
+	public static final String testDataSheet = SheetVariables.OMSAccountSheet;
 
 	private static XmlTest testObject;
 
@@ -32,11 +29,11 @@ public class Base_checkout extends SelTestCase {
 
 	@BeforeTest
 	public static void initialSetUp(XmlTest test) throws Exception {
-		Testlogs.set(new SASLogger("checkout_setup"));
+		Testlogs.set(new SASLogger("OMSAccount_setup"));
 		testObject = test;
 	}
 
-	@DataProvider(name = "Orders", parallel = true)
+	@DataProvider(name = "OMSAccount", parallel = true)
 	public static Object[][] loadTestData() throws Exception {
 		// concurrency maintenance on sheet reading
 		getBrowserWait(testObject.getParameter("browserName"));
@@ -48,14 +45,14 @@ public class Base_checkout extends SelTestCase {
 	}
 
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
-	@Test(dataProvider = "Orders")
+	@Test(dataProvider = "OMSAccount")
 	public void checkOutBaseTest(String caseId, String runTest, String desc, String proprties, String productsNumber,
 			String shippingMethod, String payment, String shippingAddress, String billingAddress, String email)
 			throws Exception {
 
 		// Important to add this for logging/reporting
-		Testlogs.set(new SASLogger("checkout_" + getBrowserName()));
-		setTestCaseReportName("Checkout Case");
+		Testlogs.set(new SASLogger("OMSAccount" + getBrowserName()));
+		setTestCaseReportName("OMSAccount Case");
 		String CaseDescription = MessageFormat.format(LoggingMsg.CHECKOUTDESC, testDataSheet + "." + caseId,
 				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- "), payment, shippingMethod);
 		initReportTime();
@@ -68,17 +65,11 @@ public class Base_checkout extends SelTestCase {
 
 		try {
 
-			// Guest user with single address
-			if (proprties.contains(guestUser)) {
-				GuestCheckoutSingleAddress.startTest(shippingMethod, productsCount, addressDetails, paymentDetails);
+			if (proprties.contains(Create_Placer_account)) {
+				CreatePlacerAccount.startTest(shippingMethod, productsCount, addressDetails, paymentDetails,
+						userdetails);
 			}
 
-			// Registered user with single addresses
-			if (proprties.contains(registeredUser)) {
-				RegisteredCheckoutSingleAddress.startTest(shippingMethod, productsCount, addressDetails, payment, userdetails);
-			}
-
-			
 			sassert().assertAll();
 
 			Common.testPass(CaseDescription);
