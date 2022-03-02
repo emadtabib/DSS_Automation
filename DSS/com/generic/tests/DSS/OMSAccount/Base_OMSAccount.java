@@ -13,13 +13,30 @@ import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
 import com.generic.util.dataProviderUtils;
+import com.generic.util.RandomUtilities;
 import com.generic.util.SASLogger;
 
 public class Base_OMSAccount extends SelTestCase {
 
 	// user types
+	public static final String Create_Approver_account  = "Create an Approver account";
+	public static final String Login_To_The_Created_Approver_account  = "Login to the created Approver account";
+	public static final String Create_Reviewer_account  = "Create a Reviewer account";
+	public static final String Login_To_The_Created_Reviewer_account  = "Login to the created Reviewer account";
 	public static final String Create_Placer_account  = "Create a Placer account";
+	public static final String Login_To_The_Created_Placer_account  = "Login to the created placer account";
+	public static final String Create_Admin_account  = "Create an Admin account";
+	public static final String Login_To_The_Created_Admin_account  = "Login to the created Admin account";
 
+	//
+	public static final String AdminMail = "AutoAdmin_" +RandomUtilities.getRandomEmail();
+	public static final String ApproverMail = "AutoApprover_" +RandomUtilities.getRandomEmail();
+	public static final String ReviewerMail = "AutoReviewer_" +RandomUtilities.getRandomEmail();
+	public static final String PlacerMail = "AutoPlacer_" + RandomUtilities.getRandomEmail();
+
+
+	
+//	public static final String PlacerMail = "auto_ealr3198@mailinator.com";
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.OMSAccountSheet;
 
@@ -65,11 +82,38 @@ public class Base_OMSAccount extends SelTestCase {
 
 		try {
 
-			if (proprties.contains(Create_Placer_account)) {
-				CreatePlacerAccount.startTest(shippingMethod, productsCount, addressDetails, paymentDetails,
-						userdetails);
+			if (proprties.contains(Create_Approver_account)) {
+				CreateApproverAccount.startTest(ApproverMail, userdetails);
 			}
 
+			if (proprties.contains(Login_To_The_Created_Approver_account)) {
+				LoginToTheCreatedApproverAccount.startTest(shippingMethod, productsCount, ApproverMail, payment,
+						userdetails);
+			}
+			if (proprties.contains(Create_Placer_account)) {
+				CreatePlacerAccount.startTest(PlacerMail, ApproverMail, ReviewerMail, userdetails);
+			}
+
+			if (proprties.contains(Login_To_The_Created_Placer_account)) {
+				LoginToTheCreatedPlacerAccount.startTest(shippingMethod, productsCount, PlacerMail, payment,
+						userdetails);
+			}
+			if (proprties.contains(Create_Reviewer_account)) {
+				CreateReviewerAccount.startTest(ReviewerMail, userdetails);
+			}
+
+			if (proprties.contains(Login_To_The_Created_Reviewer_account)) {
+				LoginToTheCreatedReviewerAccount.startTest(shippingMethod, productsCount, ReviewerMail, payment,
+						userdetails);
+			}
+			if (proprties.contains(Create_Admin_account)) {
+				CreateAdminAccount.startTest(AdminMail, userdetails);
+			}
+
+			if (proprties.contains(Login_To_The_Created_Admin_account)) {
+				LoginToTheCreatedAdminAccount.startTest(shippingMethod, productsCount, AdminMail, PlacerMail,
+						userdetails);
+			}
 			sassert().assertAll();
 
 			Common.testPass(CaseDescription);

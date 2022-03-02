@@ -1,5 +1,6 @@
 package com.generic.page;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -10,6 +11,7 @@ import org.openqa.selenium.WebElement;
 
 
 import com.generic.selector.HomePageSelectors;
+import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
 
@@ -17,7 +19,7 @@ public class HomePage extends SelTestCase {
 
 	public static void closeSignUpModal() throws Exception {
 		try {
-			System.out.println("Close Sign Up Modal if displayed");
+			logs.debug("Close Sign Up Modal if displayed");
 //			boolean isNotDisplayed;
 //			String subStrArr = HomePageSelectors.closeSignUpModal;
 //			isNotDisplayed = getDriver().findElement(By.cssSelector(HomePageSelectors.closeSignUpModal)).isDisplayed();
@@ -25,18 +27,22 @@ public class HomePage extends SelTestCase {
 //			if(!isNotDisplayed)
 			getDriver().findElement(By.cssSelector(HomePageSelectors.closeSignUpModal)).click();
 		} catch (NoSuchElementException e) {
-			System.out.println("close SignUp Modal selector was not found by selenuim");
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "close SignUp Modal selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 	}
 	
 	public static void clickSignIn() throws Exception {
 		try {
-			System.out.println("Click on My Account icon");
+			logs.debug("Click on My Account icon");
 			getDriver().findElement(By.cssSelector(HomePageSelectors.myAccountIcon)).click();
 			getDriver().findElement(By.cssSelector(HomePageSelectors.signinLink)).click();
 		} catch (NoSuchElementException e) {
-			System.out.println("myAccount icon selector was not found by selenuim");
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "myAccount icon selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 

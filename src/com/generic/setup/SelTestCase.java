@@ -322,7 +322,7 @@ public class SelTestCase {
 
 		WebDriver driver = SelTestCase.getDriver();
 		if (driver != null && !getBrowserName().contains(browsers.iOS)) {
-			driver.quit();
+//			driver.quit();
 		}
 		getCurrentFunctionName(false);
 	}

@@ -29,7 +29,6 @@ public class AccountSelectors
 	public static final String usersTable = ".responsive-table-item>.responsive-table-cell"; //Group Name 0 , 5
 	
 	public static final String AddNewUserHeader = "account-name";
-	
 	public static final String SelectGroup_CenterName = "b2bUnit_select_";
 	public static final String userFirstName = "user.firstName";
 	public static final String userLastName = "user.lastName";
@@ -42,7 +41,6 @@ public class AccountSelectors
 	public static final String admingroup = "b2badmingroup";
 	public static final String allowedPaymentMethodsPAYPAL = "PAYPAL";
 	public static final String allowedPaymentMethodsCREDITCARD = "CARD";
-	
 	public static final String reviewersSelection = ".reviewers-selection>a";
 	public static final String selectApprovers = "Select Approvers";
 	public static final String SaveSelection_reviewers = "#js-reviewers-modal>div>div>div>.btn.btn-block.btn-primary.js-submit-ohr-action";
@@ -51,9 +49,16 @@ public class AccountSelectors
 	public static final String allowChangeToShippingAddress_Yes = "allowChangeToShippingAddress2";
 	public static final String allowChangeToBillingAddress_Yes = "allowChangeToBillingAddress2";
 	public static final String submit_AddNewUser = ".btn-primary.save.load_orders";
+	
+	public static final String showTheMessage = "td.ng-binding";
+	public static final String clickHereToResetYourPassword = "Click here to reset your password";
 
-	
-	
-	
+	public static final String ResetPasswordHeader = ".account-section-header>div>div";
+	public static final String ResetPassword_password = "password";
+	public static final String ResetPassword_ConfirmPassword = "updatePwd.checkPwd";
+	public static final String ResetPassword_Submit = ".btn.btn-primary.btn-block";
+	public static final String GlobalAlert = ".alert.alert-danger";
+	public static final String EditProfile = "Edit Profile";
+	public static final String OrderHistory = "Order History";
 
 }

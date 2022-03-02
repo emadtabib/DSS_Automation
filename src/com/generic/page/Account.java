@@ -1,27 +1,19 @@
 package com.generic.page;
 
-
-import java.text.DecimalFormat;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Random;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 import com.generic.selector.AccountSelectors;
-import com.generic.selector.CheckOutSelectors;
-import com.generic.selector.HomePageSelectors;
-import com.generic.selector.PDPSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
-import com.generic.util.SelectorUtil;
 
 public class Account extends SelTestCase {
 	
@@ -100,12 +92,49 @@ public class Account extends SelTestCase {
 		}
 	}
 	
+	public static String getPaginationBarResultsForOrders() throws Exception {
+		try {
+			logs.debug("Get pagination Bar Results");
+			String paginationBarResults = getDriver().findElement(By.className(AccountSelectors.paginationBarResults)).getText();
+			logs.debug("<font color=#f442cb>Pagination Bar Results: </font><font color=#b86d29>" + paginationBarResults + "</font>");
+			String maxNum = paginationBarResults.split("- ")[1].split(" ")[0];
+			logs.debug("Number of orders in the page: " + maxNum);
+			int maxNumber = Integer.parseInt(maxNum);
+			String TotalNumber = paginationBarResults.split("of")[1].split("Orders")[0];
+			logs.debug("Total Number of orders in the page: " + TotalNumber);
+			return paginationBarResults;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "pagination Bar Results selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
 	public static int getNumberOfUserinThePage() throws Exception {
 		try {
 			logs.debug("Get Number of rows in the page");
 			String paginationBarResults = getDriver().findElement(By.className(AccountSelectors.paginationBarResults)).getText();
 			String maxNum = paginationBarResults.split("-")[1].split(" ")[0];
 			logs.debug("<font color=#f442cb>Number of rows in the page: </font><font color=#b86d29>" + maxNum + "</font>");
+			int maxNumber = Integer.parseInt(maxNum);
+			return maxNumber;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "pagination Bar Results selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static int getNumberOfOrdersinThePage() throws Exception {
+		try {
+			logs.debug("Get Number of orders in the page");
+			String paginationBarResults = getDriver().findElement(By.className(AccountSelectors.paginationBarResults)).getText();
+			String maxNum = paginationBarResults.split("- ")[1].split(" ")[0];
+			logs.debug("<font color=#f442cb>Number of orders in the page: </font><font color=#b86d29>" + maxNum + "</font>");
 			int maxNumber = Integer.parseInt(maxNum);
 			return maxNumber;
 		} catch (NoSuchElementException e) {
@@ -151,6 +180,25 @@ public class Account extends SelTestCase {
 			logs.debug("<font color=#f442cb>Users Table Data for index(" + index + "): </font><font color=#b86d29>"
 					+ UsersTable + "</font>");
 			return UsersTable;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Users Table selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static int getUserIndex(String user, int numberOfUsers) throws Exception {
+		try {
+			logs.debug("Get User index: <font color=#f442cb>" + user + ") </font>");
+			int index = 3;
+			for (index = 3; index < 6 * numberOfUsers; index = index + 6) {
+				if (Account.getUsersTableData(index).contains(user)) {
+					logs.debug("<font color=#33BEFF>User index:" + index + "</font>");
+					break;
+				}
+			}
+			return index;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
 					ExceptionMsg.PageFunctionFailed + "Users Table selector was not found by selenuim", new Object() {
@@ -466,5 +514,202 @@ public class Account extends SelTestCase {
 			throw e;
 		}
 	}
+	
+	public static void NavigteToMailinatorServer(String email) {
+		getCurrentFunctionName(true);
+		getDriver().get("https://www.mailinator.com/v4/public/inboxes.jsp?to=" + email);
+		getCurrentFunctionName(false);
+	}
+	
+	public static void clickShowTheMessage() throws Exception {
+		try {
+			logs.debug("Click on show The Message");
+			getDriver().findElement(By.cssSelector(AccountSelectors.showTheMessage)).click();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Show The Message selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static void clickHereToResetYourPassword() throws Exception {
+		try {
+			logs.debug("Click Here To Reset Your Password");
+			getDriver().switchTo().frame("html_msg_body");
+			
+			
+			String url = getDriver().findElement(By.partialLinkText(AccountSelectors.clickHereToResetYourPassword)).getAttribute("href");
+			getDriver().get(url);
+			String CurrentURL = getDriver().getCurrentUrl();
+			logs.debug("CurrentURL: " + CurrentURL);
+			String newURL = CurrentURL.replaceFirst("s1", getCONFIG().getProperty("Env"));
+			logs.debug("newURL: " + newURL);
+			getDriver().get(newURL);
+			getDriver().switchTo().parentFrame();
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Click Here To Reset Your Password selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static boolean verifyResetPasswordPageIsDisplayed() throws Exception {
+		try {
+			logs.debug("verify Reset Password Header Is Displayed");
+			boolean isDisplayed = getDriver().findElement(By.cssSelector(AccountSelectors.ResetPasswordHeader)).isDisplayed();
+			String ResetPasswordHeader = getDriver().findElement(By.cssSelector(AccountSelectors.ResetPasswordHeader)).getText();
+			logs.debug("Reset Password Header is: " + ResetPasswordHeader);
+			return isDisplayed;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Reset Password Header selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static void typeResetPassword_password(String password) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("<font color=#f442cb>Type Reset Password: password: </font><font color=#b86d29>" + password + "</font>");
+			getDriver().findElement(By.id(AccountSelectors.ResetPassword_password)).sendKeys(password);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Reset Password: password selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static void typeResetPassword_confirmPassword(String confirmPassword) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("<font color=#f442cb>Type Reset Password: confirmPassword: </font><font color=#b86d29>" + confirmPassword + "</font>");
+			getDriver().findElement(By.id(AccountSelectors.ResetPassword_ConfirmPassword)).sendKeys(confirmPassword);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Reset Password: confirmPassword: selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static void submit_ResetPassword() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Click on Submit - Reset Password");
+			getDriver().findElement(By.cssSelector(AccountSelectors.ResetPassword_Submit)).click();
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + " Submit (Reset Password) selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getGlobalAlert() throws Exception {
+		try {
+			logs.debug("Get the Global Alert");
+			String GlobalAlert = getDriver().findElement(By.cssSelector(AccountSelectors.GlobalAlert)).getText();
+			logs.debug("Global Alert: " + GlobalAlert);
+			return GlobalAlert;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Reset Password Header selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static void NavigteToEditPrfileForUser(String email) {
+		getCurrentFunctionName(true);
+		logs.debug("Navigte To Edit Prfile For User: " + email);
+		getDriver().get(getURL() + "/your-company/organization-management/manage-users/edit?user=" + email);
+		getCurrentFunctionName(false);
+	}
+	
+	public static void NavigteToOrdersForUser(String email) {
+		getCurrentFunctionName(true);
+		logs.debug("Navigte To Orders History For User: " + email);
+		getDriver().get(getURL() + "/your-company/organization-management/manage-users/getOrders?user=" + email);
+		getCurrentFunctionName(false);
+	}
+	
+	public static int clickOrderHistoryForUserIndex(int index) throws Exception {
+		try {
+			int newIndex = index/6;
+			logs.debug("click Order History For User Index: <font color=#f442cb>" + newIndex + ") </font>");
+			
+			getDriver().findElements(By.partialLinkText(AccountSelectors.OrderHistory)).get(newIndex).click();
+			return index;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Users Table selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getUserNameData(int userIndex) throws Exception {
+		try {
+			logs.debug("Get User Name Data for index( <font color=#f442cb>" + userIndex + ") </font>");
+			int userNameIndex = userIndex-2;
+			String UserData = getDriver().findElements(By.cssSelector(AccountSelectors.usersTable)).get(userNameIndex)
+					.getText();
+			logs.debug("<font color=#f442cb>User Name Data for index(" + userNameIndex + "): </font><font color=#b86d29>"
+					+ UserData + "</font>");
+			return UserData;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "User Name selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	  @SuppressWarnings("unused")
+	public static String writeOrderNumberToFile(String orderNumber) {
+	        try {
+	            logs.debug("Write Order Number To File");
+	         
+	            	getCONFIG().setProperty("orderNumber", orderNumber);
+	
+	            FileOutputStream outPropFile;
 
+	            try {
+	                outPropFile = new FileOutputStream(System.getProperty("user.dir")
+	                                + "/src/com/generic/config/config.properties");
+	                getCONFIG().store(outPropFile, "");
+	                outPropFile.close();
+	            } catch (IOException ioe) {
+	                logs.debug("I/O Exception.");
+	                System.exit(0);
+	            }
+	            	
+	            	logs.debug("order saved " + getCONFIG().getProperty("orderNumber"));
+	
+	            return "Pass";
+	        } catch (Throwable t) {
+	            t.printStackTrace();
+	            return "Fail: " + t.getMessage();
+	        }
+	    }
+	
+	
+	
+	
+	
+	
 }

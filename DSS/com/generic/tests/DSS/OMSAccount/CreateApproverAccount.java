@@ -12,9 +12,9 @@ import com.generic.setup.SelTestCase;
 import com.generic.util.RandomUtilities;
 
 //DSS
-public class CreatePlacerAccount extends SelTestCase {
+public class CreateApproverAccount extends SelTestCase {
 
-	public static void startTest(String PlacerMail, String ApproverMail, String ReviewerMail, LinkedHashMap<String, String> userdetails) throws Exception {
+	public static void startTest(String ApproverMail, LinkedHashMap<String, String> userdetails) throws Exception {
 		getCurrentFunctionName(true);
 
 		try {
@@ -24,7 +24,7 @@ public class CreatePlacerAccount extends SelTestCase {
 			String lastName = RandomUtilities.getRandomName();
 			String phoneNumber = RandomUtilities.getRandomPhone();
 			String CenterName = "Auto";
-			String UserRule = "Placer";
+			String UserRule = "Approver";
 			
 			HomePage.closeSignUpModal();
 			
@@ -57,17 +57,12 @@ public class CreatePlacerAccount extends SelTestCase {
 			
 			Account.typeFirstName(firstName);
 			Account.typeLastName(lastName);
-			Account.typeEmailAddress(PlacerMail);
+			Account.typeEmailAddress(ApproverMail);
 			Account.typePhoneNumber(phoneNumber);
 			Account.typeCenterName(CenterName);
 			
 			Account.selectUserRule(UserRule);
 			
-			Account.selectOrderReviewer(ReviewerMail);
-			Account.selectOrderApprovers(ApproverMail);
-			
-			Account.selectOrderReviewer(getCONFIG().getProperty("reviewer"));
-			Account.selectOrderApprovers(getCONFIG().getProperty("approver"));
 			
 			Thread.sleep(1000);
 			Account.selectallowedPaymentMethodsPAYPAL();
@@ -88,12 +83,12 @@ public class CreatePlacerAccount extends SelTestCase {
 			
 			logs.debug("<font color=#f442cb> Check if the new email exist in the users table </font>");
 			for (int index = 3; index < 6 * newNumOfUsersAvailable; index = index + 6) {
-				if (Account.getUsersTableData(index).contains(PlacerMail)) {
-					logs.debug("<font color=#33BEFF>" + PlacerMail + " User Added Successfully </font>");
+				if (Account.getUsersTableData(index).contains(ApproverMail)) {
+					logs.debug("<font color=#33BEFF>" + ApproverMail + " User Added Successfully </font>");
 					break;
 				}
 			}
-			int userIndex = Account.getUserIndex(PlacerMail,newNumOfUsersAvailable );
+			int userIndex = Account.getUserIndex(ApproverMail,newNumOfUsersAvailable );
 			logs.debug("<font color=#f442cb>User index:" + userIndex + "</font>");
 			sassert().assertAll();
 			getCurrentFunctionName(false);

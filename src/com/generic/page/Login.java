@@ -1,11 +1,14 @@
 package com.generic.page;
 
 
+import java.text.MessageFormat;
 import java.util.LinkedHashMap;
 import java.util.NoSuchElementException;
 import org.openqa.selenium.By;
 
+import com.generic.selector.HomePageSelectors;
 import com.generic.selector.LoginSelectors;
+import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
 
 public class Login extends SelTestCase {
@@ -52,6 +55,14 @@ public class Login extends SelTestCase {
 
 	}
 	
+	public static void Login (String email, String password) throws Exception {
+
+		typeEmailAddress(email);
+		typePassword(password);
+		clickSubmitSignIn();
+
+	}
+	
 	public static boolean verifyIfUserLoggedInSuccessfully() {
 		try {
 			getCurrentFunctionName(true);
@@ -68,6 +79,23 @@ public class Login extends SelTestCase {
 		}
 	}
 	
+	public static boolean verifyIfUserLoggedIn() {
+		try {
+			getCurrentFunctionName(true);
+			Boolean isDisplyed = true;
+			logs.debug("Click on My Account icon");
+			getDriver().findElement(By.cssSelector(HomePageSelectors.myAccountIcon)).click();	
+			logs.debug("verify If User Logged in Successfully");
+			isDisplyed = getDriver().findElement(By.cssSelector(LoginSelectors.userName)).isDisplayed();
+			getCurrentFunctionName(false);
+			return isDisplyed;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "My Account - User name selectors were not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
 
 }// End of class
 
