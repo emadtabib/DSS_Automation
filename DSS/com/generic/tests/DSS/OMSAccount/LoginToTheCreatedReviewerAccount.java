@@ -1,7 +1,6 @@
 package com.generic.tests.DSS.OMSAccount;
 
 import java.text.MessageFormat;
-import java.util.LinkedHashMap;
 import java.util.NoSuchElementException;
 
 import org.testng.Assert;
@@ -14,8 +13,7 @@ import com.generic.setup.SelTestCase;
 
 public class LoginToTheCreatedReviewerAccount extends SelTestCase {
 
-	public static void startTest(String shippingMethod, int productsCount, String ReviewerMail,
-			String payment, LinkedHashMap<String, String> userDetalis) throws Exception {
+	public static void startTest(String ReviewerMail) throws Exception {
 		try {
 			
 //			Account.NavigteToMailinatorServer("posrt915971");
@@ -32,7 +30,7 @@ public class LoginToTheCreatedReviewerAccount extends SelTestCase {
 			logs.debug("Login to the created account: " + ReviewerMail );
 			HomePage.clickSignIn();
 			Login.Login(ReviewerMail,getCONFIG().getProperty("NewUserPassword") );
-
+			Assert.assertTrue(Login.verifyIfUserLoggedIn(), "User is not logged in Successfully");
 			sassert().assertAll();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {

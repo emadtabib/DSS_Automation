@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.util.LinkedHashMap;
 import java.util.NoSuchElementException;
 
+import com.generic.page.Account;
 import com.generic.page.CheckOut;
 import com.generic.page.HomePage;
 import com.generic.page.Login;
@@ -17,7 +18,7 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 		try {
 
 			String orderSubtotal = "";
-			String EstimatedOrder = "";
+			String EstimatedOrderTotal = "";
 			String Tax = "";
 			String Shipping = "";
 			
@@ -33,7 +34,7 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 //			CheckOut.closeOfferModal();
 
 			orderSubtotal = CheckOut.getOrderSummaryItems(1);
-			EstimatedOrder = CheckOut.getEstimatedTotalInFromOrderSummary(false);
+			EstimatedOrderTotal = CheckOut.getEstimatedTotalInFromOrderSummary(false);
 			CheckOut.clickCheckout();
 
 			String NewOrderSubtotal = CheckOut.getOrderSummaryItems(1);
@@ -48,9 +49,9 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 
 			Shipping = CheckOut.getOrderSummaryItems(3);
 			Tax = CheckOut.getOrderSummaryItems(5);
-			EstimatedOrder = CheckOut.getOrderSummaryItems(7);
+			EstimatedOrderTotal = CheckOut.getOrderSummaryItems(7);
 			sassert().assertTrue(
-					CheckOut.validateEstimatedTotalIsCorrect(NewOrderSubtotal, Shipping, Tax, EstimatedOrder),
+					CheckOut.validateEstimatedTotalIsCorrect(NewOrderSubtotal, Shipping, Tax, EstimatedOrderTotal),
 					"Estimated total value is not correct in delivery method page");
 
 			// Check number of products in delivery method page
@@ -93,13 +94,18 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 			orderSubtotal = CheckOut.getOrderSummaryItems(1);
 			Shipping = CheckOut.getOrderSummaryItems(3);
 			Tax = CheckOut.getOrderSummaryItems(5);
-			EstimatedOrder = CheckOut.getOrderSummaryItems(7);
+			EstimatedOrderTotal = CheckOut.getOrderSummaryItems(7);
 			
 			sassert().assertEquals(orderSubtotal, NewOrderSubtotal, "Order subtotal in order confirmation page is not matching the one on payment page");
 			sassert().assertEquals(Shipping, newShipping, "Shipping in order confirmation page is not matching the one on payment page");
 			sassert().assertEquals(Tax, newTax, "Tax in order confirmation page is not matching the one on payment page");
-			sassert().assertEquals(EstimatedOrder, newEstimatedOrder, "Estimated Order in order confirmation page is not matching the one on payment page");
+			sassert().assertEquals(EstimatedOrderTotal, newEstimatedOrder, "Estimated Order in order confirmation page is not matching the one on payment page");
 			
+			double orderEstimatedTotal = Double.parseDouble(EstimatedOrderTotal.replace('$', ' ').trim());
+			if (orderEstimatedTotal < Placer1ThresholdAmount)
+				Account.writeOrderNumberToConfigFile("orderNumber", CheckOut.getOrderNumber());
+			else
+				Account.writeOrderNumberToConfigFile("OnHoldOrderNumber", CheckOut.getOrderNumber());
 			sassert().assertAll();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {

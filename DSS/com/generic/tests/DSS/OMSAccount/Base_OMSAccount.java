@@ -87,32 +87,28 @@ public class Base_OMSAccount extends SelTestCase {
 			}
 
 			if (proprties.contains(Login_To_The_Created_Approver_account)) {
-				LoginToTheCreatedApproverAccount.startTest(shippingMethod, productsCount, ApproverMail, payment,
-						userdetails);
+				LoginToTheCreatedApproverAccount.startTest( ApproverMail);
 			}
 			if (proprties.contains(Create_Placer_account)) {
 				CreatePlacerAccount.startTest(PlacerMail, ApproverMail, ReviewerMail, userdetails);
 			}
 
 			if (proprties.contains(Login_To_The_Created_Placer_account)) {
-				LoginToTheCreatedPlacerAccount.startTest(shippingMethod, productsCount, PlacerMail, payment,
-						userdetails);
+				LoginToTheCreatedPlacerAccount.startTest(shippingMethod, productsCount, PlacerMail, payment);
 			}
 			if (proprties.contains(Create_Reviewer_account)) {
 				CreateReviewerAccount.startTest(ReviewerMail, userdetails);
 			}
 
 			if (proprties.contains(Login_To_The_Created_Reviewer_account)) {
-				LoginToTheCreatedReviewerAccount.startTest(shippingMethod, productsCount, ReviewerMail, payment,
-						userdetails);
+				LoginToTheCreatedReviewerAccount.startTest(ReviewerMail);
 			}
 			if (proprties.contains(Create_Admin_account)) {
 				CreateAdminAccount.startTest(AdminMail, userdetails);
 			}
 
 			if (proprties.contains(Login_To_The_Created_Admin_account)) {
-				LoginToTheCreatedAdminAccount.startTest(shippingMethod, productsCount, AdminMail, PlacerMail,
-						userdetails);
+				LoginToTheCreatedAdminAccount.startTest(AdminMail);
 			}
 			sassert().assertAll();
 

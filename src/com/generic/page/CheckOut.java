@@ -13,7 +13,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-
+import com.generic.selector.AccountSelectors;
 import com.generic.selector.CheckOutSelectors;
 import com.generic.selector.HomePageSelectors;
 import com.generic.selector.PDPSelectors;
@@ -54,6 +54,39 @@ public class CheckOut extends SelTestCase {
 			throw e;
 		}
 
+	}
+	
+	public static void checkCartHeader() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Validate Cart Header");
+			String CartHeader = getDriver().findElement(By.cssSelector(CheckOutSelectors.CartHeader))
+					.getText();
+			logs.debug("<font color=#f442cb>Cart Header: </font><font color=#b86d29>" + CartHeader + "</font>");
+			sassert().assertEquals(CartHeader, "Your Cart", "Actual header: " + CartHeader);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed + "Cart Header selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+
+		}
+	}
+	
+	public static String getItemNameFromCartPage() throws Exception {
+		try {
+
+			logs.debug("Get item name From Cart Page </font>");
+			String itemName = getDriver().findElements(By.cssSelector(CheckOutSelectors.Cart_productTitle)).get(0).getText();
+			logs.debug("item name: <font color=#f442cb>" + itemName + ") </font>");
+
+			return itemName;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "item name From cart Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
 	}
 	
 	public static String getOrderSummaryItems(int index) throws Exception {

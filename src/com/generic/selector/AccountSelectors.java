@@ -4,6 +4,8 @@ public class AccountSelectors
 {
 	
 	public static final String ManageUsersHeader = "Manage Users";
+	public static final String YourOrdersHeader = "Your Orders";
+	public static final String OnHoldOrdersHeader = "On Hold Orders";
 	public static final String companyName = "company-name";
 	public static final String paginationBarResults = "pagination-bar-results";
 	public static final String paginationBarResultsShowAll = "showAll";
@@ -60,5 +62,35 @@ public class AccountSelectors
 	public static final String GlobalAlert = ".alert.alert-danger";
 	public static final String EditProfile = "Edit Profile";
 	public static final String OrderHistory = "Order History";
-
+	public static final String shippingData = ".shipping-data>.value-order";
+	public static final String orderDetailsTableValues = "item-value";
+	public static final String ListItems = "item__list--item";
+	public static final String itemImage = ".item__list--item>.item__info>.item__image>a>img";
+	public static final String itemName = ".item__list--item>.item__info>.product-info>a>div";
+	public static final String itemCode = ".item__list--item>.item__info>.product-info>.item__code";
+	public static final String itemDelivery = ".item__list--item>.item__delivery";
+	public static final String itemPrice = ".item__list--item>.item__price";
+	public static final String itemQuantity = ".item__list--item>.item__quantity";
+	public static final String itemTotal = ".item__list--item>.item__total";
+	
+	
+	public static final String billingAddress = ".billing-main";
+	public static final String paymentMethod = ".shipping-main";
+	public static final String OrderSummaryFromOrderDetailsPage = ".summary-value";
+	public static final String reorderButton = "reorderButton";
+	public static final String 	ClickToUnlockOrder = "Click to unlock order";
+	
+	
+	public static final String 	ohrEditShippAddress = "#ohrEditShippAddress";
+	public static final String 	ohrShippingData = ".step-data-completed>.data-holder";
+	public static final String 	ohrBillingSection = "#ohr-billing-section";
+	public static final String 	ohrCommentsDisplay = "#ohrCommentsDisplay";
+	public static final String 	ohrMessage = "#ohr-message";
+	public static final String 	ohrOrderSummaryFromOrderDetailsPage = ".item-row>div";
+	public static final String 	ohrSubmitForApproval = "Submit for Approval";
+	public static final String 	ohrRejectOrder = "Reject Order";
+	public static final String 	orderReleased = ".order-released";
+	public static final String 	ContinueShopping = "Continue Shopping";	
+	
+	
 }

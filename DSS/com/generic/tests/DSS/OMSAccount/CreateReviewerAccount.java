@@ -40,13 +40,6 @@ public class CreateReviewerAccount extends SelTestCase {
 			Account.clickPaginationBarResultsShowAll();
 			
 			int numOfUsersAvailable = Account.getNumberOfUserinThePage();
-			for(int index=0; index < 6 * numOfUsersAvailable; index++) {
-				if(index % 6 == 0)
-					logs.debug("<font color=#33BEFF> Row Number: (" + ((index/6) + 1)  + ") </font>");
-				Account.getUsersTableData(index);
-		
-			}
-
 			Account.clickAddNewUser();
 			Account.verifyAddNewUserPageIsOpened();
 			String companyNameInAddNewUserPage = Account.getCompanyNameInAddNewUserPage();

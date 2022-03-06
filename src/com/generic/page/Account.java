@@ -28,13 +28,15 @@ public class Account extends SelTestCase {
 		getDriver().get(getURL() + getCONFIG().getProperty("manageUsersURL"));
 		getCurrentFunctionName(false);
 	}
-	
+
 
 	public static String getCompanyName() throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("Get Company Name");
 			String companyName = getDriver().findElement(By.className(AccountSelectors.companyName)).getText();
 			logs.debug("Company Name: " + companyName);
+			getCurrentFunctionName(false);
 			return companyName;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
@@ -47,8 +49,10 @@ public class Account extends SelTestCase {
 	
 	public static boolean verifyManageUsersHeaderIsDisplayed() throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("verify Manag eUsers Header Is Displayed");
 			boolean isDisplayed = getDriver().findElement(By.partialLinkText(AccountSelectors.ManageUsersHeader)).isDisplayed();
+			getCurrentFunctionName(false);
 			return isDisplayed;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
@@ -61,8 +65,10 @@ public class Account extends SelTestCase {
 	
 	public static void clickPaginationBarResultsShowAll() throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("Click on Pagination Bar Results ShowAll");
 			getDriver().findElement(By.className(AccountSelectors.paginationBarResultsShowAll)).click();
+			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
 					ExceptionMsg.PageFunctionFailed + "Pagination Bar Results ShowAll selector was not found by selenuim",
@@ -74,6 +80,7 @@ public class Account extends SelTestCase {
 	
 	public static String getPaginationBarResults() throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("Get pagination Bar Results");
 			String paginationBarResults = getDriver().findElement(By.className(AccountSelectors.paginationBarResults)).getText();
 			logs.debug("<font color=#f442cb>Pagination Bar Results: </font><font color=#b86d29>" + paginationBarResults + "</font>");
@@ -82,6 +89,7 @@ public class Account extends SelTestCase {
 			int maxNumber = Integer.parseInt(maxNum);
 			String TotalNumber = paginationBarResults.split("of")[1].split("Users")[0];
 			logs.debug("TotalNumber of rows in the page: " + TotalNumber);
+			getCurrentFunctionName(false);
 			return paginationBarResults;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
@@ -94,6 +102,7 @@ public class Account extends SelTestCase {
 	
 	public static String getPaginationBarResultsForOrders() throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("Get pagination Bar Results");
 			String paginationBarResults = getDriver().findElement(By.className(AccountSelectors.paginationBarResults)).getText();
 			logs.debug("<font color=#f442cb>Pagination Bar Results: </font><font color=#b86d29>" + paginationBarResults + "</font>");
@@ -102,6 +111,7 @@ public class Account extends SelTestCase {
 			int maxNumber = Integer.parseInt(maxNum);
 			String TotalNumber = paginationBarResults.split("of")[1].split("Orders")[0];
 			logs.debug("Total Number of orders in the page: " + TotalNumber);
+			getCurrentFunctionName(false);
 			return paginationBarResults;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
@@ -114,11 +124,13 @@ public class Account extends SelTestCase {
 	
 	public static int getNumberOfUserinThePage() throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("Get Number of rows in the page");
 			String paginationBarResults = getDriver().findElement(By.className(AccountSelectors.paginationBarResults)).getText();
 			String maxNum = paginationBarResults.split("-")[1].split(" ")[0];
 			logs.debug("<font color=#f442cb>Number of rows in the page: </font><font color=#b86d29>" + maxNum + "</font>");
 			int maxNumber = Integer.parseInt(maxNum);
+			getCurrentFunctionName(false);
 			return maxNumber;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
@@ -131,11 +143,13 @@ public class Account extends SelTestCase {
 	
 	public static int getNumberOfOrdersinThePage() throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("Get Number of orders in the page");
 			String paginationBarResults = getDriver().findElement(By.className(AccountSelectors.paginationBarResults)).getText();
 			String maxNum = paginationBarResults.split("- ")[1].split(" ")[0];
 			logs.debug("<font color=#f442cb>Number of orders in the page: </font><font color=#b86d29>" + maxNum + "</font>");
 			int maxNumber = Integer.parseInt(maxNum);
+			getCurrentFunctionName(false);
 			return maxNumber;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
@@ -148,8 +162,10 @@ public class Account extends SelTestCase {
 	
 	public static void clickEditSelectedUserProfiles() throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("Click on Edit Selected User Profiles");
 			getDriver().findElement(By.cssSelector(AccountSelectors.editSelectedUserProfiles)).click();
+			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
 					ExceptionMsg.PageFunctionFailed + "Edit Selected User Profiles selector was not found by selenuim",
@@ -161,8 +177,10 @@ public class Account extends SelTestCase {
 	
 	public static void clickAddNewUser() throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("Click on Add New User");
 			getDriver().findElement(By.id(AccountSelectors.addNewUser)).click();
+			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
 					ExceptionMsg.PageFunctionFailed + "Add New User selector was not found by selenuim",
@@ -174,11 +192,13 @@ public class Account extends SelTestCase {
 	
 	public static String getUsersTableData(int index) throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("Get Users Table Data for index( <font color=#f442cb>" + index + ") </font>");
 			String UsersTable = getDriver().findElements(By.cssSelector(AccountSelectors.usersTable)).get(index)
 					.getText();
 			logs.debug("<font color=#f442cb>Users Table Data for index(" + index + "): </font><font color=#b86d29>"
 					+ UsersTable + "</font>");
+			getCurrentFunctionName(false);
 			return UsersTable;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
@@ -190,6 +210,7 @@ public class Account extends SelTestCase {
 	
 	public static int getUserIndex(String user, int numberOfUsers) throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("Get User index: <font color=#f442cb>" + user + ") </font>");
 			int index = 3;
 			for (index = 3; index < 6 * numberOfUsers; index = index + 6) {
@@ -198,6 +219,7 @@ public class Account extends SelTestCase {
 					break;
 				}
 			}
+			getCurrentFunctionName(false);
 			return index;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
@@ -209,10 +231,12 @@ public class Account extends SelTestCase {
 	
 	public static void verifyAddNewUserPageIsOpened() throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("Verify Add New User Page Is Opened");
 			String header = getDriver().findElement(By.className(AccountSelectors.AddNewUserHeader)).getText();
 			logs.debug("Add New User Header: " + header );
 			sassert().assertTrue(header.contains(header), "Actual header is :" + header );
+			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
 					ExceptionMsg.PageFunctionFailed + "Users Table selector was not found by selenuim",
@@ -224,9 +248,11 @@ public class Account extends SelTestCase {
 	
 	public static String getCompanyNameInAddNewUserPage() throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("Get Company Name In Add New User Page");
 			String companyName = getDriver().findElement(By.className(AccountSelectors.companyName)).getText();
 			logs.debug("Company Name In Add New User Page: " + companyName);
+			getCurrentFunctionName(false);
 			return companyName;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
@@ -245,6 +271,7 @@ public class Account extends SelTestCase {
 			Select select = new Select(stateOptions);
 			select.selectByVisibleText(Group_CenterName);
 			getCurrentFunctionName(false);
+			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
 					ExceptionMsg.PageFunctionFailed + "Group / Center Name selector was not found by selenuim",
@@ -260,6 +287,7 @@ public class Account extends SelTestCase {
 			getCurrentFunctionName(true);
 			logs.debug("<font color=#f442cb>Type firstName: </font><font color=#b86d29>" + firstName + "</font>");
 			getDriver().findElement(By.id(AccountSelectors.userFirstName)).sendKeys(firstName);
+			getCurrentFunctionName(false);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
@@ -488,8 +516,8 @@ public class Account extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			logs.debug("<font color=#f442cb>Type Order Approval Threshold: </font><font color=#b86d29>" + OrderApprovalThreshold + "</font>");
-			getDriver().findElement(By.name(AccountSelectors.OrderApprovalThreshold)).clear();
-			getDriver().findElement(By.name(AccountSelectors.OrderApprovalThreshold)).sendKeys(OrderApprovalThreshold);
+//			getDriver().findElement(By.name(AccountSelectors.OrderApprovalThreshold)).clear();
+//			getDriver().findElement(By.name(AccountSelectors.OrderApprovalThreshold)).sendKeys(OrderApprovalThreshold);
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
@@ -523,8 +551,10 @@ public class Account extends SelTestCase {
 	
 	public static void clickShowTheMessage() throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("Click on show The Message");
 			getDriver().findElement(By.cssSelector(AccountSelectors.showTheMessage)).click();
+			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
 					ExceptionMsg.PageFunctionFailed + "Show The Message selector was not found by selenuim",
@@ -536,6 +566,7 @@ public class Account extends SelTestCase {
 	
 	public static void clickHereToResetYourPassword() throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("Click Here To Reset Your Password");
 			getDriver().switchTo().frame("html_msg_body");
 			
@@ -548,6 +579,7 @@ public class Account extends SelTestCase {
 			logs.debug("newURL: " + newURL);
 			getDriver().get(newURL);
 			getDriver().switchTo().parentFrame();
+			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
 					ExceptionMsg.PageFunctionFailed + "Click Here To Reset Your Password selector was not found by selenuim",
@@ -559,10 +591,12 @@ public class Account extends SelTestCase {
 	
 	public static boolean verifyResetPasswordPageIsDisplayed() throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("verify Reset Password Header Is Displayed");
 			boolean isDisplayed = getDriver().findElement(By.cssSelector(AccountSelectors.ResetPasswordHeader)).isDisplayed();
 			String ResetPasswordHeader = getDriver().findElement(By.cssSelector(AccountSelectors.ResetPasswordHeader)).getText();
 			logs.debug("Reset Password Header is: " + ResetPasswordHeader);
+			getCurrentFunctionName(false);
 			return isDisplayed;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
@@ -620,9 +654,11 @@ public class Account extends SelTestCase {
 	
 	public static String getGlobalAlert() throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("Get the Global Alert");
 			String GlobalAlert = getDriver().findElement(By.cssSelector(AccountSelectors.GlobalAlert)).getText();
 			logs.debug("Global Alert: " + GlobalAlert);
+			getCurrentFunctionName(false);
 			return GlobalAlert;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
@@ -649,10 +685,12 @@ public class Account extends SelTestCase {
 	
 	public static int clickOrderHistoryForUserIndex(int index) throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			int newIndex = index/6;
 			logs.debug("click Order History For User Index: <font color=#f442cb>" + newIndex + ") </font>");
 			
 			getDriver().findElements(By.partialLinkText(AccountSelectors.OrderHistory)).get(newIndex).click();
+			getCurrentFunctionName(false);
 			return index;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
@@ -664,12 +702,14 @@ public class Account extends SelTestCase {
 	
 	public static String getUserNameData(int userIndex) throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("Get User Name Data for index( <font color=#f442cb>" + userIndex + ") </font>");
 			int userNameIndex = userIndex-2;
 			String UserData = getDriver().findElements(By.cssSelector(AccountSelectors.usersTable)).get(userNameIndex)
 					.getText();
 			logs.debug("<font color=#f442cb>User Name Data for index(" + userNameIndex + "): </font><font color=#b86d29>"
 					+ UserData + "</font>");
+			getCurrentFunctionName(false);
 			return UserData;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
@@ -679,37 +719,878 @@ public class Account extends SelTestCase {
 		}
 	}
 	
-	  @SuppressWarnings("unused")
-	public static String writeOrderNumberToFile(String orderNumber) {
-	        try {
-	            logs.debug("Write Order Number To File");
-	         
-	            	getCONFIG().setProperty("orderNumber", orderNumber);
-	
-	            FileOutputStream outPropFile;
 
-	            try {
-	                outPropFile = new FileOutputStream(System.getProperty("user.dir")
-	                                + "/src/com/generic/config/config.properties");
-	                getCONFIG().store(outPropFile, "");
-	                outPropFile.close();
-	            } catch (IOException ioe) {
-	                logs.debug("I/O Exception.");
-	                System.exit(0);
-	            }
-	            	
-	            	logs.debug("order saved " + getCONFIG().getProperty("orderNumber"));
+	public static void writeOrderNumberToConfigFile(String Property, String orderNumber) {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Write Order Number To Config File property");
+			getCONFIG().setProperty(Property, orderNumber);
+			FileOutputStream outPropFile;
+
+			try {
+				outPropFile = new FileOutputStream(
+						System.getProperty("user.dir") + "/src/com/generic/config/config.properties");
+				getCONFIG().store(outPropFile, "");
+				outPropFile.close();
+			} catch (IOException ioe) {
+				logs.debug("I/O Exception.");
+				System.exit(0);
+			}
+
+			logs.debug("order saved " + getCONFIG().getProperty(Property));
+			getCurrentFunctionName(false);
+		} catch (Throwable e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed + e.getMessage(), new Object() {
+			}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
 	
-	            return "Pass";
-	        } catch (Throwable t) {
-	            t.printStackTrace();
-	            return "Fail: " + t.getMessage();
-	        }
-	    }
+	public static String getOrdersTableData(int index) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Orders Table Data for index( <font color=#f442cb>" + index + ") </font>");
+			String UsersTable = getDriver().findElements(By.cssSelector(AccountSelectors.usersTable)).get(index)
+					.getText();
+			logs.debug("<font color=#f442cb>Orders Table Data for index(" + index + "): </font><font color=#b86d29>"
+					+ UsersTable + "</font>");
+			getCurrentFunctionName(false);
+			return UsersTable;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Orders Table selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static int getOrderIndex(String order, int numberOfOrders) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get User index: <font color=#f442cb>" + order + ") </font>");
+			int orderindex = -1;
+			for (int index = 1; index < 5 * numberOfOrders; index = index + 5) {
+				if (Account.getOrdersTableData(index).contains(order)) {
+					logs.debug("<font color=#33BEFF> Order index:" + index/5 + "</font>");
+					orderindex=index;
+					break;
+				}
+			}
+			getCurrentFunctionName(false);
+			return orderindex;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Orders Table selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getOrderPlacedDateFromOrdersTable(int index) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Order Placed Date for order in index( <font color=#f442cb>" + index/5 + ") </font>");
+			String OrderPlacedDate = getDriver().findElements(By.cssSelector(AccountSelectors.usersTable)).get(index-1)
+					.getText();
+			
+			logs.debug("Order Placed Date: <font color=#f442cb>" + OrderPlacedDate + ") </font>");
+			getCurrentFunctionName(false);
+			return OrderPlacedDate;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Orders Table selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static void clickOrderNumberFromOrdersTable(String orderNumber) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+//			logs.debug("Click on order Number for order in index( <font color=#f442cb>" + index/5 + ") </font>");
+//			getDriver().findElements(By.cssSelector(AccountSelectors.usersTable)).get(index)
+//					.click();
+			logs.debug("Click on order Number: ( <font color=#f442cb>" + orderNumber + " </font>");
+
+			getDriver().findElement(By.partialLinkText(orderNumber)).click();
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Orders Table selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getOrderStatusFromOrdersTable(int index) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Order Status for order in index( <font color=#f442cb>" + index/5 + ") </font>");
+			String OrderStatus = getDriver().findElements(By.cssSelector(AccountSelectors.usersTable)).get(index+1)
+					.getText();
+			
+			logs.debug("Order Status: <font color=#f442cb>" + OrderStatus + ") </font>");
+			getCurrentFunctionName(false);
+			return OrderStatus;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Orders Table selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getOrderChanelFromOrdersTable(int index) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Order Chanel for order in index( <font color=#f442cb>" + index/5 + ") </font>");
+			String OrderChannel = getDriver().findElements(By.cssSelector(AccountSelectors.usersTable)).get(index+2)
+					.getText();
+			
+			logs.debug("Order Channel: <font color=#f442cb>" + OrderChannel + ") </font>");
+			getCurrentFunctionName(false);
+			return OrderChannel;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Orders Table selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getOrderTotalFromOrdersTable(int index) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Order Total for order in index( <font color=#f442cb>" + index/5 + ") </font>");
+			String OrderTotal = getDriver().findElements(By.cssSelector(AccountSelectors.usersTable)).get(index+3)
+					.getText();
+			
+			logs.debug("Order Total: <font color=#f442cb>" + OrderTotal + ") </font>");
+			getCurrentFunctionName(false);
+			return OrderTotal;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Orders Table selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getOHOrderStatusFromOrdersTable(int index) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Order Status for order in index( <font color=#f442cb>" + index/5 + ") </font>");
+			String OrderStatus = getDriver().findElements(By.cssSelector(AccountSelectors.usersTable)).get(index+2)
+					.getText();
+			
+			logs.debug("Order Status: <font color=#f442cb>" + OrderStatus + ") </font>");
+			getCurrentFunctionName(false);
+			return OrderStatus;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Orders Table selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getOHOrderPlacedByFromOrdersTable(int index) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Order PlacedBy for order in index( <font color=#f442cb>" + index/5 + ") </font>");
+			String OrderStatus = getDriver().findElements(By.cssSelector(AccountSelectors.usersTable)).get(index+1)
+					.getText();
+			
+			logs.debug("Order PlacedBy: <font color=#f442cb>" + OrderStatus + ") </font>");
+			getCurrentFunctionName(false);
+			return OrderStatus;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Orders Table selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getOrderNumberFromOrderDetailsPage() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Order Number From Order Details Page </font>");
+			String OrderNumber = getDriver().findElements(By.className(AccountSelectors.orderDetailsTableValues)).get(0).getText();
+			logs.debug("Order Number: <font color=#f442cb>" + OrderNumber + ") </font>");
+			getCurrentFunctionName(false);
+			return OrderNumber;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Orders Table From Order Details Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getOrderPlacedDateFromOrderDetailsPage() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Order Placed Date From Order Details Page </font>");
+			String OrderNumber = getDriver().findElements(By.className(AccountSelectors.orderDetailsTableValues)).get(1).getText();
+			logs.debug("Order Placed Date: <font color=#f442cb>" + OrderNumber + ") </font>");
+			getCurrentFunctionName(false);
+			return OrderNumber;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Orders Table From Order Details Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getOrderStatusFromOrderDetailsPage(boolean isOHR) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Order Staus From Order Details Page </font>");
+			String OrderStatus = null;
+			if (isOHR)
+				OrderStatus = getDriver().findElements(By.className(AccountSelectors.orderDetailsTableValues)).get(3)
+						.getText();
+			else
+				OrderStatus = getDriver().findElements(By.className(AccountSelectors.orderDetailsTableValues)).get(2)
+						.getText();
+
+			logs.debug("Order Status: <font color=#f442cb>" + OrderStatus + ") </font>");
+			getCurrentFunctionName(false);
+			return OrderStatus;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "Orders Table From Order Details Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getOrderPlacedByValueFromOrderDetailsPage(boolean isOHR) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Order Placed By Value From Order Details Page </font>");
+			String OrderPlacedBy = null;
+			if (isOHR)
+				OrderPlacedBy = getDriver().findElements(By.className(AccountSelectors.orderDetailsTableValues)).get(4)
+						.getText();
+			else
+				OrderPlacedBy = getDriver().findElements(By.className(AccountSelectors.orderDetailsTableValues)).get(3)
+						.getText();
+
+			logs.debug("Order Placed By: <font color=#f442cb>" + OrderPlacedBy + ") </font>");
+			getCurrentFunctionName(false);
+			return OrderPlacedBy;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "Orders Table From Order Details Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getOrderTotalFromOrderDetailsPage(boolean isOHR) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Order Total From Order Details Page </font>");
+			String OrderTotal = null;
+			if (isOHR)
+				OrderTotal = getDriver().findElements(By.className(AccountSelectors.orderDetailsTableValues)).get(2)
+						.getText();
+			else
+				OrderTotal = getDriver().findElements(By.className(AccountSelectors.orderDetailsTableValues)).get(5)
+						.getText();
+
+			logs.debug("Order Total: <font color=#f442cb>" + OrderTotal + ") </font>");
+			getCurrentFunctionName(false);
+			return OrderTotal;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "Orders Table From Order Details Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getOrderChannelFromOrderDetailsPage() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Order Channel From Order Details Page </font>");
+			String OrderChannel = getDriver().findElements(By.className(AccountSelectors.orderDetailsTableValues)).get(4)
+						.getText();
+
+			logs.debug("Order Channel: <font color=#f442cb>" + OrderChannel + ") </font>");
+			getCurrentFunctionName(false);
+			return OrderChannel;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "Orders Table From Order Details Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getOrderReviewerFromOrderDetailsPage() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Order Reviewer From Order Details Page </font>");
+			String OrderReviewer = getDriver().findElements(By.className(AccountSelectors.orderDetailsTableValues)).get(5).getText();
+			logs.debug("Order Reviewer: <font color=#f442cb>" + OrderReviewer + ") </font>");
+			getCurrentFunctionName(false);
+			return OrderReviewer;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Orders Table From Order Details Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getShippingAddressFromOrderDetailsPage(boolean ohr) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Shipping Address From Order Details Page </font>");
+			String shippingData = null;
+			if (ohr)
+				shippingData = getDriver().findElement(By.cssSelector(AccountSelectors.ohrEditShippAddress)).getText();
+			else
+				shippingData = getDriver().findElements(By.cssSelector(AccountSelectors.shippingData)).get(0).getText();
+			logs.debug("Shipping Address: <font color=#f442cb>" + shippingData + ") </font>");
+			getCurrentFunctionName(false);
+			return shippingData;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed
+							+ "Shipping Table From Order Details Page selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getShippingMethodFromOrderDetailsPage(boolean ohr) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Shipping Method From Order Details Page </font>");
+			String shippingData = null;
+			if (ohr)
+				shippingData = getDriver().findElements(By.cssSelector(AccountSelectors.ohrShippingData)).get(1).getText();
+			else
+				shippingData = getDriver().findElements(By.cssSelector(AccountSelectors.shippingData)).get(1).getText();
+
+			logs.debug("Shipping Method: <font color=#f442cb>" + shippingData + ") </font>");
+			getCurrentFunctionName(false);
+			return shippingData;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "Shipping Table From Order Details Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getTrackingNumbersFromOrderDetailsPage() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Tracking Numbers From Order Details Page </font>");
+			String shippingData = getDriver().findElements(By.cssSelector(AccountSelectors.shippingData)).get(2)
+						.getText();
+
+			logs.debug("Tracking Numbers: <font color=#f442cb>" + shippingData + ") </font>");
+			getCurrentFunctionName(false);
+			return shippingData;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "Shipping Table From Order Details Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static int getNumberOfItemsFromOrderDetailsPage() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Number Of Items From Order Details Page </font>");
+			int NumberOfItems = getDriver().findElements(By.className(AccountSelectors.ListItems)).size();
+
+			logs.debug("Number Of Items: <font color=#f442cb>" + NumberOfItems + ") </font>");
+			getCurrentFunctionName(false);
+			return NumberOfItems;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "List items selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getItemImageFromOrderDetailsPage() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get item Image From Order Details Page </font>");
+			String itemImagesrc = getDriver().findElements(By.cssSelector(AccountSelectors.itemImage)).get(0).getAttribute("src");
+			String itemImagealt = getDriver().findElements(By.cssSelector(AccountSelectors.itemImage)).get(0).getAttribute("alt");
+
+			logs.debug("item Image src: <font color=#f442cb>" + itemImagesrc + ") </font>");
+			logs.debug("item Image alt: <font color=#f442cb>" + itemImagealt + ") </font>");
+			getCurrentFunctionName(false);
+			return itemImagesrc;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "item Image From Order Details Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getItemCodeFromOrderDetailsPage() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get item code From Order Details Page </font>");
+			String itemCode = getDriver().findElements(By.cssSelector(AccountSelectors.itemCode)).get(0).getText();
+			logs.debug("item code: <font color=#f442cb>" + itemCode + ") </font>");
+			getCurrentFunctionName(false);
+			return itemCode;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "item code From Order Details Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getItemDeliveryFromOrderDetailsPage() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get item Status From Order Details Page </font>");
+			String itemDelivery = getDriver().findElements(By.cssSelector(AccountSelectors.itemDelivery)).get(0).getText();
+			logs.debug("item Status: <font color=#f442cb>" + itemDelivery + ") </font>");
+			getCurrentFunctionName(false);
+			return itemDelivery;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "item Delivery From Order Details Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getItemPriceFromOrderDetailsPage() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get item price From Order Details Page </font>");
+			String itemPrice = getDriver().findElements(By.cssSelector(AccountSelectors.itemPrice)).get(0).getText();
+			logs.debug("item price: <font color=#f442cb>" + itemPrice + ") </font>");
+			getCurrentFunctionName(false);
+			return itemPrice;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "item price From Order Details Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getItemQuantityFromOrderDetailsPage() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get item Quantity From Order Details Page </font>");
+			String itemQuantity = getDriver().findElements(By.cssSelector(AccountSelectors.itemQuantity)).get(0).getText();
+			logs.debug("item Quantity: <font color=#f442cb>" + itemQuantity + ") </font>");
+			getCurrentFunctionName(false);
+			return itemQuantity;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "item Quantity From Order Details Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getItemNameFromOrderDetailsPage() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get item name From Order Details Page </font>");
+			String itemName = getDriver().findElements(By.cssSelector(AccountSelectors.itemName)).get(0).getText();
+			logs.debug("item name: <font color=#f442cb>" + itemName + ") </font>");
+			getCurrentFunctionName(false);
+			return itemName;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "item name From Order Details Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getItemTotalFromOrderDetailsPage() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get item subtotal From Order Details Page </font>");
+			String itemTotal = getDriver().findElements(By.cssSelector(AccountSelectors.itemTotal)).get(0).getText();
+			logs.debug("item Subtotal: <font color=#f442cb>" + itemTotal + ") </font>");
+			getCurrentFunctionName(false);
+			return itemTotal;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "item total From Order Details Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getBillingAddressFromOrderDetailsPage() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Billing Address From Order Details Page </font>");
+			String billingAddress =getDriver().findElement(By.cssSelector(AccountSelectors.billingAddress)).getText();
+			
+			logs.debug("Billing Address: <font color=#f442cb>" + billingAddress + ") </font>");
+			getCurrentFunctionName(false);
+			return billingAddress;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "Billing Address From Order Details Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getPaymentMethodFromOrderDetailsPage(boolean ohr) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Payment Method From Order Details Page </font>");
+			String paymentMethod = null;
+			if (ohr)
+				paymentMethod = getDriver().findElement(By.cssSelector(AccountSelectors.ohrBillingSection)).getText();
+			else
+				paymentMethod = getDriver().findElement(By.cssSelector(AccountSelectors.paymentMethod)).getText();
+			logs.debug("Payment Method: <font color=#f442cb>" + paymentMethod + ") </font>");
+			getCurrentFunctionName(false);
+			return paymentMethod;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed
+							+ "Payment Method From Order Details Page selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getOrderSubtotalFromOrderDetailsPage(boolean ohr) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Order Subtotal From Order Details Page </font>");
+			String OrderSubtotal = null;
+			if (ohr)
+				OrderSubtotal = getDriver()
+						.findElements(By.cssSelector(AccountSelectors.ohrOrderSummaryFromOrderDetailsPage)).get(1)
+						.getText();
+			else
+				OrderSubtotal = getDriver()
+						.findElements(By.cssSelector(AccountSelectors.OrderSummaryFromOrderDetailsPage)).get(0)
+						.getText();
+			logs.debug("Order Subtotal: <font color=#f442cb>" + OrderSubtotal + ") </font>");
+			getCurrentFunctionName(false);
+			return OrderSubtotal;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed
+							+ "Order Subtotal From Order Details Page selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getOrderDiscountsFromOrderDetailsPage() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Order Discounts From Order Details Page </font>");
+			String Discounts = getDriver().findElements(By.cssSelector(AccountSelectors.OrderSummaryFromOrderDetailsPage)).get(1).getText();
+			logs.debug("Order Discounts: <font color=#f442cb>" + Discounts + ") </font>");
+			getCurrentFunctionName(false);
+			return Discounts;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "Order Discounts From Order Details Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getOrderShippingValueFromOrderDetailsPage(boolean ohr) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Order Shipping Value From Order Details Page </font>");
+			String OrderShippingValue = null;
+			if (ohr)
+				OrderShippingValue = getDriver()
+						.findElements(By.cssSelector(AccountSelectors.ohrOrderSummaryFromOrderDetailsPage)).get(3)
+						.getText();
+			else
+				OrderShippingValue = getDriver()
+						.findElements(By.cssSelector(AccountSelectors.OrderSummaryFromOrderDetailsPage)).get(2)
+						.getText();
+			logs.debug("Order Shipping Value: <font color=#f442cb>" + OrderShippingValue + ") </font>");
+			getCurrentFunctionName(false);
+			return OrderShippingValue;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed
+							+ "Order Shipping Value From Order Details Page selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getOrderTaxFromOrderDetailsPage(boolean ohr) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Order Tax From Order Details Page </font>");
+			String OrderTax = null;
+			if (ohr)
+				OrderTax = getDriver()
+						.findElements(By.cssSelector(AccountSelectors.ohrOrderSummaryFromOrderDetailsPage)).get(5)
+						.getText();
+			else
+				OrderTax = getDriver()
+						.findElements(By.cssSelector(AccountSelectors.OrderSummaryFromOrderDetailsPage)).get(3)
+						.getText();
+			
+			logs.debug("Order Tax: <font color=#f442cb>" + OrderTax + ") </font>");
+			getCurrentFunctionName(false);
+			return OrderTax;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "Order Tax From Order Details Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getOrderSummaryOrderTotalFromOrderDetailsPage(boolean ohr) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Order Total From Order Details Page </font>");
+			String OrderTotal = null;
+			if (ohr)
+				OrderTotal = getDriver()
+						.findElements(By.cssSelector(AccountSelectors.ohrOrderSummaryFromOrderDetailsPage)).get(7)
+						.getText();
+			else
+				OrderTotal = getDriver()
+						.findElements(By.cssSelector(AccountSelectors.OrderSummaryFromOrderDetailsPage)).get(4)
+						.getText();
+			logs.debug("Order Total: <font color=#f442cb>" + OrderTotal + ") </font>");
+			getCurrentFunctionName(false);
+			return OrderTotal;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "Order Total From Order Details Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static void clickReorderButton() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Click Reorder Button </font>");
+			getDriver().findElements(By.id(AccountSelectors.reorderButton)).get(0).click();
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "Reorder Button selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static void clickOnHoldOrdersNavLink() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Click On Hold Orders Link from the left nav </font>");
+			getDriver().findElement(By.cssSelector(AccountSelectors.OnHoldOrders)).click();
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "On Hold Orders Link selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static void clickYourOrdersNavLink() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Click Your Orders Link from the left nav </font>");
+			getDriver().findElement(By.cssSelector(AccountSelectors.YourOrders)).click();
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "Your Orders Link selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static boolean verifyYourOrdersHeaderIsDisplayed() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("verify Your Orders Header Is Displayed");
+			boolean isDisplayed = getDriver().findElement(By.partialLinkText(AccountSelectors.YourOrdersHeader)).isDisplayed();
+			getCurrentFunctionName(false);
+			return isDisplayed;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Your Orders Header selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static boolean verifyOnHoldOrdersHeaderIsDisplayed() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("verify On Hold Orders Header Is Displayed");
+			boolean isDisplayed = getDriver().findElement(By.partialLinkText(AccountSelectors.OnHoldOrdersHeader)).isDisplayed();
+			getCurrentFunctionName(false);
+			return isDisplayed;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "On Hold Orders Header selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static void clickToUnlockOrder(int index) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Click to unlock order </font>");
+			getDriver().findElements(By.partialLinkText(AccountSelectors.ClickToUnlockOrder)).get(index).click();
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "Click to unlock order Link selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static boolean verifyOrderDetailsHeaderIsDisplayed(String onHoldOrderNumber) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("verify On Hold Order Details Header Is Displayed");
+			boolean isDisplayed = getDriver().findElement(By.partialLinkText(onHoldOrderNumber)).isDisplayed();
+			getCurrentFunctionName(false);
+			return isDisplayed;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "On Hold Order Details Header selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getohrCommentsFromOrderDetailsPage() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Order Discounts From Order Details Page </font>");
+			String ohrCommentsDisplay = getDriver().findElement(By.cssSelector(AccountSelectors.ohrCommentsDisplay)).getText();
+			logs.debug("ohr Comments: <font color=#f442cb>" + ohrCommentsDisplay + ") </font>");
+			getCurrentFunctionName(false);
+			return ohrCommentsDisplay;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "ohr Comments From Order Details Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static String getohrMessageFromOrderDetailsPage() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Order Discounts From Order Details Page </font>");
+			String ohrMessage = getDriver().findElement(By.cssSelector(AccountSelectors.ohrMessage)).getText();
+			logs.debug("ohr Message: <font color=#f442cb>" + ohrMessage + ") </font>");
+			getCurrentFunctionName(false);
+			return ohrMessage;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "ohr Message From Order Details Page selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static void clickohrSubmitForApproval() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Click ohr Submit For Approval Button </font>");
+			getDriver().findElements(By.partialLinkText(AccountSelectors.ohrSubmitForApproval)).get(0).click();
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "ohr Submit For Approval Button selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
 	
 	
+	public static void clickohrohrRejectOrder() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Click ohr Reject Order Button </font>");
+			getDriver().findElements(By.partialLinkText(AccountSelectors.ohrRejectOrder)).get(0).click();
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "ohr Reject Order Button selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
 	
+	public static String getohrOrderReleasedMessage() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get order Released Message </font>");
+			String orderReleased = getDriver().findElement(By.cssSelector(AccountSelectors.orderReleased)).getText();
+			logs.debug("order Released Message: <font color=#f442cb>" + orderReleased + ") </font>");
+			getCurrentFunctionName(false);
+			return orderReleased;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "order Released Message selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
 	
-	
+	public static boolean verifyContinueShoppingButtonIsDisplayed() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("verify Continue Shopping Button Is Displayed");
+			boolean isDisplayed = getDriver().findElement(By.partialLinkText(AccountSelectors.ContinueShopping)).isDisplayed();
+			getCurrentFunctionName(false);
+			return isDisplayed;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "ContinueShopping selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
 	
 }

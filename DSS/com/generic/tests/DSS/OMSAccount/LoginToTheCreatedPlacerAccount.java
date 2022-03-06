@@ -1,7 +1,6 @@
 package com.generic.tests.DSS.OMSAccount;
 
 import java.text.MessageFormat;
-import java.util.LinkedHashMap;
 import java.util.NoSuchElementException;
 
 import org.testng.Assert;
@@ -16,7 +15,7 @@ import com.generic.setup.SelTestCase;
 public class LoginToTheCreatedPlacerAccount extends SelTestCase {
 
 	public static void startTest(String shippingMethod, int productsCount, String PlacerMail,
-			String payment, LinkedHashMap<String, String> userDetalis) throws Exception {
+			String payment) throws Exception {
 		try {
 
 			String orderSubtotal = "";
@@ -38,14 +37,11 @@ public class LoginToTheCreatedPlacerAccount extends SelTestCase {
 			logs.debug("Login to the created account: " + PlacerMail );
 			HomePage.clickSignIn();
 			Login.Login(PlacerMail,getCONFIG().getProperty("NewUserPassword") );
-
+			Assert.assertTrue(Login.verifyIfUserLoggedIn(), "User is not logged in Successfully");
 //			
-//			HomePage.closeSignUpModal();
+			HomePage.closeSignUpModal();
 //	
-//			HomePage.clickSignIn();
-//			Login.Login(userDetalis);
-//			
-////			logs.debug("User is logged in successfully?: " + Login.verifyIfUserLoggedInSuccessfully());
+             //Place an order
 			// Add products to cart
 			CheckOut.addRandomProductTocart(productsCount);
 
@@ -99,13 +95,11 @@ public class LoginToTheCreatedPlacerAccount extends SelTestCase {
 			CheckOut.placeOrder();
 			CheckOut.closeFeedbackModal();
 			CheckOut.getSuccessMessage();
-			Account.writeOrderNumberToFile(CheckOut.getOrderNumber());
 			CheckOut.getOrderStatus();
 			
 			// Check number of products in order confirmation page
 			CheckOut.checkProductsInOrderConfirmationPage();
-//			sassert().assertTrue(CheckOut.checkProductsInOrderConfirmationPage() == productsCount,
-//					"Some products are missing in order confirmation page ");
+
 			sassert().assertTrue(CheckOut.getitemsQuantityInOrderConfirmationPage() == productsCount,
 					"Some Qty are missing in order confirmation page ");
 			
@@ -118,6 +112,12 @@ public class LoginToTheCreatedPlacerAccount extends SelTestCase {
 			sassert().assertEquals(Shipping, newShipping, "Shipping in order confirmation page is not matching the one on payment page");
 			sassert().assertEquals(Tax, newTax, "Tax in order confirmation page is not matching the one on payment page");
 			sassert().assertEquals(EstimatedOrder, newEstimatedOrder, "Estimated Order in order confirmation page is not matching the one on payment page");
+			
+			double orderEstimatedTotal = Double.parseDouble(EstimatedOrder.replace('$', ' ').trim());
+			if (orderEstimatedTotal < Placer1ThresholdAmount)
+				Account.writeOrderNumberToConfigFile("orderNumber", CheckOut.getOrderNumber());
+			else
+				Account.writeOrderNumberToConfigFile("OnHoldOrderNumber", CheckOut.getOrderNumber());
 			
 			sassert().assertAll();
 			getCurrentFunctionName(false);
