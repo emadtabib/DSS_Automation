@@ -60,7 +60,7 @@ public class GuestCheckoutSingleAddress extends SelTestCase {
 			sassert().assertTrue(CheckOut.getitemsQuantityInCheckoutPges() == productsCount,
 					"Some products are missing in delivery method page ");
 			
-			CheckOut.selectshippingMethods(shippingMethod);
+//			CheckOut.selectshippingMethods(shippingMethod);
 			CheckOut.ContinueToPayment();
 
 			NewOrderSubtotal = CheckOut.getOrderSummaryItems(1);

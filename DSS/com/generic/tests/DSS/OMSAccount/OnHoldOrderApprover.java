@@ -11,7 +11,7 @@ import com.generic.page.Login;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
 
-public class OnHoldOrderReview extends SelTestCase {
+public class OnHoldOrderApprover extends SelTestCase {
 
 	public static void startTest(String omsUser) throws Exception {
 		try {
@@ -39,7 +39,7 @@ public class OnHoldOrderReview extends SelTestCase {
 			}
 
 			String OnHoldOrderNumber = getCONFIG().getProperty("OnHoldOrderNumber");
-			logs.debug("<font color=#f442cb> Check if the new order " + OnHoldOrderNumber +" number exist in the orders table </font>");
+			logs.debug("<font color=#f442cb> Check if the new order number: " + OnHoldOrderNumber +" exist in the orders table </font>");
 			boolean orderIsDisplayed = false;
 			int orderIndex = -1;
 			Thread.sleep(2000); // Wait until the new order displayed on your order page.
@@ -47,7 +47,7 @@ public class OnHoldOrderReview extends SelTestCase {
 				if (Account.getOrdersTableData(index).contains(OnHoldOrderNumber)) {
 					logs.debug(
 							"<font color=#33BEFF>" + OnHoldOrderNumber + " order is displayed on the orders table </font>");
-//					Assert.assertTrue(Account.getOrdersTableData(index).contains("Click to unlock order"), "Click to unlock order is not displayed for the order");
+//					Assert.assertTrue(OnHoldOrderNumber.contains("Click to unlock order"), "Click to unlock order is not displayed for the order");
 					orderIsDisplayed = true;
 					break;
 				}
@@ -55,21 +55,24 @@ public class OnHoldOrderReview extends SelTestCase {
 			if (orderIsDisplayed)
 				orderIndex = Account.getOrderIndex(OnHoldOrderNumber, numOfOrdersAvailable);
 			else
-				Assert.assertTrue(orderIsDisplayed, "The new created order " + OnHoldOrderNumber + " is not displayed on your orders page");
+				Assert.assertTrue(orderIsDisplayed,
+						"The new reviewed order " + OnHoldOrderNumber + " is not displayed on your orders page");
 			String OrderPlacedDateFromOrdersTable = Account.getOrderPlacedDateFromOrdersTable(orderIndex);
 			String OrderStatusFromOrdersTable = Account.getOHOrderStatusFromOrdersTable(orderIndex);
 			String OrderPlacedByFromOrdersTable = Account.getOHOrderPlacedByFromOrdersTable(orderIndex);
 			String OrderTotalFromOrdersTable = Account.getOrderTotalFromOrdersTable(orderIndex);
-			
-			sassert().assertEquals(OrderStatusFromOrdersTable.toLowerCase(), "pending review", "<font color=#f442cb>Expected Status: "
-					+ "pening review" + ". Actual: " + OrderStatusFromOrdersTable + "</font>");
-			sassert().assertEquals(OrderPlacedByFromOrdersTable, "Placer 1", "<font color=#f442cb>Expected Placed By user: "
-					+ "Placer 1" + ". Actual: " + OrderPlacedByFromOrdersTable + "</font>");
 
+			sassert().assertEquals(OrderStatusFromOrdersTable.toLowerCase(), "pending approval",
+					"<font color=#f442cb>Expected Status: " + "pending approval" + ". Actual: "
+							+ OrderStatusFromOrdersTable.toLowerCase() + "</font>");
+			sassert().assertEquals(OrderPlacedByFromOrdersTable, "Placer 1",
+					"<font color=#f442cb>Expected Placed By user: " + OrderPlacedByFromOrdersTable + ". Actual: "
+							+ OrderPlacedByFromOrdersTable + "</font>");
 			if (Account.getOrdersTableData(orderIndex).contains("unlock")) {
 				logs.debug("<font color=#33BEFF>" + OnHoldOrderNumber + " Click to unlock order </font>");
 				Account.clickToUnlockOrder(orderIndex);
 			}
+
 			Thread.sleep(6000); // Wait until the page reloads.
 			Account.clickOrderNumberFromOrdersTable(OnHoldOrderNumber);
 			Account.verifyOrderDetailsHeaderIsDisplayed(OnHoldOrderNumber);
@@ -85,12 +88,12 @@ public class OnHoldOrderReview extends SelTestCase {
 			sassert().assertEquals(OrderPlacedDateFromOrderDetailsPage.replace(",", ""), OrderPlacedDateFromOrdersTable.replace(" 0", " ").replace(",", ""),
 					"<font color=#f442cb>Expected: " + OrderPlacedDateFromOrdersTable.replace(" 0", " ").replace(",", "") + ". Actual: "
 							+ OrderPlacedDateFromOrderDetailsPage.replace(",", "") + "</font>");
-			sassert().assertTrue(OrderPlacedByFromOrdersTable.toLowerCase().contains(OrderPlacedBylFromOrderDetailsPage.toLowerCase()),
-					"<font color=#f442cb>Expected: " + OrderPlacedBylFromOrderDetailsPage.toLowerCase() + ". Actual: "
-							+ OrderPlacedByFromOrdersTable + "</font>");
+			sassert().assertEquals(OrderPlacedBylFromOrderDetailsPage, OrderPlacedByFromOrdersTable,
+					"<font color=#f442cb>Expected: " + OrderPlacedByFromOrdersTable + ". Actual: "
+							+ OrderPlacedBylFromOrderDetailsPage + "</font>");
 			sassert().assertEquals(OrderStatusFromOrderDetailsPage.toLowerCase(), OrderStatusFromOrdersTable.toLowerCase(),
-					"<font color=#f442cb>Expected: " + OrderStatusFromOrdersTable.toLowerCase() + ". Actual: "
-							+ OrderStatusFromOrderDetailsPage.toLowerCase() + "</font>");
+					"<font color=#f442cb>Expected: " + OrderStatusFromOrdersTable + ". Actual: "
+							+ OrderStatusFromOrderDetailsPage + "</font>");
 			sassert().assertEquals(OrderTotalFromOrderDetailsPage, OrderTotalFromOrdersTable,
 					"<font color=#f442cb>Expected: " + OrderTotalFromOrdersTable + ". Actual: "
 							+ OrderTotalFromOrderDetailsPage + "</font>");
@@ -98,36 +101,43 @@ public class OnHoldOrderReview extends SelTestCase {
 			Account.getShippingAddressFromOrderDetailsPage(true);
 			Account.getShippingMethodFromOrderDetailsPage(true);
 
-		    Account.getNumberOfItemsFromOrderDetailsPage();
+			Account.getNumberOfItemsFromOrderDetailsPage();
 			Account.getItemImageFromOrderDetailsPage(true);
 			Account.getItemNameFromOrderDetailsPage(true);
 			Account.getItemCodeFromOrderDetailsPage(true);
 //			String ItemStatusFromOrderDetailsPage = Account.getItemDeliveryFromOrderDetailsPage();
-			Account.getItemPriceFromOrderDetailsPage();
+	    	Account.getItemPriceFromOrderDetailsPage();
 			Account.getItemQuantityFromOrderDetailsPage();
 			Account.getItemTotalFromOrderDetailsPage(true);
 
 			Account.getPaymentMethodFromOrderDetailsPage(true);
-
 			Account.getohrCommentsFromOrderDetailsPage();
-			Account.getohrMessageFromOrderDetailsPage();
-			
 			Account.getOrderSubtotalFromOrderDetailsPage(true);
 			Account.getOrderShippingValueFromOrderDetailsPage(true);
 			Account.getOrderTaxFromOrderDetailsPage(true);
 			Account.getOrderTotalFromOrderDetailsPage(true);
 
-			Account.clickohrSubmitForApproval();
+			Account.clickohrEditPayment();
+			Account.getselectedPaymentMethodId();
+			Account.getselectedBillingAddress();
+			Account.typeCreditCVV("111");
+			Account.clickSaveAndContinue();
+			Thread.sleep(6000); // Wait until the page reloads.
+			Account.getCompletedCreditCardNumber();
+			Account.getCompletedCreditCardBilling();
 
-			String ohrOrderReleasedMessage = Account.getohrOrderReleasedMessage();
+			Account.clickohrSubmitForRelease();
+			Thread.sleep(6000); // Wait until the page reloads.
+			
+			String ohrOrderApprovedMessage = Account.getohrOrderApprovedMessage();
 			OrderNumberFromOrderDetailsPage = Account.getOrderNumberFromOrderDetailsPage();
 			OrderPlacedDateFromOrderDetailsPage = Account.getOrderPlacedDateFromOrderDetailsPage();
 			OrderStatusFromOrderDetailsPage = Account.getOrderStatusFromOrderDetailsPage(true);
 			OrderPlacedBylFromOrderDetailsPage = Account.getOrderPlacedByValueFromOrderDetailsPage(true);
 			OrderTotalFromOrderDetailsPage = Account.getOrderTotalFromOrderDetailsPage(true);
 			String OrderReviewerFromOrderDetailsPage = Account.getOrderReviewerFromOrderDetailsPage();
-			sassert().assertEquals(OrderStatusFromOrderDetailsPage.toLowerCase(), "pending approval",
-					"<font color=#f442cb> Status is not updated correctly. Expected: " + "PENDING APPROVAL" + ". Actual: "
+			sassert().assertEquals(OrderStatusFromOrderDetailsPage.toLowerCase(), "approved",
+					"<font color=#f442cb> Status is not updated correctly. Expected Status: " + "APPROVED" + ". Actual: "
 							+ OrderStatusFromOrderDetailsPage.toLowerCase() + "</font>");
 			sassert().assertTrue(Account.verifyContinueShoppingButtonIsDisplayed(),
 					"<font color=#f442cb> Continue Button is not Displayed</font>");

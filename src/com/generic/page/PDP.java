@@ -19,6 +19,7 @@ public class PDP extends SelTestCase {
 	
 	public static void clickAddToCartButton() throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("Click Add To Cart Button ");
 			boolean singlePDP = getDriver().findElement(By.cssSelector(PDPSelectors.addToCartButton)).isDisplayed();
 			logs.debug("<font color=#f442cb>Single PDP ?: </font><font color=#b86d29>" + singlePDP + "</font>");
@@ -26,8 +27,12 @@ public class PDP extends SelTestCase {
 				getDriver().findElement(By.cssSelector(PDPSelectors.addToCartButton)).click();
 			else
 				getDriver().findElement(By.cssSelector(PDPSelectors.BundlesAddToCart)).click();
+			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
-			System.out.println("Add To Cart Button selector was not found by selenuim");
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Add To Cart Button selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 
@@ -35,10 +40,15 @@ public class PDP extends SelTestCase {
 	
 	public static void verifyAddToCartLayerIsDisplayed() throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("Verify Add To Cart Layer Is Displayed");
 			getDriver().findElement(By.cssSelector(PDPSelectors.addToCartLayer)).isDisplayed();
+			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
-			System.out.println("Add To Cart Layer selector was not found by selenuim");
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Add to cart layer selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 
@@ -46,10 +56,15 @@ public class PDP extends SelTestCase {
 	
 	public static void clickProceedToCheckout() throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("Click Proceed To Checkout");
 			getDriver().findElement(By.cssSelector(PDPSelectors.proceedToCheckout)).click();
+			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
-			System.out.println("Proceed To Checkout Button selector was not found by selenuim");
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Proceed to checkout button selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 
@@ -57,10 +72,15 @@ public class PDP extends SelTestCase {
 	
 	public static void clickMiniCartContinueCheckout() throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("Click mini Cart Continue Checkout");
 			getDriver().findElement(By.cssSelector(PDPSelectors.miniCartContinueCheckout)).click();
+			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
-			System.out.println("Mini Cart Continue Checkout Button selector was not found by selenuim");
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Mini Cart Continue Checkout Button selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 
@@ -68,9 +88,11 @@ public class PDP extends SelTestCase {
 	
 	public static void navigteToBundleLandingPage() throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("Navigte To Bundle Landing Page");
 			getDriver().findElement(By.partialLinkText(PDPSelectors.budgetBundles)).click();
 			getDriver().findElement(By.partialLinkText(PDPSelectors.budgetBundles)).click();
+			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
 					ExceptionMsg.PageFunctionFailed + "Budget Bundles link selector was not found by selenuim",
@@ -82,6 +104,7 @@ public class PDP extends SelTestCase {
 
 	public static void navigteToRandomBundlePage() throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			logs.debug("Navigte To Bundle Page");
 			List<WebElement> items = new ArrayList<WebElement>();
 			items = SelectorUtil.getAllElements(PDPSelectors.BundlesLinks);
@@ -90,6 +113,7 @@ public class PDP extends SelTestCase {
 			Random random = new Random();
 			int index = random.nextInt(items.size() - 1);
 			items.get(index).click();
+			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
 					ExceptionMsg.PageFunctionFailed + "Shop now links for bundle items selectors were not found by selenuim",

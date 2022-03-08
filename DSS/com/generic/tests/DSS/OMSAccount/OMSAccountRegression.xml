@@ -3,7 +3,7 @@
 <suite name="OMSAccount Regression" parallel="tests"
 	thread-count="3" data-provider-thread-count="1">
 
-	<test name="checkout chrome">
+	<test name="oms account chrome">
 		<parameter name="browserName" value="chrome"></parameter>
 		<parameter name="Env" value="exts1"></parameter>
 		<classes>

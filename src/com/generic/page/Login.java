@@ -18,19 +18,31 @@ public class Login extends SelTestCase {
 	
 	public static void typeEmailAddress(String emailAddress) throws Exception {
 		try {
+			getCurrentFunctionName(true);
+			logs.debug("Type user email: "+ emailAddress);
 			getDriver().findElement(By.cssSelector(LoginSelectors.userNameField)).sendKeys(emailAddress);
+			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
-			System.out.println("userName Field selector was not found by selenuim");
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "userName Field selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 	}
 	
-	public static void typePassword(String passord) throws Exception {
+	public static void typePassword(String password) throws Exception {
 		try {
-			getDriver().findElement(By.cssSelector(LoginSelectors.passwordField)).sendKeys(passord);
+			getCurrentFunctionName(true);
+			logs.debug("Type password: "+ password);
+			getDriver().findElement(By.cssSelector(LoginSelectors.passwordField)).sendKeys(password);
+			getCurrentFunctionName(false);
 		
 		} catch (NoSuchElementException e) {
-			System.out.println("password Field selector was not found by selenuim");
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "password Field selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 
@@ -39,9 +51,14 @@ public class Login extends SelTestCase {
 	
 	public static void clickSubmitSignIn() throws Exception {
 		try {
+			getCurrentFunctionName(true);
 			getDriver().findElement(By.cssSelector(LoginSelectors.singInButton)).click();
+			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
-			System.out.println("singIn Button selector was not found by selenuim");
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "singIn Button selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 
@@ -56,10 +73,11 @@ public class Login extends SelTestCase {
 	}
 	
 	public static void Login (String email, String password) throws Exception {
-
+		getCurrentFunctionName(true);
 		typeEmailAddress(email);
 		typePassword(password);
 		clickSubmitSignIn();
+		getCurrentFunctionName(false);
 
 	}
 	
@@ -89,6 +107,20 @@ public class Login extends SelTestCase {
 			isDisplyed = getDriver().findElement(By.cssSelector(LoginSelectors.userName)).isDisplayed();
 			getCurrentFunctionName(false);
 			return isDisplyed;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "My Account - User name selectors were not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static void clickMyAccountMenu() {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Click on My Account icon");
+			getDriver().findElement(By.cssSelector(HomePageSelectors.myAccountIcon)).click();	
+			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
 					ExceptionMsg.PageFunctionFailed + "My Account - User name selectors were not found by selenuim", new Object() {

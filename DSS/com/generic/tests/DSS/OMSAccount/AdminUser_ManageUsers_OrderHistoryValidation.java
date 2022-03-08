@@ -89,13 +89,13 @@ public class AdminUser_ManageUsers_OrderHistoryValidation extends SelTestCase {
 			
 				sassert().assertEquals(getOrderNumberFromOrderDetailsPage, orderNumber, "<font color=#f442cb>Expected: "
 						+ orderNumber + "Actual: " + getOrderNumberFromOrderDetailsPage + "</font>");
-				sassert().assertEquals(OrderPlacedDateFromOrderDetailsPage, OrderPlacedDateFromOrdersTable,
-						"<font color=#f442cb>Expected: " + OrderPlacedDateFromOrdersTable + "Actual: "
+				sassert().assertEquals(OrderPlacedDateFromOrderDetailsPage, OrderPlacedDateFromOrdersTable.replace(" 0", " "),
+						"<font color=#f442cb>Expected: " + OrderPlacedDateFromOrdersTable.replace(" 0", " ") + "Actual: "
 								+ OrderPlacedDateFromOrderDetailsPage + "</font>");
 				sassert().assertEquals(OrderChanelFromOrderDetailsPage, OrderChanelFromOrdersTable,
 						"<font color=#f442cb>Expected: " + OrderChanelFromOrdersTable + "Actual: "
 								+ OrderChanelFromOrderDetailsPage + "</font>");
-				sassert().assertEquals(OrderStatusFromOrderDetailsPage, OrderStatusFromOrdersTable,
+				sassert().assertEquals(OrderStatusFromOrderDetailsPage.toLowerCase(), OrderStatusFromOrdersTable.toLowerCase(),
 						"<font color=#f442cb>Expected: " + OrderStatusFromOrdersTable + "Actual: "
 								+ OrderStatusFromOrderDetailsPage + "</font>");
 				sassert().assertEquals(getOrderTotalFromOrderDetailsPage, getOrderTotalFromOrdersTable,
@@ -107,13 +107,13 @@ public class AdminUser_ManageUsers_OrderHistoryValidation extends SelTestCase {
 				String trackingNumbersFromOrderDetailsPage = Account.getTrackingNumbersFromOrderDetailsPage();
 			
 				int NumberOfItemsFromOrderDetailsPage = Account.getNumberOfItemsFromOrderDetailsPage();
-				String itemImageSrcFromOrderDetailsPage = Account.getItemImageFromOrderDetailsPage();
-				String itemNameFromOrderDetailsPage = Account.getItemNameFromOrderDetailsPage();
-				String itemCodeFromOrderDetailsPage = Account.getItemCodeFromOrderDetailsPage();
+				String itemImageSrcFromOrderDetailsPage = Account.getItemImageFromOrderDetailsPage(false);
+				String itemNameFromOrderDetailsPage = Account.getItemNameFromOrderDetailsPage(false);
+				String itemCodeFromOrderDetailsPage = Account.getItemCodeFromOrderDetailsPage(false);
 				String getItemStatusFromOrderDetailsPage = Account.getItemDeliveryFromOrderDetailsPage();
 				String itemPriceFromOrderDetailsPage = Account.getItemPriceFromOrderDetailsPage();
 				String itemQuantityFromOrderDetailsPage = Account.getItemQuantityFromOrderDetailsPage();
-				String itemTotalFromOrderDetailsPage = Account.getItemTotalFromOrderDetailsPage();
+				String itemTotalFromOrderDetailsPage = Account.getItemTotalFromOrderDetailsPage(false);
 				
 				String BillingAddressFromOrderDetailsPage = Account.getBillingAddressFromOrderDetailsPage();
 				String PaymentMethodFromOrderDetailsPage = Account.getPaymentMethodFromOrderDetailsPage(false);

@@ -12,4 +12,5 @@ public class HomePageSelectors
 	public static final String passwordField = "#j_password";
 	public static final String singInButton = ".btn.btn-primary.btn-block.load_orders";
 	public static final String closeSignUpModalee = ".dy-modal-contents>.dy-lb-close";
+	public static final String signout = "signout-link";
 }

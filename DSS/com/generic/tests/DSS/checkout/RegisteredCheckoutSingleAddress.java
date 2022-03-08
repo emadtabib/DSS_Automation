@@ -4,6 +4,8 @@ import java.text.MessageFormat;
 import java.util.LinkedHashMap;
 import java.util.NoSuchElementException;
 
+import org.testng.Assert;
+
 import com.generic.page.Account;
 import com.generic.page.CheckOut;
 import com.generic.page.HomePage;
@@ -26,6 +28,7 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 	
 			HomePage.clickSignIn();
 			Login.Login(userDetalis);
+			Assert.assertTrue(Login.verifyIfUserLoggedIn(), "User is not logged in Successfully");
 			
 //			logs.debug("User is logged in successfully?: " + Login.verifyIfUserLoggedInSuccessfully());
 			// Add products to cart
@@ -58,7 +61,7 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 			sassert().assertTrue(CheckOut.getitemsQuantityInCheckoutPges() == productsCount,
 					"Some products are missing in delivery method page ");
 			
-			CheckOut.selectshippingMethods(shippingMethod);
+//			CheckOut.selectshippingMethods(shippingMethod);
 			CheckOut.ContinueToPayment();
 
 			NewOrderSubtotal = CheckOut.getOrderSummaryItems(1);

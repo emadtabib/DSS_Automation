@@ -27,16 +27,26 @@ public class Base_OMSAccount extends SelTestCase {
 	public static final String Login_To_The_Created_Placer_account  = "Login to the created placer account";
 	public static final String Create_Admin_account  = "Create an Admin account";
 	public static final String Login_To_The_Created_Admin_account  = "Login to the created Admin account";
-
-	//
-	public static final String AdminMail = "AutoAdmin_" +RandomUtilities.getRandomEmail();
-	public static final String ApproverMail = "AutoApprover_" +RandomUtilities.getRandomEmail();
-	public static final String ReviewerMail = "AutoReviewer_" +RandomUtilities.getRandomEmail();
-	public static final String PlacerMail = "AutoPlacer_" + RandomUtilities.getRandomEmail();
-
-
+	public static final String Order_History_Validation_From_Manage_Users = "Order History Validation From Manage Users";
+	public static final String Admin_user_Normal_Order_Validation = "Admin user: Normal Order Validation";
+	public static final String Reviewer_user_Normal_Order_Validation = "Reviewer user: Normal Order Validation";
+	public static final String On_Hold_Order_Review_Submit_for_approval = "On Hold Order Review - Submit for approval";
+	public static final String On_Hold_Order_Approve_Submit_for_release = "On Hold Order Approve - Submit for release";
+	public static final String On_Hold_Order_Reviewer_Reject_Order = "On Hold Order Review - Reject Order";
+	public static final String On_Hold_Order_Approver_Reject_Order = "On Hold Order Approve - Reject Order";
 	
-//	public static final String PlacerMail = "auto_ealr3198@mailinator.com";
+	//
+	public static final String Create_AdminMail = "AutoAdmin_" +RandomUtilities.getRandomEmail();
+	public static final String Create_ApproverMail = "AutoApprover_" +RandomUtilities.getRandomEmail();
+	public static final String Create_ReviewerMail = "AutoReviewer_" +RandomUtilities.getRandomEmail();
+	public static final String Create_PlacerMail = "AutoPlacer_" + RandomUtilities.getRandomEmail();
+
+
+	public static final String AdminMail = "admin@mailinator.com";
+	public static final String ApproverMail = "approver11@gmail.com";
+	public static final String ReviewerMail = "reviewer1@gmail.com";
+	public static final String PlacerMail = "placer1@gmail.com";
+
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.OMSAccountSheet;
 
@@ -62,9 +72,9 @@ public class Base_OMSAccount extends SelTestCase {
 	}
 
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
-	@Test(dataProvider = "OMSAccount")
+	@Test(dataProvider = "OMSAccount", priority=2)
 	public void checkOutBaseTest(String caseId, String runTest, String desc, String proprties, String productsNumber,
-			String shippingMethod, String payment, String shippingAddress, String billingAddress, String email)
+			String shippingMethod, String payment, String email)
 			throws Exception {
 
 		// Important to add this for logging/reporting
@@ -74,40 +84,60 @@ public class Base_OMSAccount extends SelTestCase {
 				this.getClass().getCanonicalName(), desc, proprties.replace("\n", "<br>- "), payment, shippingMethod);
 		initReportTime();
 
-		LinkedHashMap<String, String> addressDetails = (LinkedHashMap<String, String>) addresses.get(shippingAddress);
-		LinkedHashMap<String, String> paymentDetails = (LinkedHashMap<String, String>) paymentCards.get(payment);
 		LinkedHashMap<String, String> userdetails = (LinkedHashMap<String, String>) users.get(email);
 
-		int productsCount = Integer.parseInt(productsNumber);
+		
 
 		try {
 
 			if (proprties.contains(Create_Approver_account)) {
-				CreateApproverAccount.startTest(ApproverMail, userdetails);
+				CreateApproverAccount.startTest(Create_ApproverMail, userdetails);
 			}
 
 			if (proprties.contains(Login_To_The_Created_Approver_account)) {
-				LoginToTheCreatedApproverAccount.startTest( ApproverMail);
+				LoginToTheCreatedApproverAccount.startTest(Create_ApproverMail);
 			}
 			if (proprties.contains(Create_Placer_account)) {
-				CreatePlacerAccount.startTest(PlacerMail, ApproverMail, ReviewerMail, userdetails);
+				CreatePlacerAccount.startTest(Create_PlacerMail, Create_ApproverMail, Create_ReviewerMail, userdetails);
 			}
 
 			if (proprties.contains(Login_To_The_Created_Placer_account)) {
-				LoginToTheCreatedPlacerAccount.startTest(shippingMethod, productsCount, PlacerMail, payment);
+				int productsCount = Integer.parseInt(productsNumber);
+				LoginToTheCreatedPlacerAccount.startTest(shippingMethod, productsCount, Create_PlacerMail, payment);
 			}
 			if (proprties.contains(Create_Reviewer_account)) {
-				CreateReviewerAccount.startTest(ReviewerMail, userdetails);
+				CreateReviewerAccount.startTest(Create_ReviewerMail, userdetails);
 			}
 
 			if (proprties.contains(Login_To_The_Created_Reviewer_account)) {
-				LoginToTheCreatedReviewerAccount.startTest(ReviewerMail);
+				LoginToTheCreatedReviewerAccount.startTest(Create_ReviewerMail);
 			}
 			if (proprties.contains(Create_Admin_account)) {
-				CreateAdminAccount.startTest(AdminMail, userdetails);
+				CreateAdminAccount.startTest(Create_AdminMail, userdetails);
 			}
 
 			if (proprties.contains(Login_To_The_Created_Admin_account)) {
+				LoginToTheCreatedAdminAccount.startTest(Create_AdminMail);
+			}
+			if (proprties.contains(Order_History_Validation_From_Manage_Users)) {
+				AdminUser_ManageUsers_OrderHistoryValidation.startTest(AdminMail, PlacerMail);
+			}
+			if (proprties.contains(Admin_user_Normal_Order_Validation)) {
+				NormalOrderValidation.startTest(AdminMail);
+			}
+			if (proprties.contains(Reviewer_user_Normal_Order_Validation)) {
+				NormalOrderValidation.startTest(ReviewerMail);
+			}
+			if (proprties.contains(On_Hold_Order_Review_Submit_for_approval)) {
+				OnHoldOrderReview.startTest(ReviewerMail);
+			}
+			if (proprties.contains(On_Hold_Order_Approve_Submit_for_release)) {
+				OnHoldOrderApprover.startTest(ApproverMail);
+			}
+			if (proprties.contains(On_Hold_Order_Reviewer_Reject_Order)) {
+				OnHoldOrderReviewer_RejectOrder.startTest(PlacerMail, ReviewerMail);
+			}
+			if (proprties.contains(On_Hold_Order_Approver_Reject_Order)) {
 				LoginToTheCreatedAdminAccount.startTest(AdminMail);
 			}
 			sassert().assertAll();

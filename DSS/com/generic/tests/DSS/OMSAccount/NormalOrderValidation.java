@@ -22,7 +22,6 @@ public class NormalOrderValidation extends SelTestCase {
 			HomePage.clickSignIn();
 			Login.Login(omsUser,getCONFIG().getProperty("NewUserPassword") );
 			Assert.assertTrue(Login.verifyIfUserLoggedIn(), "User is not logged in Successfully");
-
 			
 			Account.clickYourOrdersNavLink();
 			
@@ -58,7 +57,7 @@ public class NormalOrderValidation extends SelTestCase {
 				Assert.assertTrue(orderIsDisplayed, "The new created order is not displayed on your orders page");
 			String OrderPlacedDateFromOrdersTable = Account.getOrderPlacedDateFromOrdersTable(orderIndex);
 			String OrderStatusFromOrdersTable = Account.getOrderStatusFromOrdersTable(orderIndex);
-			String OrderChanelFromOrdersTable = Account.getOrderChanelFromOrdersTable(orderIndex);
+			String OrderPlacerFromOrdersTable = Account.getOrderPlacerFromOrdersTable(orderIndex);
 			String OrderTotalFromOrdersTable = Account.getOrderTotalFromOrdersTable(orderIndex);
 			Account.clickOrderNumberFromOrdersTable(orderNumber);
 			Account.verifyOrderDetailsHeaderIsDisplayed(orderNumber);
@@ -68,20 +67,21 @@ public class NormalOrderValidation extends SelTestCase {
 			String OrderStatusFromOrderDetailsPage = Account.getOrderStatusFromOrderDetailsPage(false);
 			String OrderChanelFromOrderDetailsPage = Account.getOrderChannelFromOrderDetailsPage();
 			String OrderTotalFromOrderDetailsPage = Account.getOrderTotalFromOrderDetailsPage(false);
-
+			String OrderPlacedByValueFromOrderDetailsPage = Account.getOrderPlacedByValueFromOrderDetailsPage(false);
+			 
 			sassert().assertEquals(OrderNumberFromOrderDetailsPage, orderNumber, "<font color=#f442cb>Expected: "
-					+ orderNumber + "Actual: " + OrderNumberFromOrderDetailsPage + "</font>");
-			sassert().assertEquals(OrderPlacedDateFromOrderDetailsPage, OrderPlacedDateFromOrdersTable,
-					"<font color=#f442cb>Expected: " + OrderPlacedDateFromOrdersTable + "Actual: "
+					+ orderNumber + ". Actual: " + OrderNumberFromOrderDetailsPage + "</font>");
+			sassert().assertEquals(OrderPlacedDateFromOrderDetailsPage, OrderPlacedDateFromOrdersTable.replace(" 0", " "),
+					"<font color=#f442cb>Expected: " + OrderPlacedDateFromOrdersTable.replace(" 0", " ") + ". Actual: "
 							+ OrderPlacedDateFromOrderDetailsPage + "</font>");
-			sassert().assertEquals(OrderChanelFromOrderDetailsPage, OrderChanelFromOrdersTable,
-					"<font color=#f442cb>Expected: " + OrderChanelFromOrdersTable + "Actual: "
-							+ OrderChanelFromOrderDetailsPage + "</font>");
-			sassert().assertEquals(OrderStatusFromOrderDetailsPage, OrderStatusFromOrdersTable,
-					"<font color=#f442cb>Expected: " + OrderStatusFromOrdersTable + "Actual: "
+//			sassert().assertTrue(OrderPlacerFromOrdersTable.startsWith(OrderPlacedByValueFromOrderDetailsPage.toLowerCase()),
+//					"<font color=#f442cb>Expected: " + OrderPlacerFromOrdersTable + ". Actual: "
+//							+ OrderPlacedByValueFromOrderDetailsPage.toLowerCase() + "</font>");
+			sassert().assertEquals(OrderStatusFromOrderDetailsPage.toLowerCase(), OrderStatusFromOrdersTable.toLowerCase(),
+					"<font color=#f442cb>Expected: " + OrderStatusFromOrdersTable + ". Actual: "
 							+ OrderStatusFromOrderDetailsPage + "</font>");
 			sassert().assertEquals(OrderTotalFromOrderDetailsPage, OrderTotalFromOrdersTable,
-					"<font color=#f442cb>Expected: " + OrderTotalFromOrdersTable + "Actual: "
+					"<font color=#f442cb>Expected: " + OrderTotalFromOrdersTable + ". Actual: "
 							+ OrderTotalFromOrderDetailsPage + "</font>");
 
 			String shippingAddressFromOrderDetailsPage = Account.getShippingAddressFromOrderDetailsPage(false);
@@ -89,13 +89,13 @@ public class NormalOrderValidation extends SelTestCase {
 			String trackingNumbersFromOrderDetailsPage = Account.getTrackingNumbersFromOrderDetailsPage();
 
 			int NumberOfItemsFromOrderDetailsPage = Account.getNumberOfItemsFromOrderDetailsPage();
-			String itemImageSrcFromOrderDetailsPage = Account.getItemImageFromOrderDetailsPage();
-			String itemNameFromOrderDetailsPage = Account.getItemNameFromOrderDetailsPage();
-			String itemCodeFromOrderDetailsPage = Account.getItemCodeFromOrderDetailsPage();
+			String itemImageSrcFromOrderDetailsPage = Account.getItemImageFromOrderDetailsPage(false);
+			String itemNameFromOrderDetailsPage = Account.getItemNameFromOrderDetailsPage(false);
+			String itemCodeFromOrderDetailsPage = Account.getItemCodeFromOrderDetailsPage(false);
 			String ItemStatusFromOrderDetailsPage = Account.getItemDeliveryFromOrderDetailsPage();
 			String itemPriceFromOrderDetailsPage = Account.getItemPriceFromOrderDetailsPage();
 			String itemQuantityFromOrderDetailsPage = Account.getItemQuantityFromOrderDetailsPage();
-			String itemTotalFromOrderDetailsPage = Account.getItemTotalFromOrderDetailsPage();
+			String itemTotalFromOrderDetailsPage = Account.getItemTotalFromOrderDetailsPage(false);
 
 			String BillingAddressFromOrderDetailsPage = Account.getBillingAddressFromOrderDetailsPage();
 			String PaymentMethodFromOrderDetailsPage = Account.getPaymentMethodFromOrderDetailsPage(false);
@@ -110,7 +110,7 @@ public class NormalOrderValidation extends SelTestCase {
 			CheckOut.checkCartHeader();
 			String ReordereditemNameFromCart = CheckOut.getItemNameFromCartPage();
 			sassert().assertEquals(ReordereditemNameFromCart, itemNameFromOrderDetailsPage,
-					"<font color=#f442cb>Expected: " + itemNameFromOrderDetailsPage + "Actual: "
+					"<font color=#f442cb>Expected: " + itemNameFromOrderDetailsPage + ". Actual: "
 							+ ReordereditemNameFromCart + "</font>");
 
 			sassert().assertAll();

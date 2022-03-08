@@ -45,7 +45,7 @@ public class PDPBase extends SelTestCase {
 		return data;
 	}
 
-	@Test(dataProvider = "PDP")
+	@Test(dataProvider = "PDP", priority=0)
 	public void PDPTest(String caseId, String runTest, String desc, String proprties)
 			throws Exception {
 		Testlogs.set(new SASLogger("PDP " + getBrowserName()));

@@ -48,7 +48,7 @@ public class Base_checkout extends SelTestCase {
 	}
 
 	@SuppressWarnings("unchecked") // avoid warning from linked hashmap
-	@Test(dataProvider = "Orders")
+	@Test(dataProvider = "Orders", priority=1)
 	public void checkOutBaseTest(String caseId, String runTest, String desc, String proprties, String productsNumber,
 			String shippingMethod, String payment, String shippingAddress, String billingAddress, String email)
 			throws Exception {
