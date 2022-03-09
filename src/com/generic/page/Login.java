@@ -68,6 +68,7 @@ public class Login extends SelTestCase {
 
 		typeEmailAddress(userDetalis.get("mail"));
 		typePassword(userDetalis.get("password"));
+		Thread.sleep(2000);
 		clickSubmitSignIn();
 
 	}

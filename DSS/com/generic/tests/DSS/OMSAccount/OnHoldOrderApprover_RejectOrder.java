@@ -250,7 +250,7 @@ public class OnHoldOrderApprover_RejectOrder extends SelTestCase {
 
 			logs.debug("<font color=#f442cb>Login to placer account </font>");
 			HomePage.clickSignIn();
-			Login.Login(approver, getCONFIG().getProperty("NewUserPassword"));
+			Login.Login(placer, getCONFIG().getProperty("NewUserPassword"));
 			Assert.assertTrue(Login.verifyIfUserLoggedIn(), "User is not logged in Successfully");
 			
 			Account.clickOnHoldOrdersNavLink();

@@ -98,7 +98,7 @@ public class Base_OMSAccount extends SelTestCase {
 				LoginToTheCreatedApproverAccount.startTest(Create_ApproverMail);
 			}
 			if (proprties.contains(Create_Placer_account)) {
-				CreatePlacerAccount.startTest(Create_PlacerMail, Create_ApproverMail, Create_ReviewerMail, userdetails);
+				CreatePlacerAccount.startTest(Create_PlacerMail, ApproverMail, ReviewerMail, userdetails);
 			}
 
 			if (proprties.contains(Login_To_The_Created_Placer_account)) {
@@ -138,7 +138,7 @@ public class Base_OMSAccount extends SelTestCase {
 				OnHoldOrderReviewer_RejectOrder.startTest(PlacerMail, ReviewerMail);
 			}
 			if (proprties.contains(On_Hold_Order_Approver_Reject_Order)) {
-				LoginToTheCreatedAdminAccount.startTest(AdminMail);
+				OnHoldOrderApprover_RejectOrder.startTest(PlacerMail, ReviewerMail,ApproverMail);
 			}
 			sassert().assertAll();
 

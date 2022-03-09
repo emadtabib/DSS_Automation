@@ -60,9 +60,9 @@ public class CreatePlacerAccount extends SelTestCase {
 			Account.selectOrderReviewer(ReviewerMail);
 			Account.selectOrderApprovers(ApproverMail);
 			
-			Account.selectOrderReviewer(getCONFIG().getProperty("reviewer"));
-			Account.selectOrderApprovers(getCONFIG().getProperty("approver"));
-			
+//			Account.selectOrderReviewer(getCONFIG().getProperty("reviewer"));
+//			Account.selectOrderApprovers(getCONFIG().getProperty("approver"));
+//			
 			Thread.sleep(1000);
 			Account.selectallowedPaymentMethodsPAYPAL();
 			Account.selectallowedPaymentMethodsCC();

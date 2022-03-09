@@ -375,16 +375,20 @@ public class Account extends SelTestCase {
 			getCurrentFunctionName(true);
 			logs.debug("<font color=#f442cb>Select User Rule: </font><font color=#b86d29>" + UserRule + "</font>");
 			String selector = null;
-			if (UserRule == "Placer")
-				selector = AccountSelectors.placergroup;
-			else if (UserRule == "Reviewer")
-				selector = AccountSelectors.reviewergroup;
-			else if (UserRule == "Approver")
-				selector = AccountSelectors.approvergroup;
-			else if (UserRule == "admin")
-				selector = AccountSelectors.admingroup;
+			if (UserRule != "Admin") {
+				if (UserRule == "Placer")
+					selector = AccountSelectors.placergroup;
+				else if (UserRule == "Reviewer")
+					selector = AccountSelectors.reviewergroup;
+				else if (UserRule == "Approver")
+					selector = AccountSelectors.approvergroup;
+				getDriver().findElement(By.id(selector)).click();
+			} else if (UserRule == "Admin") {
+				WebElement element = getDriver().findElement(By.id(AccountSelectors.admingroup));
+				Actions actions = new Actions(getDriver());
+				actions.moveToElement(element).click().perform();
+			}
 
-			getDriver().findElement(By.id(selector)).click();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
@@ -398,18 +402,19 @@ public class Account extends SelTestCase {
 	public static void selectOrderReviewer(String OrderReviewer) throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			logs.debug("<font color=#f442cb>Select Order Reviewer: </font><font color=#b86d29>" + OrderReviewer
-					+ "</font>");
 
+			logs.debug("<font color=#f442cb>open select reviewer window</font>");
 			getDriver().findElement(By.cssSelector(AccountSelectors.reviewersSelection)).click();
 			Thread.sleep(3000);
-			
+			logs.debug("<font color=#f442cb>Select Order Reviewer: </font><font color=#b86d29>" + OrderReviewer
+					+ "</font>");
 			WebElement element = getDriver().findElement(By.id(OrderReviewer));
 			Actions actions = new Actions(getDriver());
 			actions.moveToElement(element).click().perform();
 	//		getDriver().findElement(By.id(OrderReviewer)).click();
 			
 			Thread.sleep(1000);
+			logs.debug("<font color=#f442cb>Submit select reviewer window</font>");
 			getDriver().findElement(By.cssSelector(AccountSelectors.SaveSelection_reviewers)).click();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
@@ -424,18 +429,18 @@ public class Account extends SelTestCase {
 	public static void selectOrderApprovers(String OrderApprovers) throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			logs.debug("<font color=#f442cb>Select Order Approvers: </font><font color=#b86d29>" + OrderApprovers
-					+ "</font>");
-
+			logs.debug("<font color=#f442cb>open select approver window</font>");
 			getDriver().findElement(By.partialLinkText(AccountSelectors.selectApprovers)).click();
 			Thread.sleep(3000);
-			
+			logs.debug("<font color=#f442cb>Select Order Approvers: </font><font color=#b86d29>" + OrderApprovers
+					+ "</font>");
 			WebElement element = getDriver().findElement(By.id(OrderApprovers));
 			Actions actions = new Actions(getDriver());
 			actions.moveToElement(element).click().perform();
 			
 //			getDriver().findElement(By.id(OrderApprovers)).click();
 			Thread.sleep(1000);
+			logs.debug("<font color=#f442cb>Submit select reviewer window</font>");
 			getDriver().findElement(By.cssSelector(AccountSelectors.SaveSelection_approvers)).click();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
