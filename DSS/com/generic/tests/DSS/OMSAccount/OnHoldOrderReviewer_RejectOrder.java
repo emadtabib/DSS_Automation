@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import org.testng.Assert;
 
 import com.generic.page.Account;
+import com.generic.page.Cart;
 import com.generic.page.CheckOut;
 import com.generic.page.HomePage;
 import com.generic.page.Login;
@@ -31,13 +32,13 @@ public class OnHoldOrderReviewer_RejectOrder extends SelTestCase {
 			
 //			logs.debug("User is logged in successfully?: " + Login.verifyIfUserLoggedInSuccessfully());
 			// Add products to cart
-			CheckOut.addRandomProductTocart(productsCount);
+			Cart.addRandomProductTocart(productsCount);
 
 //			CheckOut.closeOfferModal();
 
 			orderSubtotal = CheckOut.getOrderSummaryItems(1);
-			EstimatedOrderTotal = CheckOut.getEstimatedTotalInFromOrderSummary(false);
-			CheckOut.clickCheckout();
+			EstimatedOrderTotal = Cart.getEstimatedTotalInFromOrderSummary(false);
+			Cart.clickCheckout();
 
 			String NewOrderSubtotal = CheckOut.getOrderSummaryItems(1);
 			sassert().assertEquals(NewOrderSubtotal, orderSubtotal, "Actual subtotal in shipping address page is: "

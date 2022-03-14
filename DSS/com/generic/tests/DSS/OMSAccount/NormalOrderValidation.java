@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import org.testng.Assert;
 
 import com.generic.page.Account;
+import com.generic.page.Cart;
 import com.generic.page.CheckOut;
 import com.generic.page.HomePage;
 import com.generic.page.Login;
@@ -107,8 +108,8 @@ public class NormalOrderValidation extends SelTestCase {
 			String orderTotalFromOrderDetailsPage = Account.getOrderSummaryOrderTotalFromOrderDetailsPage(false);
 
 			Account.clickReorderButton();
-			CheckOut.checkCartHeader();
-			String ReordereditemNameFromCart = CheckOut.getItemNameFromCartPage();
+			Cart.checkCartHeader();
+			String ReordereditemNameFromCart = Cart.getItemNameFromCartPage(0);
 			sassert().assertEquals(ReordereditemNameFromCart, itemNameFromOrderDetailsPage,
 					"<font color=#f442cb>Expected: " + itemNameFromOrderDetailsPage + ". Actual: "
 							+ ReordereditemNameFromCart + "</font>");

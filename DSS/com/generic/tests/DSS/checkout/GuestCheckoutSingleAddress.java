@@ -4,12 +4,12 @@ import java.text.MessageFormat;
 import java.util.LinkedHashMap;
 import java.util.NoSuchElementException;
 
+import com.generic.page.Cart;
 import com.generic.page.CheckOut;
 import com.generic.page.HomePage;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
 
-//DSS
 public class GuestCheckoutSingleAddress extends SelTestCase {
 
 	public static void startTest(String shippingMethod, int productsCount, LinkedHashMap<String, String> addressDetails,
@@ -26,19 +26,19 @@ public class GuestCheckoutSingleAddress extends SelTestCase {
 			HomePage.closeSignUpModal();
 	
 			// Add products to cart
-			CheckOut.addRandomProductTocart(productsCount);
+			Cart.addRandomProductTocart(productsCount);
 
 			CheckOut.closeOfferModal();
 
 			orderSubtotal = CheckOut.getOrderSummaryItems(1);
-			EstimatedOrder = CheckOut.getEstimatedTotalInFromOrderSummary(true);
-			CheckOut.clickCheckout();
+			EstimatedOrder = Cart.getEstimatedTotalInFromOrderSummary(true);
+			Cart.clickCheckout();
 
 			String NewOrderSubtotal = CheckOut.getOrderSummaryItems(1);
 			sassert().assertEquals(NewOrderSubtotal, orderSubtotal, "Actual subtotal in shipping address page is: "
 					+ NewOrderSubtotal + "While it is: " + orderSubtotal + " in cart");
 
-			String NewEstimatedOrder = CheckOut.getEstimatedTotalInFromOrderSummary(true);
+			String NewEstimatedOrder = Cart.getEstimatedTotalInFromOrderSummary(true);
 			sassert().assertEquals(NewEstimatedOrder, EstimatedOrder,
 					"Actual Estimated Order in shipping address page is: " + NewEstimatedOrder + "While it is: "
 							+ EstimatedOrder + " in cart");

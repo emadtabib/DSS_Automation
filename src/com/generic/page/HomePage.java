@@ -52,7 +52,6 @@ public class HomePage extends SelTestCase {
 		}
 
 	}
-
 	
 	public static void SearchAndPickItem(String searchTerm) throws Exception {
 		try {
@@ -78,6 +77,24 @@ public class HomePage extends SelTestCase {
 
 	}
 
+	public static void SearchByItemID(String searchTerm) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Search for a given term");
+			getDriver().findElement(By.cssSelector(HomePageSelectors.search)).sendKeys(searchTerm);
+			getDriver().findElement(By.className(HomePageSelectors.searchIcon)).click();
+			Thread.sleep(2000);
+			getDriver().findElement(By.cssSelector(HomePageSelectors.PLPProductsName)).click();
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Search icon selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+	}
+	
 	public static void Signout() throws Exception {
 		try {
 			getCurrentFunctionName(true);

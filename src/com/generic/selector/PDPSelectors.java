@@ -3,7 +3,7 @@ package com.generic.selector;
 import com.generic.setup.cselector;
 
 public class PDPSelectors {
-	////////////////////////////DSS
+	
 	public static final String addToCartButton = "#addToCartButton";
 	public static final String addToCartLayer = "#addToCartLayer";
 	public static final String proceedToCheckout = ".btn.btn-primary.btn-block.add-to-cart-button";
@@ -63,5 +63,8 @@ public class PDPSelectors {
 	public static final String recommendedForYouProductTiles = "#dy-pdp-recommendations-3>div>div.productCarousel>div.slick-slider>div>div>div.slick-active";
 	
 	
+	public static final String shippingMessage =".js-zoom-target>.warnings";
+	public static final String AddToFavorites = "Add to Favorites";
+	public static final String stockNotifyMe = ".js-stocknotify-cta";
 
 }

@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import org.testng.Assert;
 
 import com.generic.page.Account;
+import com.generic.page.Cart;
 import com.generic.page.CheckOut;
 import com.generic.page.HomePage;
 import com.generic.page.Login;
@@ -43,13 +44,13 @@ public class LoginToTheCreatedPlacerAccount extends SelTestCase {
 //	
              //Place an order
 			// Add products to cart
-			CheckOut.addRandomProductTocart(productsCount);
+			Cart.addRandomProductTocart(productsCount);
 
 //			CheckOut.closeOfferModal();
 
 			orderSubtotal = CheckOut.getOrderSummaryItems(1);
-			EstimatedOrder = CheckOut.getEstimatedTotalInFromOrderSummary(false);
-			CheckOut.clickCheckout();
+			EstimatedOrder = Cart.getEstimatedTotalInFromOrderSummary(false);
+			Cart.clickCheckout();
 
 			String NewOrderSubtotal = CheckOut.getOrderSummaryItems(1);
 			sassert().assertEquals(NewOrderSubtotal, orderSubtotal, "Actual subtotal in shipping address page is: "

@@ -9,6 +9,7 @@ import java.util.Random;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import com.generic.selector.CheckOutSelectors;
 import com.generic.selector.PDPSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
@@ -77,14 +78,92 @@ public class PDP extends SelTestCase {
 			getDriver().findElement(By.cssSelector(PDPSelectors.miniCartContinueCheckout)).click();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ "Mini Cart Continue Checkout Button selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+	}
+
+	public static int getNumberOfShippingMessages() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get shipping messages");
+			int numberOfShippingMessages = getDriver().findElements(By.cssSelector(PDPSelectors.shippingMessage))
+					.size();
+			String shippingMessage;
+			for (int count = 0; count < numberOfShippingMessages; count++) {
+				shippingMessage = getDriver().findElements(By.cssSelector(PDPSelectors.shippingMessage)).get(count)
+						.getText();
+				logs.debug("<font color=#f442cb>ShippingMessage(" + count + "): </font><font color=#b86d29>"
+						+ shippingMessage + "</font>");
+			}
+			getCurrentFunctionName(false);
+			return numberOfShippingMessages;
+		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
-					ExceptionMsg.PageFunctionFailed + "Mini Cart Continue Checkout Button selector was not found by selenuim",
+					ExceptionMsg.PageFunctionFailed + "Shipping Message selector was not found by selenuim",
 					new Object() {
 					}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 
 	}
+	
+	public static boolean verifyIfItemIsDropShip() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			boolean isDropShip = false;
+			logs.debug("Get shipping messages");
+			int numberOfShippingMessages = getDriver().findElements(By.cssSelector(PDPSelectors.shippingMessage))
+					.size();
+			String shippingMessage;
+			for (int count = 0; count < numberOfShippingMessages; count++) {
+				shippingMessage = getDriver().findElements(By.cssSelector(PDPSelectors.shippingMessage)).get(count)
+						.getText();
+				logs.debug("<font color=#f442cb>ShippingMessage(" + count + "): </font><font color=#b86d29>"
+						+ shippingMessage + "</font>");
+				if (shippingMessage.toLowerCase().contains("drop ship"))
+					isDropShip = true;
+			}
+			getCurrentFunctionName(false);
+			return isDropShip;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Shipping Message selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+	}
+	
+	public static boolean verifyIfItemIsOutOfStock() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			boolean isOutOfStock = true;
+			logs.debug("verify if item is out of stock");
+			if (SelectorUtil.isNotDisplayed(PDPSelectors.stockNotifyMe))
+				isOutOfStock = false;
+			logs.debug("Item is out of stock?: " + isOutOfStock);
+			getCurrentFunctionName(false);
+			return isOutOfStock;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Notify Me selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+	}
+	
+	
+	
+	
+	
+	
 	
 	public static void navigteToBundleLandingPage() throws Exception {
 		try {

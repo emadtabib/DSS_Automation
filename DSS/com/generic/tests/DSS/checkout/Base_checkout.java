@@ -68,6 +68,10 @@ public class Base_checkout extends SelTestCase {
 
 		try {
 
+			if (proprties.contains("Cart")) {
+				CartRegression.startTest(shippingMethod, productsCount, addressDetails, paymentDetails);
+			}
+			
 			// Guest user with single address
 			if (proprties.contains(guestUser)) {
 				GuestCheckoutSingleAddress.startTest(shippingMethod, productsCount, addressDetails, paymentDetails);

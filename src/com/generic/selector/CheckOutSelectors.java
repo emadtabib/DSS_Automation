@@ -3,15 +3,7 @@ package com.generic.selector;
 public class CheckOutSelectors
 {
 	
-	public static final String Cart_OrderSubtotal = ".summary-items>div>div";
-	public static final String CartHeader = ".cart-headline";
-	public static final String Cart_productImg = ".item__list--item>.item__image>a>img";
-	public static final String Cart_productTitle  = ".item__list--item>.item__info>.prod-title";
-	public static final String Cart_ProductCode = ".item__list--item>.item__info>.item-details";
-	public static final String Cart_ProductPrice = ".item__list--item >.item__price";
-	public static final String Cart_ProductQuantity = ".item__list--item >.item__quantity";
-	public static final String Cart_ProductTotal = ".item__list--item >.item_total";
-	public static final String checkoutButton = ".btn.btn-primary.btn-block.btn--continue-checkout.js-continue-checkout-button";
+	public static final String OrderSubtotal = ".summary-items>div>div";
 	public static final String closeOfferModal = "css,.close.float-right";
 	public static final String emailAddress = "address.email";
 	public static final String firstName = "address.firstName";
@@ -52,9 +44,9 @@ public class CheckOutSelectors
 	public static final String orderShipMethod = ".order-ship-method";
 	public static final String orderPurhcaseOrderData = ".order-purhcase-order-data";
 	
-	public static final String cartItemsSummaryPage = ".cart-items.cart-items-summary-page";
-	public static final String item_Code = ".item__code";
-	public static final String summaryTitle = ".summary-title";
-	public static final String summaryItems = ".summary-items>.item-row";
+//	public static final String cartItemsSummaryPage = ".cart-items.cart-items-summary-page";
+//	public static final String item_Code = ".item__code";
+//	public static final String summaryTitle = ".summary-title";
+//	public static final String summaryItems = ".summary-items>.item-row";
 
 }

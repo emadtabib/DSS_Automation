@@ -3,98 +3,26 @@ package com.generic.page;
 
 import java.text.DecimalFormat;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Random;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-import com.generic.selector.AccountSelectors;
 import com.generic.selector.CheckOutSelectors;
-import com.generic.selector.HomePageSelectors;
-import com.generic.selector.PDPSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
 
 public class CheckOut extends SelTestCase {
 	
-	public static void addRandomProductTocart(int prodCount) throws Exception {
-		try {
-			getCurrentFunctionName(true);
-
-			for (int count = 0; count < prodCount; count++) {
-				Thread.sleep(3000);
-				
-				String[] options = getCONFIG().getProperty("RandomItems").split(",");
-				logs.debug("Items to search on"+ options);
-				Random random = new Random();
-				int randomIndex = random.nextInt(options.length - 1);
-				String item = options[randomIndex];
-				logs.debug("<font color=#f442cb>Search on: </font><font color=#b86d29>" + item + "</font>");
-				HomePage.SearchAndPickItem(item);
-				PDP.selectPDPOptionsifAnyAndValidate();
-				PDP.clickAddToCartButton();
-				PDP.verifyAddToCartLayerIsDisplayed();
-				if (count < prodCount-1)
-					PDP.clickMiniCartContinueCheckout();
-				else
-				PDP.clickProceedToCheckout();
-			}
-			getCurrentFunctionName(false);
-		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(
-					ExceptionMsg.PageFunctionFailed + "Add random product to cart selector was not found by selenium ",
-					new Object() {
-					}.getClass().getEnclosingMethod().getName()));
-			throw e;
-		}
-
-	}
-	
-	public static void checkCartHeader() throws Exception {
-		try {
-			getCurrentFunctionName(true);
-			logs.debug("Validate Cart Header");
-			String CartHeader = getDriver().findElement(By.cssSelector(CheckOutSelectors.CartHeader))
-					.getText();
-			logs.debug("<font color=#f442cb>Cart Header: </font><font color=#b86d29>" + CartHeader + "</font>");
-			sassert().assertEquals(CartHeader, "Your Cart", "Actual header: " + CartHeader);
-			getCurrentFunctionName(false);
-		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed + "Cart Header selector was not found by selenuim", new Object() {
-					}.getClass().getEnclosingMethod().getName()));
-			throw e;
-
-		}
-	}
-	
-	public static String getItemNameFromCartPage() throws Exception {
-		try {
-
-			logs.debug("Get item name From Cart Page </font>");
-			String itemName = getDriver().findElements(By.cssSelector(CheckOutSelectors.Cart_productTitle)).get(0).getText();
-			logs.debug("item name: <font color=#f442cb>" + itemName + ") </font>");
-
-			return itemName;
-		} catch (NoSuchElementException e) {
-			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
-					+ "item name From cart Page selector was not found by selenuim", new Object() {
-					}.getClass().getEnclosingMethod().getName()));
-			throw e;
-		}
-	}
-	
 	public static String getOrderSummaryItems(int index) throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			String orderSubtotal = "";
 			logs.debug("Get Order Summary Item: " + index);
-			orderSubtotal = getDriver().findElements(By.cssSelector(CheckOutSelectors.Cart_OrderSubtotal)).get(index)
+			orderSubtotal = getDriver().findElements(By.cssSelector(CheckOutSelectors.OrderSubtotal)).get(index)
 					.getText();
 			logs.debug("<font color=#f442cb>order item(" + index + "): </font><font color=#b86d29>" + orderSubtotal + "</font>");
 			getCurrentFunctionName(false);
@@ -107,38 +35,6 @@ public class CheckOut extends SelTestCase {
 
 		}
 	}
-	
-	public static String getEstimatedTotalInFromOrderSummary(Boolean Guest) throws Exception {
-		try {
-			getCurrentFunctionName(true);
-			String estimatedTotal = "";
-			logs.debug("Get Estimated Total from Cart page");
-			estimatedTotal =  getDriver().findElements(By.cssSelector(CheckOutSelectors.Cart_OrderSubtotal)).get(5).getText();	
-			System.out.println("order Estimated: " + estimatedTotal);
-			logs.debug("order Estimated: " + estimatedTotal);
-			getCurrentFunctionName(false);
-			return estimatedTotal;
-		} catch (Exception e) {
-			System.out.println("estimatedTotal selector was not found by selenuim");
-			String estimatedTotal =  getDriver().findElements(By.cssSelector(CheckOutSelectors.Cart_OrderSubtotal)).get(3).getText();
-			return estimatedTotal;
-		}
-	
-}
-
-	public static void clickCheckout() throws Exception {
-		try {
-			getCurrentFunctionName(true);
-			System.out.println("Click Checkout in Cart Page");
-			getDriver().findElement(By.cssSelector(CheckOutSelectors.checkoutButton)).click();
-			getCurrentFunctionName(false);
-		} catch (NoSuchElementException e) {
-			System.out.println("Checkout Button selector was not found by selenuim");
-			throw e;
-		}
-
-	}
-	
 	
 	public static int checkProductsinStepTwo() throws Exception {
 		try {
