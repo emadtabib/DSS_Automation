@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="PDP,Checkout and OMS user Regression" parallel="tests"
+	thread-count="1" data-provider-thread-count="1">
+
+  <test  name="PDP Chrome ">
+		<parameter name="browserName" value="Chrome"></parameter>
+		<parameter name="Env" value="exts1"></parameter>
+		<classes>
+			<class name="com.generic.tests.DSS.PDP.PDPBase" />
+		</classes>
+	</test><!-- Test -->
+	
+	<test name="checkout chrome">
+		<parameter name="browserName" value="chrome"></parameter>
+		<parameter name="Env" value="exts1"></parameter>
+		<classes>
+			<class name="com.generic.tests.DSS.checkout.Base_checkout" />
+		</classes>
+	</test>
+
+	<test name="omsAccount chrome">
+		<parameter name="browserName" value="chrome"></parameter>
+		<parameter name="Env" value="exts1"></parameter>
+		<classes>
+			<class name="com.generic.tests.DSS.OMSAccount.Base_OMSAccount" />
+		</classes>
+	</test>
+
+
+</suite> <!-- Suite -->
