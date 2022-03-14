@@ -381,7 +381,8 @@ public class Cart extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			logs.debug("Click remove for the item in index: </font>" + index);
-			getDriver().findElement(By.id(CartSelectors.itemRemove + index));
+			getDriver().findElement(By.id(CartSelectors.itemRemove + index)).click();
+			getDriver().findElement(By.id(CartSelectors.itemRemove + index)).click();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
@@ -409,6 +410,22 @@ public class Cart extends SelTestCase {
 		}
 	}
 	
+	public static boolean verifyAddToFavoritesModalHeader(int index) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Verify Add To Favorites Modal Header item in index: </font>" + index);
+			boolean itemprice = getDriver().findElement(By.cssSelector(CartSelectors.AddToFavoritesModalHeader)).isDisplayed();
+			logs.debug("Add To Favorites Modal Header is displayed for item in index: <font color=#f442cb>" + index + "</font>");
+			getCurrentFunctionName(false);
+			return itemprice;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Add To Favorites Modal Header selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
 	public static boolean verifySaveAllItmsForLaterLinkDisplayedForItemIndex(int index) throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -460,20 +477,68 @@ public class Cart extends SelTestCase {
 		}
 	}
 	
-//	public static void clickItemRemove(int index) throws Exception {
-//		try {
-//			getCurrentFunctionName(true);
-//			logs.debug("Click remove for the item in index: </font>" + index);
-//			getDriver().findElement(By.id(CartSelectors.itemRemove + index));
-//			getCurrentFunctionName(false);
-//		} catch (NoSuchElementException e) {
-//			logs.debug(MessageFormat.format(
-//					ExceptionMsg.PageFunctionFailed + "remove item selector was not found by selenuim",
-//					new Object() {
-//					}.getClass().getEnclosingMethod().getName()));
-//			throw e;
-//		}
-//	}
+	public static void clickItemSaveForLAter(int index) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Click Save for later for the item in index: </font>" + index);
+			getDriver().findElement(By.partialLinkText(CartSelectors.SaveForLater)).click();
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "save for later item selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static boolean verifySaveForLaterLoginModalIsDisplayed(int index) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Verify Save for later Login modal is displayed for item in index: </font>" + index);
+			boolean isDisplayed = getDriver().findElement(By.id(CartSelectors.saveForLaterModal)).isDisplayed();
+			logs.debug("Save for later login modal is displayed for item in index: <font color=#f442cb>" + index + "</font>");
+			getCurrentFunctionName(false);
+			return isDisplayed;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Save for later login modal selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static void clickAddToFavorites(int index) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Click Add To Favorites for the item in index: </font>" + index);
+			getDriver().findElement(By.partialLinkText(CartSelectors.AddToFavorites)).click();
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Add To Favorites selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static void clickSaveForLaterModalClose(int index) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Click Close for Save for Later login modal for the item in index: </font>" + index);
+			getDriver().findElement(By.cssSelector(CartSelectors.saveForLaterModalClose)).click();
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Close button for Save for Later login modal selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
 //	
 //	public static void clickItemRemove(int index) throws Exception {
 //		try {
@@ -489,18 +554,39 @@ public class Cart extends SelTestCase {
 //			throw e;
 //		}
 //	}
-	
+
+	public static int getNumberOfOrderSummaryLines() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Order Summary Item numbers");
+			int count = getDriver().findElements(By.cssSelector(CartSelectors.Cart_OrderSubtotal)).size();
+			logs.debug("<font color=#f442cb>Number of ordersummary lines are" + count / 2 + "</font>");
+			getCurrentFunctionName(false);
+			return count / 2;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Order Summary Item selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+
+		}
+	}
+
 	public static String getOrderSummaryItems(int index) throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			String orderSubtotal = "";
-			logs.debug("Get Order Summary Item: " + index);
-			orderSubtotal = getDriver().findElements(By.cssSelector(CartSelectors.Cart_OrderSubtotal)).get(index)
+			String item = "";
+			String total = "";
+			logs.debug("Get Order Summary Item:" + index/2 + 1);
+			item = getDriver().findElements(By.cssSelector(CartSelectors.Cart_OrderSubtotal)).get(index)
 					.getText();
-			logs.debug("<font color=#f442cb>order item(" + index + "): </font><font color=#b86d29>" + orderSubtotal
+			total = getDriver().findElements(By.cssSelector(CartSelectors.Cart_OrderSubtotal)).get(index+1)
+					.getText();
+			logs.debug("<font color=#f442cb>" + item + ": </font><font color=#b86d29>" + total
 					+ "</font>");
 			getCurrentFunctionName(false);
-			return orderSubtotal;
+			return total;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed + "Order Summary Item: " + index
 					+ " selector was not found by selenuim", new Object() {

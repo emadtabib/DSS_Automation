@@ -25,6 +25,16 @@ public class CartSelectors
 	public static final String AddAllItemsToFavorites = "Add All Items to Favorites";
 	public static final String cartTotal = ".cart-total.item-final-total";
 	//public static final String productDivs = ".item__list--item";
+	public static final String saveForLaterModal = "cboxLoadedContent";
+	public static final String saveForLaterModalButtons = "#cboxLoadedContent>b>a";
+	public static final String saveForLaterModalClose = "#cboxClose>.btn-close-icon";
+	
+	public static final String AddToFavoritesModalHeader = "#cboxTitle>.headline>.headline-text";
+	public static final String newWishlistName = "newWishlistName";
+	public static final String AddThisToShoppingList_Cancel = "Cancel";
+	
+
+	
 
 	
 	

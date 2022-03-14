@@ -3,6 +3,7 @@ package com.generic.selector;
 
 public class LoginSelectors
 {
+	public static final String loginPageHeadline = "login-page__headline";
 	
 	public static final String userNameField = "#j_username";
 	public static final String passwordField = "#j_password";

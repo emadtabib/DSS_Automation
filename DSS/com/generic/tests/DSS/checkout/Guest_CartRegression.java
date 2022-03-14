@@ -9,15 +9,16 @@ import org.openqa.selenium.By;
 import com.generic.page.Cart;
 import com.generic.page.CheckOut;
 import com.generic.page.HomePage;
+import com.generic.page.Login;
 import com.generic.page.PDP;
 import com.generic.selector.CartSelectors;
+import com.generic.setup.ActionDriver;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
 
-public class CartRegression extends SelTestCase {
+public class Guest_CartRegression extends SelTestCase {
 
-	public static void startTest(String shippingMethod, int productsCount, LinkedHashMap<String, String> addressDetails,
-			LinkedHashMap<String, String> paymentDetails) throws Exception {
+	public static void startTest() throws Exception {
 		getCurrentFunctionName(true);
 
 		try {
@@ -27,8 +28,6 @@ public class CartRegression extends SelTestCase {
 		
 			String orderSubtotal = "";
 			String EstimatedOrder = "";
-			String Tax = "";
-			String Shipping = "";
 			
 			HomePage.closeSignUpModal();
 			
@@ -93,7 +92,28 @@ public class CartRegression extends SelTestCase {
 				Cart.verifyAddAllItemsToFavoritesLinkDisplayedForItemIndex(index);
 				Cart.getCartTotalForIndex(index);
 			}
-
+			
+			int numberOfOrderSummaryLines = Cart.getNumberOfOrderSummaryLines();
+			orderSubtotal = Cart.getOrderSummaryItems(0);
+			if (numberOfOrderSummaryLines < 3)
+				EstimatedOrder = Cart.getOrderSummaryItems(2);
+			else
+				EstimatedOrder = Cart.getOrderSummaryItems(4);
+			
+			Cart.clickItemSaveForLAter(0);
+			Cart.verifySaveForLaterLoginModalIsDisplayed(0);
+			Cart.clickSaveForLaterModalClose(0);
+			
+			Cart.clickItemRemove(1);
+			Thread.sleep(4500);
+			numerOfInStockitems = Cart.getNumerOfInStockItems();
+			numerOfDropShipitems = Cart.getNumerOfItems(1);
+			numberOfProductsInCart = Cart.getNumberOfProducts();
+			
+			Cart.clickAddToFavorites(1);
+			Login.verifyLoginHeaderIsDisplayed();
+			ActionDriver.returnPreviousPage();
+			
 			sassert().assertAll();
 			getCurrentFunctionName(false);
 

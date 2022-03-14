@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.NoSuchElementException;
 import org.openqa.selenium.By;
 
+import com.generic.selector.CartSelectors;
 import com.generic.selector.HomePageSelectors;
 import com.generic.selector.LoginSelectors;
 import com.generic.setup.ExceptionMsg;
@@ -15,6 +16,23 @@ public class Login extends SelTestCase {
 	
 //	public static final String emailAddress = "placer1@gmail.com";
 //	public static final String passord = "12341234";
+	
+	public static boolean verifyLoginHeaderIsDisplayed() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Verify Login page is opened</font>");
+			boolean isDisplayed = getDriver().findElement(By.className(LoginSelectors.loginPageHeadline)).isDisplayed();
+			logs.debug("Login page is opened");
+			getCurrentFunctionName(false);
+			return isDisplayed;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "login page header selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
 	
 	public static void typeEmailAddress(String emailAddress) throws Exception {
 		try {
