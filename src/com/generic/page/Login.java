@@ -34,7 +34,62 @@ public class Login extends SelTestCase {
 		}
 	}
 	
-	public static void typeEmailAddress(String emailAddress) throws Exception {
+	public static void typeEmailAddress(String email) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String chrome_email = email.split(",")[0];
+			String iPad_email = email.split(",")[1];
+			String mobile_email = email.split(",")[2];
+			LinkedHashMap<String, String> userdetails_chrome = (LinkedHashMap<String, String>) users.get(chrome_email);
+			LinkedHashMap<String, String> userdetails_iPad = (LinkedHashMap<String, String>) users.get(iPad_email);
+			LinkedHashMap<String, String> userdetails_mobile = (LinkedHashMap<String, String>) users.get(mobile_email);
+			String mail = userdetails_chrome.get("mail");
+			if (isiPad())
+				mail = userdetails_iPad.get("mail");
+			if (isMobile())
+				mail = userdetails_mobile.get("mail");
+			logs.debug("Type user email: " + mail);
+			getDriver().findElement(By.cssSelector(LoginSelectors.userNameField)).sendKeys(mail);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "userName Field selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static void typePassword(String email) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			String chrome_email = email.split(",")[0];
+			String iPad_email = email.split(",")[1];
+			String mobile_email = email.split(",")[2];
+			LinkedHashMap<String, String> userdetails_chrome = (LinkedHashMap<String, String>) users.get(chrome_email);
+			LinkedHashMap<String, String> userdetails_iPad = (LinkedHashMap<String, String>) users.get(iPad_email);
+			LinkedHashMap<String, String> userdetails_mobile = (LinkedHashMap<String, String>) users.get(mobile_email);
+			String password = userdetails_chrome.get("password");
+			if (isiPad())
+				password = userdetails_iPad.get("password");
+			if (isMobile())
+				password = userdetails_mobile.get("password");
+			
+			logs.debug("Type password: "+ password);
+			getDriver().findElement(By.cssSelector(LoginSelectors.passwordField)).sendKeys(password);
+			getCurrentFunctionName(false);
+		
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "password Field selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+	}
+	
+	public static void typeEmailAddress1(String emailAddress) throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			logs.debug("Type user email: "+ emailAddress);
@@ -49,7 +104,7 @@ public class Login extends SelTestCase {
 		}
 	}
 	
-	public static void typePassword(String password) throws Exception {
+	public static void typePassword1(String password) throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			logs.debug("Type password: "+ password);
@@ -65,7 +120,6 @@ public class Login extends SelTestCase {
 		}
 
 	}
-	
 	
 	public static void clickSubmitSignIn() throws Exception {
 		try {
@@ -100,6 +154,15 @@ public class Login extends SelTestCase {
 
 	}
 	
+	public static void Login (String email) throws Exception {
+		getCurrentFunctionName(true);
+		typeEmailAddress(email);
+		typePassword(email);
+		clickSubmitSignIn();
+		getCurrentFunctionName(false);
+
+	}
+	
 	public static boolean verifyIfUserLoggedInSuccessfully() {
 		try {
 			getCurrentFunctionName(true);
@@ -116,37 +179,44 @@ public class Login extends SelTestCase {
 		}
 	}
 	
-	public static boolean verifyIfUserLoggedIn() {
+	public static boolean verifyIfUserLoggedIn() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			Boolean isDisplyed = true;
 			logs.debug("Click on My Account icon");
-			getDriver().findElement(By.cssSelector(HomePageSelectors.myAccountIcon)).click();	
+			if (isMobile()) {
+				getDriver().findElement(By.cssSelector(HomePageSelectors.navMenu)).click();
+				Thread.sleep(2500);
+			} else
+				getDriver().findElement(By.cssSelector(HomePageSelectors.myAccountIcon)).click();
 			logs.debug("verify If User Logged in Successfully");
-			isDisplyed = getDriver().findElement(By.cssSelector(LoginSelectors.userName)).isDisplayed();
+			isDisplyed = getDriver().findElement(By.cssSelector(LoginSelectors.userName.get())).isDisplayed();
+			if (isMobile())
+				getDriver().findElement(By.cssSelector(HomePageSelectors.closeNavMenu)).click();
 			getCurrentFunctionName(false);
 			return isDisplyed;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
-					ExceptionMsg.PageFunctionFailed + "My Account - User name selectors were not found by selenuim", new Object() {
+					ExceptionMsg.PageFunctionFailed + "My Account - User name selectors were not found by selenuim",
+					new Object() {
 					}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 	}
-	
+
 	public static void clickMyAccountMenu() {
 		try {
 			getCurrentFunctionName(true);
 			logs.debug("Click on My Account icon");
-			getDriver().findElement(By.cssSelector(HomePageSelectors.myAccountIcon)).click();	
+			getDriver().findElement(By.cssSelector(HomePageSelectors.myAccountIcon)).click();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
-					ExceptionMsg.PageFunctionFailed + "My Account - User name selectors were not found by selenuim", new Object() {
+					ExceptionMsg.PageFunctionFailed + "My Account - User name selectors were not found by selenuim",
+					new Object() {
 					}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}
 	}
 
 }// End of class
-

@@ -9,6 +9,7 @@ import java.util.NoSuchElementException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import com.generic.selector.CheckOutSelectors;
 import com.generic.selector.HomePageSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
@@ -40,8 +41,16 @@ public class HomePage extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			logs.debug("Click on My Account icon");
-			getDriver().findElement(By.cssSelector(HomePageSelectors.myAccountIcon)).click();
-			getDriver().findElement(By.cssSelector(HomePageSelectors.signinLink)).click();
+			if (!isDesktop()) {
+				getDriver().findElement(By.cssSelector(HomePageSelectors.navMenu)).click();
+				Thread.sleep(4500);
+			} else {
+				logs.debug("Click on My Account icon");
+				getDriver().findElement(By.cssSelector(HomePageSelectors.myAccountIcon)).click();	
+			}
+			Thread.sleep(2500);
+			logs.debug("Click on signin link");
+			getDriver().findElement(By.cssSelector(HomePageSelectors.signinLink.get())).click();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
@@ -111,4 +120,22 @@ public class HomePage extends SelTestCase {
 
 	}
 
+	public static void closeNotReadyToBuyModal() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Close Not Ready To Buy Modal if displayed");
+			boolean isNotDisplayed;
+			String subStrArr = HomePageSelectors.closeNotReadyToBuyModal;
+			isNotDisplayed = SelectorUtil.isNotDisplayed(subStrArr);
+			logs.debug("Close Not Ready To Buy Modal if displayed : " + !isNotDisplayed);
+			if (!isNotDisplayed) {
+				getDriver().findElement(By.cssSelector(HomePageSelectors.closeNotReadytoBuyModal)).click();
+			}
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			System.out.println("Close Not Ready To Buy Modal Button selector was not found by selenuim");
+		}
+
+	}
+	
 }// End of class

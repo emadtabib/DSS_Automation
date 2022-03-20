@@ -17,18 +17,18 @@ import com.generic.setup.SelTestCase;
 public class RegisteredCheckoutSingleAddress extends SelTestCase {
 
 	public static void startTest(String shippingMethod, int productsCount, LinkedHashMap<String, String> addressDetails,
-			String payment, LinkedHashMap<String, String> userDetalis) throws Exception {
+			String payment, String email) throws Exception {
 		try {
-
+			String shippingAddressValue = "8898464382999";
 			String orderSubtotal = "";
 			String EstimatedOrderTotal = "";
 			String Tax = "";
 			String Shipping = "";
-			
+
 			HomePage.closeSignUpModal();
 	
 			HomePage.clickSignIn();
-			Login.Login(userDetalis);
+			Login.Login(email);
 			Assert.assertTrue(Login.verifyIfUserLoggedIn(), "User is not logged in Successfully");
 			
 //			logs.debug("User is logged in successfully?: " + Login.verifyIfUserLoggedInSuccessfully());
@@ -40,13 +40,20 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 			orderSubtotal = CheckOut.getOrderSummaryItems(1);
 			EstimatedOrderTotal = Cart.getEstimatedTotalInFromOrderSummary(false);
 			Cart.clickCheckout();
-
+			String checkoutTitle = CheckOut.getcheckoutTitle();
+			sassert().assertEquals(checkoutTitle, "shipping address", "User is not on shipping address page. Actual page title:  "
+					+ checkoutTitle);
+			CheckOut.selectDeliveryAddressDropDown(shippingAddressValue);
 			String NewOrderSubtotal = CheckOut.getOrderSummaryItems(1);
 			sassert().assertEquals(NewOrderSubtotal, orderSubtotal, "Actual subtotal in shipping address page is: "
 					+ NewOrderSubtotal + "While it is: " + orderSubtotal + " in cart");
 
+			
 			CheckOut.ContinueToShippingMethod();
-
+			checkoutTitle = CheckOut.getcheckoutTitle();
+			sassert().assertEquals(checkoutTitle, "2. Shipping method", "User is not on Shipping method page. Actual page title:  "
+					+ checkoutTitle);
+			
 			NewOrderSubtotal = CheckOut.getOrderSummaryItems(1);
 			sassert().assertEquals(NewOrderSubtotal, orderSubtotal, "Actual subtotal in delivery method page is: "
 					+ NewOrderSubtotal + "While it is: " + orderSubtotal + " in cart");
@@ -59,12 +66,18 @@ public class RegisteredCheckoutSingleAddress extends SelTestCase {
 					"Estimated total value is not correct in delivery method page");
 
 			// Check number of products in delivery method page
-			sassert().assertTrue(CheckOut.getitemsQuantityInCheckoutPges() == productsCount,
-					"Some products are missing in delivery method page ");
-			
-//			CheckOut.selectshippingMethods(shippingMethod);
-			CheckOut.ContinueToPayment();
+			int itemsQuantity;
+			if (isMobile())
+				itemsQuantity = CheckOut.getitemsQuantityInShippingMethodsPageMobile();
+			else
+				itemsQuantity = CheckOut.getitemsQuantityInCheckoutPges();
+			sassert().assertTrue(itemsQuantity == productsCount, "Some products are missing in delivery method page ");
 
+			CheckOut.selectshippingMethods(shippingMethod);
+			CheckOut.ContinueToPayment();
+			checkoutTitle = CheckOut.getcheckoutTitle();
+			sassert().assertEquals(checkoutTitle, "payment", "User is not on payment page. Actual page title:  "
+					+ checkoutTitle);
 			NewOrderSubtotal = CheckOut.getOrderSummaryItems(1);
 			sassert().assertEquals(NewOrderSubtotal, orderSubtotal, "Actual subtotal in payment page is: "
 					+ NewOrderSubtotal + "While it is: " + orderSubtotal + " in cart");

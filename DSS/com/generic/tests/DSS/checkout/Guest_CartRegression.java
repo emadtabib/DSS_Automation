@@ -28,7 +28,10 @@ public class Guest_CartRegression extends SelTestCase {
 		
 			String orderSubtotal = "";
 			String EstimatedOrder = "";
-			
+			int numberOfCartItemsSections;
+			int numberOfInStockitems;
+			int numberOfDropShipitems;
+			int numberOfSavedItemsToLater;
 			HomePage.closeSignUpModal();
 			
 			logs.debug("Add Bundle item");
@@ -48,10 +51,12 @@ public class Guest_CartRegression extends SelTestCase {
 					continue;
 				PDP.selectPDPOptionsifAnyAndValidate();
 				PDP.clickAddToCartButton();
+				if (!isDesktop())
+					Thread.sleep(4000);
 				PDP.clickMiniCartContinueCheckout();
 				Thread.sleep(2500);
 			}
-			
+
 			logs.debug("Add Single items");
 			productsNumber = SingleItems.split(",").length;
 			for (int count = 0; count < productsNumber; count++) {
@@ -63,29 +68,45 @@ public class Guest_CartRegression extends SelTestCase {
 					continue;
 				PDP.selectPDPOptionsifAnyAndValidate();
 				PDP.clickAddToCartButton();
+				if (!isDesktop())
+					Thread.sleep(4000);
 				PDP.clickProceedToCheckout();
 				break;
 			}
 			Cart.getGuestCartMessage();
-			int numberOfCartItemsSections = Cart.getNumberOfCartItemsSections();
-			int numerOfInStockitems = Cart.getNumerOfInStockItems();
-			int numerOfDropShipitems = Cart.getNumerOfItems(1);
-
+			numberOfCartItemsSections = Cart.getNumberOfCartItemsSections();
+			logs.debug("<font color=#f442cb> Get Number Of In Stock items: </font>");
+			numberOfInStockitems = Cart.getNumberOfInStockItems();
+			logs.debug("<font color=#f442cb> Get Number Of Drop Ship Items: </font>");
+			numberOfDropShipitems = Cart.getNumberOfItems(1);
+			if (numberOfCartItemsSections == 3) {
+				logs.debug("<font color=#f442cb> Get Number Of Saved Items To Later: </font>");
+				numberOfSavedItemsToLater = Cart.getNumberOfItems(2);
+			}
 			int numberOfProductsInCart = Cart.getNumberOfProducts();
-
+			int numberOfItemQtyInputs = Cart.getNumberOfItemQtyInputs();
+			int numberOfItemQtyDivs = Cart.getNumberOfItemQtyDivs();
+			if (numberOfCartItemsSections == 3)
+				sassert().assertEquals(numberOfItemQtyDivs, numberOfProductsInCart + 3,
+						"Some products do not have item qty label");
 			for (int index = 0; index < numberOfProductsInCart; index++) {
 				logs.debug("<font color=#f442cb>Items details for item in row: " + index + "</font>");
 				Cart.getItemImg(index);
 				Cart.getItemNameFromCartPage(index);
 				Cart.getItemCode(index);
 				Cart.getItemPrice(index);
-				Cart.getItemQty(index);
+				if (index < numberOfItemQtyInputs)
+					Cart.getItemQty(index);
+				else
+					Cart.getItemQtyForSavedForLater(index + 3);
 				Cart.getItemTotal(index);
 				Cart.verifyRemoveLinkDisplayedForItemIndex(index);
 				Cart.verifySaveForLaterLinkDisplayedForItemIndex(index);
+				if (isMobile() && index == numberOfItemQtyInputs )
+					Cart.expandSaveForLater(); 
 				Cart.verifyAddToFavoritesLinkDisplayedForItemIndex(index);
 			}
-			for (int index = 0; index < numberOfCartItemsSections; index++) {
+			for (int index = 0; index < 2; index++) {
 				logs.debug("<font color=#f442cb>Sections details for cart section: " + index + "</font>");
 				Cart.verifyRemoveAllLinkDisplayedForItemIndex(index);
 				Cart.verifySaveAllItmsForLaterLinkDisplayedForItemIndex(index);
@@ -100,19 +121,21 @@ public class Guest_CartRegression extends SelTestCase {
 			else
 				EstimatedOrder = Cart.getOrderSummaryItems(4);
 			
+			HomePage.closeNotReadyToBuyModal();
 			Cart.clickItemSaveForLAter(0);
 			Cart.verifySaveForLaterLoginModalIsDisplayed(0);
 			Cart.clickSaveForLaterModalClose(0);
-			
-			Cart.clickItemRemove(1);
-			Thread.sleep(4500);
-			numerOfInStockitems = Cart.getNumerOfInStockItems();
-			numerOfDropShipitems = Cart.getNumerOfItems(1);
-			numberOfProductsInCart = Cart.getNumberOfProducts();
-			
+				
 			Cart.clickAddToFavorites(1);
 			Login.verifyLoginHeaderIsDisplayed();
 			ActionDriver.returnPreviousPage();
+			Thread.sleep(2500);
+			
+			Cart.clickItemRemove(1);
+			Thread.sleep(4500);
+			numberOfInStockitems = Cart.getNumberOfInStockItems();
+			numberOfDropShipitems = Cart.getNumberOfItems(1);
+			numberOfProductsInCart = Cart.getNumberOfProducts();
 			
 			sassert().assertAll();
 			getCurrentFunctionName(false);

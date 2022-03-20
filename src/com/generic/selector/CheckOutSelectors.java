@@ -1,5 +1,7 @@
 package com.generic.selector;
 
+import com.generic.setup.cselector;
+
 public class CheckOutSelectors
 {
 	
@@ -13,17 +15,20 @@ public class CheckOutSelectors
 	public static final String addressRegion = "address.region";
 	public static final String postCode = "address.postcode";
 	public static final String addressPhone = "address.phone";
+	public static final String checkoutTitle = ".checkout-steps >a>.title";
+	public static final String deliveryAddressDropDown = "deliveryAddressDropDown";
 	
-	public static final String shiipingAddress_continueToShippingMethod = "addressSubmit";
+	public static final cselector shiipingAddress_continueToShippingMethod = new cselector("addressSubmit", "addressSubmit_mobile");
 	public static final String productContainerInCheckout = "css,.summary-product-items>.summary-product";
 	public static final String itemsQuantityInCheckoutPages = ".product-qty>span>b";
+	public static final String itemsCountInCheckoutPages = ".count>a";
 	public static final String productContainerInOrderConfirmationPage = "css,.item__list.item__list__cart>.item__list--item";
 	public static final String itemQuantityInOrderConfirmationPage = ".item__list.item__list__cart>.item__list--item>.item__quantity";
 	
 	public static final String useEnteredAddressbtn =  ".use-entered-address";
 	public static final String shippingMethods = ".radio-button.shipping-method-radio>input";
 	
-	public static final String shippingMethod_continueToPayment = "#deliveryMethodSubmit";
+	public static final cselector shippingMethod_continueToPayment = new cselector("deliveryMethodSubmit", "deliveryMethodSubmit_mobile");
 	public static final String CCPaymentButton = "PaymentTypeSelection_CARD";
 	public static final String PayPalPaymentButton = "PaymentTypeSelection_PAYPAL";
 	public static final String PaymentTypeSelectionNONE =	"PaymentTypeSelection_NONE";

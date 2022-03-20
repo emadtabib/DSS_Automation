@@ -14,6 +14,7 @@ public class CartSelectors
 	public static final String Cart_ProductCode = ".item__list--item>.item__info>.item-details";
 	public static final String Cart_ProductPrice = ".item__list--item >.item__price";
 	public static final String Cart_ProductQuantity = "quantity";
+	public static final String Cart_ProductQuantityDiv = ".item__quantity";
 	public static final String Cart_ProductTotal = ".item__list--item >.item_total";
 
 	public static final String itemRemove = "actionEntry_";
@@ -25,6 +26,7 @@ public class CartSelectors
 	public static final String AddAllItemsToFavorites = "Add All Items to Favorites";
 	public static final String cartTotal = ".cart-total.item-final-total";
 	//public static final String productDivs = ".item__list--item";
+	public static final String expandSaveForLater = ".js-saveForLater-visibility>.plus"; 
 	public static final String saveForLaterModal = "cboxLoadedContent";
 	public static final String saveForLaterModalButtons = "#cboxLoadedContent>b>a";
 	public static final String saveForLaterModalClose = "#cboxClose>.btn-close-icon";

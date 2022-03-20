@@ -10,6 +10,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
+import com.generic.selector.CartSelectors;
 import com.generic.selector.CheckOutSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
@@ -30,6 +31,22 @@ public class CheckOut extends SelTestCase {
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed + "Order Summary Item: " + index
 					+ " selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+
+		}
+	}
+	
+	public static String getcheckoutTitle() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Checkout Title");
+			String checkoutTitle = getDriver().findElement(By.cssSelector(CheckOutSelectors.checkoutTitle)).getText();
+			logs.debug("<font color=#f442cb>Get Checkout Title: </font><font color=#b86d29>" + checkoutTitle + "</font>");
+			getCurrentFunctionName(false);
+			return checkoutTitle;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed + "Checkout Title selector was not found by selenuim", new Object() {
 					}.getClass().getEnclosingMethod().getName()));
 			throw e;
 
@@ -73,6 +90,27 @@ public class CheckOut extends SelTestCase {
 
 	}
 	
+	public static void selectDeliveryAddressDropDown(String deliveryAddress) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("<font color=#f442cb>Select Delivery Address DropDown: </font><font color=#b86d29>" + deliveryAddress + "</font>");
+			WebElement deliveryAddressDropDown = getDriver().findElement(By.name(CheckOutSelectors.deliveryAddressDropDown));
+			Select select = new Select(deliveryAddressDropDown);
+			logs.debug("<font color=#f442cb>select.getOptions():  </font><font color=#b86d29>" + select.getOptions().size() + "</font>");
+			logs.debug("<font color=#f442cb>select.getOptions():  </font><font color=#b86d29>" + select.getOptions() + "</font>");
+			logs.debug("<font color=#f442cb>select.getOptions():  </font><font color=#b86d29>" + select.getAllSelectedOptions() + "</font>");
+			select.selectByValue(deliveryAddress);
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "Delivery Address DropDown selector was not found by selenium",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+
+	}
+	
 	public static void fillShippingAddressForm(LinkedHashMap<String, String> addressDetalis) throws Exception {
 		try {
 			getCurrentFunctionName(true);
@@ -86,6 +124,8 @@ public class CheckOut extends SelTestCase {
 			typeZipCode(addressDetalis.get(CheckOut.shippingAddress.keys.zipcode));
 			typePhoneNumber(addressDetalis.get(CheckOut.shippingAddress.keys.phone));
 			ContinueToShippingMethod();
+			if(!isDesktop())
+				Thread.sleep(5000);
 			useEnteredAddress();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
@@ -220,8 +260,8 @@ public class CheckOut extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			logs.debug("Click on continue to shipping method ");
-			getDriver().findElement(By.id(CheckOutSelectors.shiipingAddress_continueToShippingMethod)).click();
-			getCurrentFunctionName(false);
+			getDriver().findElement(By.id(CheckOutSelectors.shiipingAddress_continueToShippingMethod.get())).click();
+			getCurrentFunctionName(false); 
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
 					ExceptionMsg.PageFunctionFailed + "Checkout Button selector was not found by selenuim",
@@ -238,8 +278,12 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(true);
 			logs.debug("validate Estimated Total Is Correct");
 			double orderSubtotal = Double.parseDouble(Subtotal.replace('$', ' ').trim());
-			double orderShipping = Double.parseDouble(Shipping.replace('$', ' ').trim());
-			double orderTax = Double.parseDouble(Tax.replace('$', ' ').trim());
+			double orderShipping = 0.0;
+			if (!Shipping.toLowerCase().contains("free"))
+				orderShipping = Double.parseDouble(Shipping.replace('$', ' ').trim());
+			double orderTax = 0.0;
+			if (!Tax.toLowerCase().contains("free"))
+				orderTax = Double.parseDouble(Tax.replace('$', ' ').trim());
 			double orderEstimatedTotal = Double.parseDouble(estimtedTotal.replace('$', ' ').trim());
 			double ExpectedTotal = orderSubtotal + orderShipping + orderTax;
 			logs.debug("Expected Total: " + ExpectedTotal);
@@ -276,8 +320,8 @@ public class CheckOut extends SelTestCase {
 	public static void ContinueToPayment() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			logs.debug("Click Checkout in Cart Page");
-			getDriver().findElement(By.cssSelector(CheckOutSelectors.shippingMethod_continueToPayment)).click();
+			logs.debug("Click Continue To Payment");
+			getDriver().findElement(By.id(CheckOutSelectors.shippingMethod_continueToPayment.get())).click();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
@@ -451,12 +495,15 @@ public class CheckOut extends SelTestCase {
 		throw e;
 	}
 	}
-	
+
 	public static void placeOrder() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			logs.debug("Click Place Order Button");
-			getDriver().findElement(By.cssSelector(CheckOutSelectors.placeOrder)).click();
+			if (isMobile())
+				getDriver().findElements(By.cssSelector(CheckOutSelectors.placeOrder)).get(1).click();
+			else
+				getDriver().findElement(By.cssSelector(CheckOutSelectors.placeOrder)).click();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
@@ -553,6 +600,7 @@ public class CheckOut extends SelTestCase {
 	public static int getitemsQuantityInCheckoutPges() throws Exception {
 		try {
 			getCurrentFunctionName(true);
+			
 			int itemsQty = 0;
 			logs.debug("Get items Quantity from checkout pages");
 			int numberOfProducts = getDriver().findElements(By.cssSelector(CheckOutSelectors.itemsQuantityInCheckoutPages)).size();
@@ -569,21 +617,57 @@ public class CheckOut extends SelTestCase {
 		}
 	}
 		
-	
-	public static int getitemsQuantityInOrderConfirmationPage() throws Exception {
+	public static int getitemsQuantityInShippingMethodsPageMobile() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			int itemsQty = 0;
-			logs.debug("Get items Quantity from Order Confirmation page");
-			int numberOfProducts = getDriver().findElements(By.cssSelector(CheckOutSelectors.itemQuantityInOrderConfirmationPage)).size();
-			for (int index = 0; index < numberOfProducts; index++ )
-			itemsQty = itemsQty + Integer.parseInt(getDriver().findElements(By.cssSelector(CheckOutSelectors.itemQuantityInOrderConfirmationPage)).get(index).getText());
+			logs.debug("Get items Quantity from checkout pages");
+			itemsQty = itemsQty + Integer.parseInt(getDriver().findElement(By.cssSelector(CheckOutSelectors.itemsCountInCheckoutPages)).getText().replace("Items", "").trim());
 			logs.debug("items Quantity:  " + itemsQty);
 			getCurrentFunctionName(false);
 			return itemsQty;
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
-					ExceptionMsg.PageFunctionFailed + "items Quantity selector was not found by selenuim", new Object() {
+					ExceptionMsg.PageFunctionFailed + "items Quantity in checkout pages selector was not found by selenuim", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+
+	public static int getitemsQuantityInOrderConfirmationPage() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			int itemsQty = 0;
+			logs.debug("Get items Quantity from Order Confirmation page");
+			int numberOfProducts = getDriver()
+					.findElements(By.cssSelector(CheckOutSelectors.itemQuantityInOrderConfirmationPage)).size();
+			for (int index = 0; index < numberOfProducts; index++) {
+				String itemsQtyText = getDriver()
+						.findElements(By.cssSelector(CheckOutSelectors.itemQuantityInOrderConfirmationPage)).get(index)
+						.getText().trim();
+				if (itemsQtyText.contains("Qty")) {
+					logs.debug("Items uantity text:  " + itemsQty);
+					int itemsqty = Integer.parseInt(itemsQtyText.substring(itemsQtyText.indexOf(':') + 1).trim());
+					itemsQty = itemsQty + itemsqty;
+				} else
+					itemsQty = itemsQty + Integer.parseInt(itemsQtyText);
+			}
+			logs.debug("items Quantity:  " + itemsQty);
+
+			logs.debug("Get product In Stock Count in Order Confirmation page</font>");
+			String productInStockCount = getDriver().findElement(By.cssSelector(CartSelectors.productCount)).getText();
+			logs.debug("Items In Stock Count: <font color=#f442cb>" + productInStockCount + "</font>");
+			int ProductInStockCount = Integer.parseInt(productInStockCount
+					.substring(productInStockCount.indexOf('(') + 1, productInStockCount.indexOf(')')));
+			logs.debug("In Stock items: <font color=#f442cb>" + ProductInStockCount + "</font>");
+			sassert().assertTrue(ProductInStockCount == itemsQty,
+					"The Sum of items qty is not matching the total of in stock items");
+			getCurrentFunctionName(false);
+			return itemsQty;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "items Quantity selector was not found by selenuim",
+					new Object() {
 					}.getClass().getEnclosingMethod().getName()));
 			throw e;
 		}

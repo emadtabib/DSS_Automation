@@ -83,6 +83,26 @@ public class SelTestCase {
 	
 	private static String URL;
 
+	public static boolean isMobile() {
+		getCurrentFunctionName(true);
+		boolean result = getBrowserName().equalsIgnoreCase(GlobalVariables.browsers.iPhone);
+		getCurrentFunctionName(false);
+		return result;
+	}
+
+	public static boolean isDesktop() {
+		getCurrentFunctionName(true);
+		boolean result = getBrowserName().equalsIgnoreCase(GlobalVariables.browsers.chrome);
+		getCurrentFunctionName(false);
+		return result;
+	}
+
+	public static boolean isiPad() {
+		getCurrentFunctionName(true);
+		boolean result = getBrowserName().equalsIgnoreCase(GlobalVariables.browsers.iPad);
+		getCurrentFunctionName(false);
+		return result;
+	}
 
 	public static String getBrowserName() {
 		// return browserName;

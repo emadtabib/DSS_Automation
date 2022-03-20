@@ -169,8 +169,12 @@ public class PDP extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			logs.debug("Navigte To Bundle Landing Page");
+			if(isDesktop()) {
 			getDriver().findElement(By.partialLinkText(PDPSelectors.budgetBundles)).click();
 			getDriver().findElement(By.partialLinkText(PDPSelectors.budgetBundles)).click();
+			}
+			else
+				getDriver().get(getURL() + "/at-home-budget-bundles");
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(

@@ -20,8 +20,8 @@ import com.generic.util.SASLogger;
 public class Base_checkout extends SelTestCase {
 
 	// user types
-	public static final String guestUser = "fresh";
-	public static final String registeredUser = "registered";
+	public static final String guestUser = "fresh user";
+	public static final String registeredUser = "registered user";
 
 	// used sheet in test
 	public static final String testDataSheet = SheetVariables.checkoutSheet;
@@ -73,7 +73,7 @@ public class Base_checkout extends SelTestCase {
 			}
 			
 			if (proprties.contains("Registered Cart")) {
-				Registered_CartRegression.startTest(userdetails);
+				Registered_CartRegression.startTest(email);
 			}
 			
 			// Guest user with single address
@@ -83,7 +83,7 @@ public class Base_checkout extends SelTestCase {
 
 			// Registered user with single addresses
 			if (proprties.contains(registeredUser)) {
-				RegisteredCheckoutSingleAddress.startTest(shippingMethod, productsCount, addressDetails, payment, userdetails);
+				RegisteredCheckoutSingleAddress.startTest(shippingMethod, productsCount, addressDetails, payment, email);
 			}
 
 			

@@ -5,7 +5,11 @@ import java.util.NoSuchElementException;
 import java.util.Random;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
+import com.generic.selector.AccountSelectors;
 import com.generic.selector.CartSelectors;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
@@ -29,6 +33,7 @@ public class Cart extends SelTestCase {
 					HomePage.SearchAndPickItem(item);
 					PDP.selectPDPOptionsifAnyAndValidate();
 					PDP.clickAddToCartButton();
+					Thread.sleep(2500);
 					PDP.verifyAddToCartLayerIsDisplayed();
 					if (count < prodCount - 1)
 						PDP.clickMiniCartContinueCheckout();
@@ -95,7 +100,7 @@ public class Cart extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			logs.debug("Guest Cart Message");
-			String guestCartMessage = getDriver().findElement(By.cssSelector(CartSelectors.guestCartMessage)).getText();
+			String guestCartMessage = getDriver().findElements(By.cssSelector(CartSelectors.guestCartMessage)).get(1).getText();
 			logs.debug("<font color=#f442cb>Guest Cart Message: </font><font color=#b86d29>" + guestCartMessage
 					+ "</font>");
 			sassert().assertTrue(guestCartMessage.contains("not signed in"),
@@ -144,7 +149,7 @@ public class Cart extends SelTestCase {
 		}
 	}
 	
-	public static int getNumerOfInStockItems() throws Exception {
+	public static int getNumberOfInStockItems() throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			logs.debug("Get product In Stock Count in Cart Page</font>");
@@ -163,14 +168,14 @@ public class Cart extends SelTestCase {
 		}
 	}
 	
-	public static int getNumerOfItems(int index) throws Exception {
+	public static int getNumberOfItems(int index) throws Exception {
 		try {
 			getCurrentFunctionName(true);
 			logs.debug("Get Number of items in section: " + index +"</font>");
 			String productsCount = getDriver().findElements(By.cssSelector(CartSelectors.productCount)).get(index).getText();
-			logs.debug("Items Count: <font color=#f442cb>" + productsCount + "</font>");
+			logs.debug("Items Count text: <font color=#f442cb>" + productsCount + "</font>");
 			int ProductInStockCount = Integer.parseInt(productsCount.substring(productsCount.indexOf('(')+1, productsCount.indexOf(')')));
-			logs.debug("In Stock items: <font color=#f442cb>" + ProductInStockCount + "</font>");
+			logs.debug("items count: <font color=#f442cb>" + ProductInStockCount + "</font>");
 			getCurrentFunctionName(false);
 			
 			return ProductInStockCount;
@@ -290,10 +295,27 @@ public class Cart extends SelTestCase {
 		}
 	}
 	
+	public static int getNumberOfItemQtyInputs() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Number Of Item Qty Inputs");
+			int itemQty = getDriver().findElements(By.name(CartSelectors.Cart_ProductQuantity)).size();
+			logs.debug("Number Of Item Qty Inputs: <font color=#f442cb>" + itemQty + "</font>");
+			getCurrentFunctionName(false);
+			return itemQty;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "item qty From cart Page selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
 	public static String getItemQty(int index) throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			logs.debug("Get item qty From Cart Page for item in index: </font>" + index);
+			logs.debug("Get item qty From Cart Page for item in index:" + index);
 			String itemQty = getDriver().findElements(By.name(CartSelectors.Cart_ProductQuantity)).get(index)
 					.getAttribute("value");
 			logs.debug("item qty: <font color=#f442cb>" + itemQty + "</font>");
@@ -302,6 +324,40 @@ public class Cart extends SelTestCase {
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
 					ExceptionMsg.PageFunctionFailed + "item qty From cart Page selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
+	public static int getNumberOfItemQtyDivs() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get Number of Item qty divs");
+			int itemQtys = getDriver().findElements(By.cssSelector(CartSelectors.Cart_ProductQuantityDiv)).size();
+			logs.debug("Number of Item qty divs: <font color=#f442cb>" + itemQtys + "</font>");
+			getCurrentFunctionName(false);
+			return itemQtys;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "item qty From cart Page selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	public static String getItemQtyForSavedForLater(int index) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Get item qty for items in saved for later in Cart Page for item in index: </font>" + (index - 3));
+			String itemQty = getDriver().findElements(By.cssSelector(CartSelectors.Cart_ProductQuantityDiv)).get(index)
+					.getText();
+			logs.debug("item Qty in saved for later in Cart Page : <font color=#f442cb>" + itemQty.trim() + "</font>");
+			getCurrentFunctionName(false);
+			return itemQty;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "item qty in saved for later in Cart Page selector was not found by selenuim",
 					new Object() {
 					}.getClass().getEnclosingMethod().getName()));
 			throw e;
@@ -364,7 +420,7 @@ public class Cart extends SelTestCase {
 	public static boolean verifyRemoveAllLinkDisplayedForItemIndex(int index) throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			logs.debug("Verify Ramove All link is displayed for item in index: </font>" + index);
+			logs.debug("Verify Remove All link is displayed for item in index: </font>" + index);
 			boolean itemprice = getDriver().findElements(By.partialLinkText(CartSelectors.RemoveAll)).get(index).isDisplayed();
 			logs.debug("Remove All link is displayed for item in index: <font color=#f442cb>" + index + "</font>");
 			getCurrentFunctionName(false);
@@ -381,8 +437,13 @@ public class Cart extends SelTestCase {
 		try {
 			getCurrentFunctionName(true);
 			logs.debug("Click remove for the item in index: </font>" + index);
-			getDriver().findElement(By.id(CartSelectors.itemRemove + index)).click();
-			getDriver().findElement(By.id(CartSelectors.itemRemove + index)).click();
+			WebElement element = getDriver().findElement(By.id(CartSelectors.itemRemove + index));
+			JavascriptExecutor executor = (JavascriptExecutor) getDriver();
+		    executor.executeScript("arguments[0].scrollIntoView(true);", element);
+		    executor.executeScript("arguments[0].click();", element);
+
+//			Actions actions = new Actions(getDriver());
+//			actions.moveToElement(element).click().perform();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
@@ -540,20 +601,20 @@ public class Cart extends SelTestCase {
 	}
 	
 //	
-//	public static void clickItemRemove(int index) throws Exception {
-//		try {
-//			getCurrentFunctionName(true);
-//			logs.debug("Click remove for the item in index: </font>" + index);
-//			getDriver().findElement(By.id(CartSelectors.itemRemove + index));
-//			getCurrentFunctionName(false);
-//		} catch (NoSuchElementException e) {
-//			logs.debug(MessageFormat.format(
-//					ExceptionMsg.PageFunctionFailed + "remove item selector was not found by selenuim",
-//					new Object() {
-//					}.getClass().getEnclosingMethod().getName()));
-//			throw e;
-//		}
-//	}
+	public static void expandSaveForLater() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug("Click to expand Save For Later");
+			getDriver().findElement(By.cssSelector(CartSelectors.expandSaveForLater));
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + "expand Save For Later selector was not found by selenuim",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
 
 	public static int getNumberOfOrderSummaryLines() throws Exception {
 		try {
@@ -603,7 +664,6 @@ public class Cart extends SelTestCase {
 			logs.debug("Get Estimated Total from Cart page");
 			estimatedTotal = getDriver().findElements(By.cssSelector(CartSelectors.Cart_OrderSubtotal)).get(5)
 					.getText();
-			System.out.println("order Estimated: " + estimatedTotal);
 			logs.debug("order Estimated: " + estimatedTotal);
 			getCurrentFunctionName(false);
 			return estimatedTotal;

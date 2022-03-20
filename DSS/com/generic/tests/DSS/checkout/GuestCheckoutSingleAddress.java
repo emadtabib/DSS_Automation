@@ -57,8 +57,13 @@ public class GuestCheckoutSingleAddress extends SelTestCase {
 					"Estimated total value is not correct in delivery method page");
 
 			// Check number of products in delivery method page
-			sassert().assertTrue(CheckOut.getitemsQuantityInCheckoutPges() == productsCount,
-					"Some products are missing in delivery method page ");
+			int itemsQuantity;
+			if (isMobile())
+				itemsQuantity = CheckOut.getitemsQuantityInShippingMethodsPageMobile();
+			else
+				itemsQuantity = CheckOut.getitemsQuantityInCheckoutPges();
+			sassert().assertTrue(itemsQuantity == productsCount, "Some products are missing in delivery method page ");
+
 			
 //			CheckOut.selectshippingMethods(shippingMethod);
 			CheckOut.ContinueToPayment();
