@@ -67,7 +67,8 @@ public class HomePage extends SelTestCase {
 			logs.debug("WebElement List Size = " + items.size());
 			Random random = new Random();
 			int index = random.nextInt(items.size() - 1);
-			items.get(index).click();
+	//		items.get(index).click();
+			items.get(0).click();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(

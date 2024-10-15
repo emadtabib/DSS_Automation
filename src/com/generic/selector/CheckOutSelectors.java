@@ -3,7 +3,7 @@ package com.generic.selector;
 public class CheckOutSelectors
 {
 	
-	public static final String Cart_OrderSubtotal = ".summary-items>div>div";
+	public static final String Cart_OrderSubtotal = ".item-row>div";
 	public static final String CartHeader = ".cart-headline";
 	public static final String Cart_productImg = ".item__list--item>.item__image>a>img";
 	public static final String Cart_productTitle  = ".item__list--item>.item__info>.prod-title";
@@ -24,7 +24,7 @@ public class CheckOutSelectors
 	
 	public static final String shiipingAddress_continueToShippingMethod = "addressSubmit";
 	public static final String productContainerInCheckout = "css,.summary-product-items>.summary-product";
-	public static final String itemsQuantityInCheckoutPages = ".product-qty>span>b";
+	public static final String itemsQuantityInCheckoutPages = ".product-qty>span>span>b";
 	public static final String productContainerInOrderConfirmationPage = "css,.item__list.item__list__cart>.item__list--item";
 	public static final String itemQuantityInOrderConfirmationPage = ".item__list.item__list__cart>.item__list--item>.item__quantity";
 	
@@ -43,7 +43,7 @@ public class CheckOutSelectors
 	public static final String useDeliveryAddress = "useDeliveryAddress";
 	
 	public static final String poNumber = "#poNumber";
-	public static final String placeOrder = ".checkout-next.continue-btn.progress-btn";
+	public static final String placeOrder = ".btn-orange.submit_silentOrderPostForm.checkout-next.continue-btn";
 
 	public static final String globalMessage = ".row.checkout-header>div>p";
 	public static final String FeedbackModal_NoThanks = "css,.smcx-btn.smcx-btn-secondary.smcx-pull-left";

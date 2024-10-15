@@ -10,7 +10,7 @@ import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
 
 //DSS
-public class GuestCheckoutSingleAddress extends SelTestCase {
+public class GuestCheckout extends SelTestCase {
 
 	public static void startTest(String shippingMethod, int productsCount, LinkedHashMap<String, String> addressDetails,
 			LinkedHashMap<String, String> paymentDetails) throws Exception {
@@ -32,35 +32,29 @@ public class GuestCheckoutSingleAddress extends SelTestCase {
 
 			orderSubtotal = CheckOut.getOrderSummaryItems(1);
 			EstimatedOrder = CheckOut.getEstimatedTotalInFromOrderSummary(true);
-			CheckOut.clickCheckout();
+			// Check number of products in Shipping address page
+			sassert().assertTrue(CheckOut.getitemsQuantityInCheckoutPges() == productsCount,
+					"Some products are missing in shipping address page ");
+			
+			CheckOut.fillShippingAddressForm(addressDetails);
+		//	CheckOut.clickCheckout();
 
 			String NewOrderSubtotal = CheckOut.getOrderSummaryItems(1);
-			sassert().assertEquals(NewOrderSubtotal, orderSubtotal, "Actual subtotal in shipping address page is: "
-					+ NewOrderSubtotal + "While it is: " + orderSubtotal + " in cart");
-
-			String NewEstimatedOrder = CheckOut.getEstimatedTotalInFromOrderSummary(true);
-			sassert().assertEquals(NewEstimatedOrder, EstimatedOrder,
-					"Actual Estimated Order in shipping address page is: " + NewEstimatedOrder + "While it is: "
-							+ EstimatedOrder + " in cart");
-
-			CheckOut.fillShippingAddressForm(addressDetails);
-
-			NewOrderSubtotal = CheckOut.getOrderSummaryItems(1);
-			sassert().assertEquals(NewOrderSubtotal, orderSubtotal, "Actual subtotal in delivery method page is: "
+			sassert().assertEquals(NewOrderSubtotal, orderSubtotal, "Actual subtotal in shipping method page is: "
 					+ NewOrderSubtotal + "While it is: " + orderSubtotal + " in cart");
 
 			Shipping = CheckOut.getOrderSummaryItems(3);
 			Tax = CheckOut.getOrderSummaryItems(5);
-			EstimatedOrder = CheckOut.getOrderSummaryItems(7);
+			String NewEstimatedOrder = CheckOut.getOrderSummaryItems(7);
 			sassert().assertTrue(
-					CheckOut.validateEstimatedTotalIsCorrect(NewOrderSubtotal, Shipping, Tax, EstimatedOrder),
+					CheckOut.validateEstimatedTotalIsCorrect(NewOrderSubtotal, Shipping, Tax, NewEstimatedOrder),
 					"Estimated total value is not correct in delivery method page");
 
-			// Check number of products in delivery method page
+			// Check number of products in shipping method page
 			sassert().assertTrue(CheckOut.getitemsQuantityInCheckoutPges() == productsCount,
-					"Some products are missing in delivery method page ");
+					"Some products are missing in shipping method page ");
 			
-//			CheckOut.selectshippingMethods(shippingMethod);
+			CheckOut.selectshippingMethods(shippingMethod);
 			CheckOut.ContinueToPayment();
 
 			NewOrderSubtotal = CheckOut.getOrderSummaryItems(1);

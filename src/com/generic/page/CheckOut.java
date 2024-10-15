@@ -17,6 +17,7 @@ import com.generic.selector.AccountSelectors;
 import com.generic.selector.CheckOutSelectors;
 import com.generic.selector.HomePageSelectors;
 import com.generic.selector.PDPSelectors;
+import com.generic.setup.Common;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.util.SelectorUtil;
@@ -28,7 +29,7 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(true);
 
 			for (int count = 0; count < prodCount; count++) {
-				Thread.sleep(3000);
+			
 				
 				String[] options = getCONFIG().getProperty("RandomItems").split(",");
 				logs.debug("Items to search on"+ options);
@@ -37,11 +38,15 @@ public class CheckOut extends SelTestCase {
 				String item = options[randomIndex];
 				logs.debug("<font color=#f442cb>Search on: </font><font color=#b86d29>" + item + "</font>");
 				HomePage.SearchAndPickItem(item);
+				Thread.sleep(5000);
+				getDriver().getCurrentUrl().replaceAll("d1.", "exts1");
 				PDP.selectPDPOptionsifAnyAndValidate();
 				PDP.clickAddToCartButton();
 				PDP.verifyAddToCartLayerIsDisplayed();
-				if (count < prodCount-1)
-					PDP.clickMiniCartContinueCheckout();
+				if (count < prodCount-1) {
+					PDP.clickMiniCartDismiss();
+				    Common.refreshBrowser();
+				}
 				else
 				PDP.clickProceedToCheckout();
 			}
@@ -113,7 +118,7 @@ public class CheckOut extends SelTestCase {
 			getCurrentFunctionName(true);
 			String estimatedTotal = "";
 			logs.debug("Get Estimated Total from Cart page");
-			estimatedTotal =  getDriver().findElements(By.cssSelector(CheckOutSelectors.Cart_OrderSubtotal)).get(5).getText();	
+			estimatedTotal =  getDriver().findElements(By.cssSelector(CheckOutSelectors.Cart_OrderSubtotal)).get(3).getText();	
 			System.out.println("order Estimated: " + estimatedTotal);
 			logs.debug("order Estimated: " + estimatedTotal);
 			getCurrentFunctionName(false);

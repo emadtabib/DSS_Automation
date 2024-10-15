@@ -217,6 +217,11 @@ public class SelTestCase {
 		}
 	}
 
+	public static String getSubMailAccount(String email) {
+		return email.replace("tester", "tester_" + getBrowserName().replace(" ", "_"));
+
+	}
+	
 	public static void failureHandeler(Throwable t, String info) {
 		setTestCaseDescription(getTestCaseDescription());
 		logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t.getMessage()));
@@ -299,6 +304,7 @@ public class SelTestCase {
 
 		try {
 			Common.launchApplication(test.getParameter("browserName"), test.getParameter("Env"));
+			
 
 		} catch (Throwable t) {
 			logs.debug(MessageFormat.format(LoggingMsg.DEBUGGING_TEXT, t));

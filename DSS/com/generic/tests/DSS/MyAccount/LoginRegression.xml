@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="PDPRegression" parallel="tests" thread-count="3" data-provider-thread-count="1">
+<suite name="PDPRegression" parallel="tests" thread-count="3" data-provider-thread-count="2">
 <test name="PDP Chrome">
 		<parameter name="browserName" value="Chrome"></parameter>
 		<parameter name="Env" value="exts1"></parameter>
 		<classes>
-			<class name="com.generic.tests.DSS.PDP.PDPBase" />
+			<class name="com.generic.tests.DSS.MyAccount.LoginRegression" />
 		</classes>
 	</test><!-- Test -->
 

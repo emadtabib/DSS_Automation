@@ -1,20 +1,53 @@
 package com.generic.page;
 
 
+import java.net.URI;
 import java.text.MessageFormat;
 import java.util.LinkedHashMap;
 import java.util.NoSuchElementException;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import com.generic.selector.HomePageSelectors;
 import com.generic.selector.LoginSelectors;
 import com.generic.setup.ExceptionMsg;
+import com.generic.setup.GlobalVariables;
+import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
+import com.generic.util.SelectorUtil;
 
 public class Login extends SelTestCase {
 	
 //	public static final String emailAddress = "placer1@gmail.com";
 //	public static final String passord = "12341234";
+
+	/**
+	 * Fill the login form and click submit button.
+	 *
+	 * @param email
+	 * @param Password
+	 * @throws Exception
+	 */
+	public static void fillLoginFormAndClickSubmit(String email, String Password) throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			logs.debug(MessageFormat.format(LoggingMsg.GETTING_TEXT,
+					"Navigating to login page..." + getCONFIG().getProperty("RegistrationPage")));
+			getDriver().get(new URI(getDriver().getCurrentUrl()).resolve(getCONFIG().getProperty("RegistrationPage"))
+					.toString());
+
+			typeEmailAddress(email);
+			typePassword(Password);
+			Thread.sleep(2000);
+			clickSubmitSignIn();
+			getCurrentFunctionName(false);
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(ExceptionMsg.PageFunctionFailed
+					+ " Fill Login form has failed, a selector can't be found by selenium ", new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
 	
 	public static void typeEmailAddress(String emailAddress) throws Exception {
 		try {
@@ -64,6 +97,30 @@ public class Login extends SelTestCase {
 
 	}
 
+	public static boolean checkUserAccount() throws Exception {
+		try {
+			getCurrentFunctionName(true);
+			boolean isUserLogedIn = false;		
+
+			// Validate the welcome message if it is exist.
+					SelectorUtil.initializeSelectorsAndDoActions(LoginSelectors.welcomeMessage);
+					Thread.sleep(1000);
+//					if (SelectorUtil.isElementExist(By.cssSelector(LoginSelectors.welcomeMessage.get()));
+						isUserLogedIn = true;
+
+
+			getCurrentFunctionName(false);
+
+			return isUserLogedIn;
+		} catch (NoSuchElementException e) {
+			logs.debug(MessageFormat.format(
+					ExceptionMsg.PageFunctionFailed + " Welcome message selector can't be found by selenium ",
+					new Object() {
+					}.getClass().getEnclosingMethod().getName()));
+			throw e;
+		}
+	}
+	
 	public static void Login(LinkedHashMap<String, String> userDetalis) throws Exception {
 
 		typeEmailAddress(userDetalis.get("mail"));

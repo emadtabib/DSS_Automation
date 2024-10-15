@@ -5,9 +5,9 @@ import com.generic.setup.cselector;
 public class PDPSelectors {
 	////////////////////////////DSS
 	public static final String addToCartButton = "#addToCartButton";
-	public static final String addToCartLayer = "#addToCartLayer";
-	public static final String proceedToCheckout = ".btn.btn-primary.btn-block.add-to-cart-button";
-	public static final String miniCartContinueCheckout = ".btn.btn-secondary.btn-block.js-mini-cart-close-button";
+	public static final String addToCartLayer = ".cart-flyout-section";
+	public static final String proceedToCheckout = ".btn.btn-primary.btn-orange.continue-btn.pos-rel";
+	public static final String miniCartDismiss = ".icon.icon-close";
 	public static final String budgetBundles = "Budget Bundles";
 	public static final String BundlesLinks = "css,.btn-cta.btn-color-green";
 	public static final String BundleHeadline = ".page-headline";

@@ -70,15 +70,15 @@ public class PDP extends SelTestCase {
 
 	}
 	
-	public static void clickMiniCartContinueCheckout() throws Exception {
+	public static void clickMiniCartDismiss() throws Exception {
 		try {
 			getCurrentFunctionName(true);
-			logs.debug("Click mini Cart Continue Checkout");
-			getDriver().findElement(By.cssSelector(PDPSelectors.miniCartContinueCheckout)).click();
+			logs.debug("Click mini Cart Close button");
+			getDriver().findElement(By.cssSelector(PDPSelectors.miniCartDismiss)).click();
 			getCurrentFunctionName(false);
 		} catch (NoSuchElementException e) {
 			logs.debug(MessageFormat.format(
-					ExceptionMsg.PageFunctionFailed + "Mini Cart Continue Checkout Button selector was not found by selenuim",
+					ExceptionMsg.PageFunctionFailed + "Mini Cart Close Button selector was not found by selenuim",
 					new Object() {
 					}.getClass().getEnclosingMethod().getName()));
 			throw e;

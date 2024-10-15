@@ -643,6 +643,18 @@ public class SelectorUtil extends SelTestCase {
 		return isDisplayed;
 	}
 
+	public static boolean isElementExist(By  Byselector) throws Exception {
+		getCurrentFunctionName(true);
+		boolean isElementExist = false;
+		List<WebElement> listItems = getDriver().findElements(Byselector);
+
+		if (listItems.size() != 0) {
+			isElementExist = true;
+		}
+		getCurrentFunctionName(false);
+		return isElementExist;
+	}
+	
 	@SuppressWarnings("rawtypes")
 	public static boolean isDisplayed(List<String> subStrArr) throws Exception {
 		getCurrentFunctionName(true);

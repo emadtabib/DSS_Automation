@@ -4,6 +4,7 @@ public class LoggingMsg {
 
 	public static final String CHECKOUTDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}<br><b>case proprties:</b><br>- {3}<br>- {4}<br>- {5}";
 	public static final String TEST_CASE_DESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Description: </b>{2}<br>";
+	public static final String REGISTRATIONDESC = "<b>Case ID: </b>{0} <br><b>File of execution:</b> {1}<br><b>Decrption: </b>{2}<br><b>fields to validate:</b><br>- {3}<br>";
 	public static String SELECTING_ELEMENT_VALUE = "Selecting {0} {1}";
 	public static String GET_ELEMENT_BY_LOCATOR = "get element by locator {0}";
 	public static String TERMINATING_SESSION = "Terminating session";
@@ -19,12 +20,15 @@ public class LoggingMsg {
 	public static String EXPECTED_TEXT = "Expected Text: {0}";
 	public static String ACTUAL_TEXT = "ACTUAL TEXT IS: {0}";
 	public static String WAIT_SECONDS = "Wait: {0} Sec";
+	public static String TYPING_ELEMENT_VALUE = "typing {0} {1}";
+	public static String GETTING_TEXT = "Getting text of : {0}";
 	public static String ACTUAL_EXPECTED_ERROR = "Error -> Actual: {0} Expected: {1}";
 	public static String KILLING_PROCESS = "Killing {0} process";
 	public static String NOT_RUNNING_PROCESS_ERROR_MSG = "{0} process is not running. Starting Scripts execution on {1}";
 	public static String NULL_FILE_PATH_ERROR_MSG = "The {0} file path is null, then generating it";
 	public static String READING_DATA_FROM_SHEET = "reading data from sheet: {0} row: {1}";
 	public static String STARTING_THREAD = "<font color=#035d6d>>>> <u> Starting {0} </u> >>> </font>";
+	public static String USER_IS_NOT_LOGGED_IN_SUCCESSFULLY = "Your username or password was incorrect";
 	public static String ENDING_THREAD = "<font color='green'><<< Ending {0} <<< </font>";
 	public static String COUNTER_VALUE = "The value of the counter is: {0}";
 	public static String EXECUTE_TEST_CASE = "Execute test case {0}";
@@ -64,6 +68,8 @@ public class LoggingMsg {
 	public static String NOT_EXIST_MSG = "{0} is not exist";
 	public static String REFRESH_SESSION = "REFRESH_SESSION";
 	public static String RETURNING_TO_PREVIOUS_PAGE= "BACK TO PREVIOUS PAGE";
-
+	public static String USER_IS_LOGGED_IN = "User is loged in";
+	public static String NOT_MY_ACCOUNT_PAGE = "This page is not my account page";
+	public static String MY_ACCOUNT_LINK_NOT_EXIST = "My account page link does not exist";
 	
 }

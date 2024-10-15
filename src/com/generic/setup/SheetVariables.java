@@ -17,6 +17,8 @@ public class SheetVariables {
 	// SheetNames
 	public static final String checkoutSheet = "CheckOutRegression";
 	public static final String PDPSheet = "PDPRegression";
+	public static final String RegistrationSheet = "RegistrationRegression";
+	public static final String LoginSheet = "LoginRegression";
 	public static final String OMSAccountSheet = "OMSAccountRegression";
 	public static final String checkoutTestCaseId = "CheckOut";
 	public static final String PDPCaseId = "PDP";

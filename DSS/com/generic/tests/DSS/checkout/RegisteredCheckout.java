@@ -13,7 +13,7 @@ import com.generic.page.Login;
 import com.generic.setup.ExceptionMsg;
 import com.generic.setup.SelTestCase;
 
-public class RegisteredCheckoutSingleAddress extends SelTestCase {
+public class RegisteredCheckout extends SelTestCase {
 
 	public static void startTest(String shippingMethod, int productsCount, LinkedHashMap<String, String> addressDetails,
 			String payment, LinkedHashMap<String, String> userDetalis) throws Exception {

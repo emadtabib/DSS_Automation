@@ -12,8 +12,8 @@ import com.generic.setup.Common;
 import com.generic.setup.LoggingMsg;
 import com.generic.setup.SelTestCase;
 import com.generic.setup.SheetVariables;
-import com.generic.tests.DSS.checkout.GuestCheckoutSingleAddress;
-import com.generic.tests.DSS.checkout.RegisteredCheckoutSingleAddress;
+import com.generic.tests.DSS.checkout.GuestCheckout;
+import com.generic.tests.DSS.checkout.RegisteredCheckout;
 import com.generic.util.dataProviderUtils;
 import com.generic.util.SASLogger;
 
@@ -70,12 +70,12 @@ public class Base_checkout extends SelTestCase {
 
 			// Guest user with single address
 			if (proprties.contains(guestUser)) {
-				GuestCheckoutSingleAddress.startTest(shippingMethod, productsCount, addressDetails, paymentDetails);
+				GuestCheckout.startTest(shippingMethod, productsCount, addressDetails, paymentDetails);
 			}
 
 			// Registered user with single addresses
 			if (proprties.contains(registeredUser)) {
-				RegisteredCheckoutSingleAddress.startTest(shippingMethod, productsCount, addressDetails, payment, userdetails);
+				RegisteredCheckout.startTest(shippingMethod, productsCount, addressDetails, payment, userdetails);
 			}
 
 			
